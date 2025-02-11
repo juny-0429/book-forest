@@ -1,5 +1,5 @@
-import Image from 'next/image';
+import LucideIcons from 'src/theme/lucideIcon';
 
 export default function Home() {
-  return <></>;
+  return <div></div>;
 }
