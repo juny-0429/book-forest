@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import colors from './src/theme/colors';
 
 export default {
   darkMode: ['class'],
@@ -10,7 +11,7 @@ export default {
         gyeonggiBatang: ['GyeonggiBatang', 'serif'], // 경기천년바탕 폰트
         gyeonggiTitle: ['GyeonggiJeTitle', 'sans-serif'], // 경기천년제목 폰트
       },
-      colors: {},
+      colors: { ...colors },
     },
   },
   plugins: [],

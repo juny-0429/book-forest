@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @import './reset.css';
-@import './fonts.css';
+@import '../theme/fonts.css';
 
 @layer base {
   html {
@@ -11,6 +11,7 @@
   }
 
   body {
-    color: #121212;
+    @apply bg-ui-background;
+    @apply text-ui-text-title;
   }
 }
