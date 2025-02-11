@@ -6,11 +6,9 @@
 @import '../theme/fonts.css';
 
 @layer base {
-  html {
-    font-family: 'Pretendard', sans-serif;
-  }
-
   body {
+    font-family: 'Pretendard', sans-serif;
+
     @apply bg-ui-background;
     @apply text-ui-text-title;
   }

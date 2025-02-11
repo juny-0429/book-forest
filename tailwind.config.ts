@@ -1,9 +1,10 @@
 import type { Config } from 'tailwindcss';
 import colors from './src/theme/colors';
+import typography from './src/theme/typography';
 
 export default {
   darkMode: ['class'],
-  content: ['./src/app/**/*.{js,ts,jsx,tsx,mdx}', './src/components/**/*.{js,ts,jsx,tsx,mdx}'],
+  content: ['./src/**/*.{js,ts,jsx,tsx,mdx,css}', './src/app/**/*.{js,ts,jsx,tsx,mdx}', './src/components/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
       fontFamily: {
@@ -12,6 +13,7 @@ export default {
         gyeonggiTitle: ['GyeonggiJeTitle', 'sans-serif'], // 경기천년제목 폰트
       },
       colors: { ...colors },
+      fontSize: { ...typography },
     },
   },
   plugins: [],
