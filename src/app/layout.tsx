@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import '../styles/globals.css';
 
 export const metadata: Metadata = {
   title: '책숲 - 독서를 사랑하는 당신을 위한 책 쇼핑몰',
