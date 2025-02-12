@@ -1,6 +1,6 @@
-import BaseButton, { ButtonProps } from './BaseButton';
-import clsx from 'clsx';
+import Button, { ButtonProps } from './Button';
+import { cn } from 'src/lib/utils';
 
 export default function CapsuleButton(props: ButtonProps) {
-  return <BaseButton {...props} className={clsx('rounded-full', props.className)} />;
+  return <Button {...props} className={cn('rounded-full', props.className)} />;
 }
