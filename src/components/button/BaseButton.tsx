@@ -3,9 +3,9 @@ import clsx from 'clsx';
 import React, { useMemo } from 'react';
 import { ColorType } from 'src/types/color.types';
 
-export type ButtonHeight = 32 | 40 | 48 | 56;
+type ButtonHeight = 32 | 40 | 48 | 56;
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   height: ButtonHeight;
   color: ColorType;
   leftIcon?: React.ReactNode;
