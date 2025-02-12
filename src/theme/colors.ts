@@ -95,6 +95,7 @@ const stateColors = {
 const uiColors = {
   main: baseColors.green[700], // 브랜드 대표 색상
   cta: baseColors.green[500], // 버튼, 벳지 등 구매 주요 동선 색상
+  'cta-hover': baseColors.green[600],
   text: {
     title: baseColors.gray[900], // 제목 색상
     body: baseColors.gray[800], // 서브 타이틀 및 강조
