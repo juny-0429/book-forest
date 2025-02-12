@@ -11,7 +11,7 @@ const colorStyles: Partial<Record<ColorType, string>> = {
 
 export default function LineButton({ height, color, leftIcon, rightIcon, children, className, ...restProps }: ButtonProps) {
   const buttonClass = useMemo(() => {
-    return clsx('justify-center items-center border', heightStyle[height], colorStyles[color], disabledStyles, className);
+    return clsx('flex justify-center items-center border', heightStyle[height], colorStyles[color], disabledStyles, className);
   }, [height, color, className]);
 
   return (
