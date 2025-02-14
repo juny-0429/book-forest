@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 import colors from './src/theme/colors';
 import typography from './src/theme/typography';
+import { animations } from './src/styles/animations';
 
 export default {
   darkMode: ['class'],
@@ -14,6 +15,10 @@ export default {
       },
       colors: { ...colors },
       fontSize: { ...typography },
+      ...animations,
+      boxShadow: {
+        'blur-4-25': '0 0 4px rgba(0, 0, 0, 0.25)',
+      },
     },
   },
   plugins: [],

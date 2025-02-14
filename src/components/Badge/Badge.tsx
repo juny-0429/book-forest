@@ -6,18 +6,18 @@ import { cn } from 'src/lib/utils';
 const badgeVariants = cva('inline-flex items-center rounded-full px-[8px] py-[2px] text-body-12r', {
   variants: {
     variant: {
-      positive: 'bg-state-positive text-white',
+      success: 'bg-state-success text-white',
       informative: 'bg-state-informative text-white',
+      error: 'bg-state-error text-white',
       warning: 'bg-state-warning text-white',
-      delay: 'bg-state-delay text-white',
-      linePositive: 'border border-solid  border-state-positive text-state-positive',
+      linesuccess: 'border border-solid  border-state-success text-state-success',
       lineInformative: 'border border-solid  border-state-informative text-state-informative',
-      lineWarning: 'border border-solid  border-state-warning text-state-warning',
-      lineDelay: 'border border-solid  border-state-delay text-state-delay',
+      lineerror: 'border border-solid  border-state-error text-state-error',
+      linewarning: 'border border-solid  border-state-warning text-state-warning',
     },
   },
   defaultVariants: {
-    variant: 'positive',
+    variant: 'success',
   },
 });
 
