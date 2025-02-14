@@ -86,10 +86,10 @@ const baseColors = {
 };
 
 const stateColors = {
-  positive: baseColors.green[500], // 쿠폰, 사은품 혜택 안내 및 활성화 텍스트
+  success: baseColors.green[500], // 쿠폰, 사은품 혜택 안내 및 활성화 텍스트
   informative: baseColors.blue[400], // 별점, 공식 태그 등 신뢰 색상
-  warning: baseColors.red[600], // 취소, 탈퇴 등 에러 색상
-  delay: baseColors.saffron[700], // 배송 지연, 주의 관련 색상
+  error: baseColors.red[600], // 취소, 탈퇴 등 에러 색상
+  warning: baseColors.saffron[700], // 배송 지연, 주의 관련 색상
 };
 
 const uiColors = {
