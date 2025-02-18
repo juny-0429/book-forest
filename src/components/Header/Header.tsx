@@ -1,0 +1,64 @@
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
+import { appRoutes } from 'src/routes/appRoutes';
+import KoLogo from '@/assets/images/logos/ko-logo.png';
+import SearchBar from '../SearchBar/SearchBar';
+import LucideIcons from 'src/theme/lucideIcon';
+import NavigationBar from '../NavigationBar/NavigationBar';
+import { mockNavigationList } from '../NavigationBar/NavigationBar.data';
+
+export default function Header() {
+  return (
+    <header>
+      <nav>
+        <ul className='flex justify-end items-center gap-5 px-[50px] py-[10px] text-ui-text-title bg-gray-200'>
+          <li>
+            <Link href={appRoutes.login} className='text-body-16m'>
+              로그인
+            </Link>
+          </li>
+          <li className='w-[2px] h-[10px] bg-gray-600' />
+          <li>
+            <Link href={appRoutes.signup} className='text-body-16m'>
+              회원가입
+            </Link>
+          </li>
+          <li className='w-[2px] h-[10px] bg-gray-600' />
+          <li>
+            <Link href={appRoutes.myPage} className='text-body-16m'>
+              마이페이지
+            </Link>
+          </li>
+          <li className='w-[2px] h-[10px] bg-gray-600' />
+          <li>
+            <Link href={appRoutes.cart} className='text-body-16m'>
+              장바구니
+            </Link>
+          </li>
+        </ul>
+      </nav>
+
+      <div className='flex justify-between items-center px-[100px] py-3 border border-solid border-gray-300'>
+        <div className='flex flex-col items-start gap-[20px] w-fit'>
+          <div className='flex items-center gap-[40px] w-full'>
+            <Image src={KoLogo} width={120} alt='logo image' />
+            <SearchBar className='w-[400px]' />
+          </div>
+
+          <NavigationBar navigationList={mockNavigationList} />
+        </div>
+
+        <div className='flex justify-center items-center gap-[20px]'>
+          <Link href={appRoutes.cart} className='flex justify-center items-center w-[60px] h-[60px] text-gray-800'>
+            <LucideIcons.ShoppingCart size={40} />
+          </Link>
+
+          <Link href={appRoutes.myPage} className='flex justify-center items-center w-[60px] h-[60px] bg-green-700 text-white rounded-full shadow-blur-6-50'>
+            <LucideIcons.User size={30} />
+          </Link>
+        </div>
+      </div>
+    </header>
+  );
+}
