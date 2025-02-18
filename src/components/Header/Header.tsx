@@ -10,27 +10,33 @@ import { mockNavigationList } from '../NavigationBar/NavigationBar.data';
 
 export default function Header() {
   return (
-    <header>
-      <nav>
-        <ul className='flex justify-end items-center gap-5 px-[50px] py-[10px] text-ui-text-title bg-gray-200'>
+    <header className='sticky top-0 z-100 bg-ui-background border-b border-solid border-gray-300'>
+      <nav className='bg-gray-200'>
+        <ul className='flex justify-end items-center w-full max-w-[1400px] mx-auto gap-5 px-[50px] py-[10px] text-ui-text-title '>
           <li>
             <Link href={appRoutes.login} className='text-body-16m'>
               로그인
             </Link>
           </li>
-          <li className='w-[2px] h-[10px] bg-gray-600' />
+
+          <hr className='w-[2px] h-[10px] bg-gray-600' />
+
           <li>
             <Link href={appRoutes.signup} className='text-body-16m'>
               회원가입
             </Link>
           </li>
-          <li className='w-[2px] h-[10px] bg-gray-600' />
+
+          <hr className='w-[2px] h-[10px] bg-gray-600' />
+
           <li>
             <Link href={appRoutes.myPage} className='text-body-16m'>
               마이페이지
             </Link>
           </li>
-          <li className='w-[2px] h-[10px] bg-gray-600' />
+
+          <hr className='w-[2px] h-[10px] bg-gray-600' />
+
           <li>
             <Link href={appRoutes.cart} className='text-body-16m'>
               장바구니
@@ -39,10 +45,12 @@ export default function Header() {
         </ul>
       </nav>
 
-      <div className='flex justify-between items-center px-[100px] py-3 border border-solid border-gray-300'>
+      <div className='flex justify-between items-center w-full max-w-[1200px] mx-auto py-3'>
         <div className='flex flex-col items-start gap-[20px] w-fit'>
           <div className='flex items-center gap-[40px] w-full'>
-            <Image src={KoLogo} width={120} alt='logo image' />
+            <Link href='/'>
+              <Image src={KoLogo} width={120} alt='logo image' />
+            </Link>
             <SearchBar className='w-[400px]' />
           </div>
 

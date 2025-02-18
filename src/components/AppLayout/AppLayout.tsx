@@ -4,7 +4,7 @@ import Footer from '../Footer/Footer';
 
 export default function AppLayout({ children }: PropsWithChildren) {
   return (
-    <div>
+    <div className='mt-[172p]'>
       <Header />
       <main>{children}</main>
       <Footer />
