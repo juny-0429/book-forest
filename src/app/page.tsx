@@ -1,34 +1,3 @@
 export default function Home() {
-  return (
-    <div>
-      <h1>aaaa</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-      <h1>sdfsdfsdf</h1>
-    </div>
-  );
+  return <div></div>;
 }
