@@ -12,7 +12,7 @@ export interface ButtonProps
   rightIcon?: React.ReactNode;
 }
 
-const buttonVariants = cva('flex justify-center items-center text-white disabled:opacity-30 disabled:cursor-not-allowed', {
+const buttonVariants = cva('flex justify-center items-center disabled:opacity-30 disabled:cursor-not-allowed', {
   variants: {
     height: {
       32: 'h-[32px] gap-[2px] px-3 rounded-[4px] text-body-12r',
@@ -21,8 +21,8 @@ const buttonVariants = cva('flex justify-center items-center text-white disabled
       56: 'h-[56px] gap-[8px] px-5 rounded-[8px] text-body-18r',
     },
     color: {
-      gray: 'bg-gray-500 enabled:hover:bg-gray-600',
-      cta: 'bg-ui-cta enabled:hover:bg-ui-cta-hover',
+      gray: 'text-white bg-gray-500 enabled:hover:bg-gray-600',
+      cta: 'text-white bg-ui-cta enabled:hover:bg-ui-cta-hover',
     },
   },
   defaultVariants: {
@@ -32,7 +32,7 @@ const buttonVariants = cva('flex justify-center items-center text-white disabled
 
 export default function Button({ height = 32, color, leftIcon, rightIcon, children, className, ...restProps }: ButtonProps) {
   return (
-    <button type='button' className={cn(buttonVariants({ height, color }), className)} {...restProps}>
+    <button className={cn(buttonVariants({ height, color }), className)} {...restProps}>
       {leftIcon}
       {children}
       {rightIcon}

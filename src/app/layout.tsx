@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import '../styles/globals.css';
-import AppLayout from 'src/components/AppLayout/AppLayout';
 
 export const metadata: Metadata = {
   title: '책숲 - 독서를 사랑하는 당신을 위한 책 쇼핑몰',
@@ -12,7 +11,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang='ko'>
       <body>
-        <AppLayout>{children}</AppLayout>
+        <main>{children}</main>
       </body>
     </html>
   );
