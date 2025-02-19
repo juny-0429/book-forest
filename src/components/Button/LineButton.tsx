@@ -27,7 +27,7 @@ const lineButtonVariants = cva('flex justify-center items-center border disabled
 
 export default function LineButton({ height = 32, color, leftIcon, rightIcon, children, className, ...restProps }: LineButtonProps) {
   return (
-    <button type='button' className={cn(lineButtonVariants({ height, color }), className)} {...restProps}>
+    <button className={cn(lineButtonVariants({ height, color }), className)} {...restProps}>
       {leftIcon}
       {children}
       {rightIcon}
