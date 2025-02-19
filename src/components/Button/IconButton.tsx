@@ -18,7 +18,7 @@ const iconButtonVariants = cva('flex justify-center items-center border border-g
 
 export default function IconButton({ height = 24, children, className, ...restProps }: IconButtonProps) {
   return (
-    <button type='button' {...restProps} className={cn(iconButtonVariants({ height }), className)}>
+    <button {...restProps} className={cn(iconButtonVariants({ height }), className)}>
       {children}
     </button>
   );

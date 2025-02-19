@@ -20,7 +20,7 @@ const textButtonVariants = cva('flex justify-center items-center text-ui-text-ti
 
 export default function TextButton({ height = 32, leftIcon, rightIcon, children, className, ...restProps }: TextButtonProps) {
   return (
-    <button type='button' className={cn(textButtonVariants({ height }), className)} {...restProps}>
+    <button className={cn(textButtonVariants({ height }), className)} {...restProps}>
       {leftIcon}
       {children}
       {rightIcon}
