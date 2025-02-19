@@ -3,6 +3,14 @@ export const appRoutes = {
   home: '/',
   /* 로그인 */
   login: '/login',
+
+  find: {
+    /* 아이디 찾기 */
+    id: '/find/id',
+    /* 비밀번호 찾기 */
+    password: '/find/password',
+  },
+
   /* 회원가입 */
   signup: '/signup',
   /* 카테고리 */
