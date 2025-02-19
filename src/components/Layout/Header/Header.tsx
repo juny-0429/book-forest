@@ -3,7 +3,7 @@ import Link from 'next/link';
 import React from 'react';
 import { appRoutes } from 'src/routes/appRoutes';
 import KoLogo from '@/assets/images/logos/ko-logo.png';
-import SearchBar from '../SearchBar/SearchBar';
+import SearchBar from '../../SearchBar/SearchBar';
 import LucideIcons from 'src/theme/lucideIcon';
 import NavigationBar from '../NavigationBar/NavigationBar';
 import { mockNavigationList } from '../NavigationBar/NavigationBar.data';
