@@ -9,8 +9,8 @@ import { usePasswordStrength } from '../_hooks/usePasswordStrength';
 
 interface SignupPasswordInputProps extends Omit<TextInputProps, 'type' | 'rightIcon'> {
   userId?: string;
-  register: any;
-  isDirty: boolean;
+  register?: any;
+  isDirty?: boolean;
 }
 
 const SignupPasswordInput = forwardRef<HTMLInputElement, SignupPasswordInputProps>(({ className, userId, register, isDirty, ...restProps }, ref) => {
@@ -24,7 +24,7 @@ const SignupPasswordInput = forwardRef<HTMLInputElement, SignupPasswordInputProp
       <TextInput
         type={isVisible ? 'text' : 'password'}
         ref={ref}
-        {...register('password')}
+        // {...register('password')}
         {...restProps}
         className={className}
         rightIcon={
