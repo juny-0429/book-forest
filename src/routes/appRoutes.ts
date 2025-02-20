@@ -48,11 +48,13 @@ export const appRoutes = {
     /* 회사소개 */
     companyInfo: '/company',
     /* 이용약관 */
-    termsOfService: '/terms',
+    termsOfService: '/use-policy',
     /* 개인정보처리방침 */
     privacyPolicy: '/privacy',
     /* 청소년보호정책 */
     youthProtection: '/youth-protection',
+    /* 개인정보 마케팅 활용 동의 */
+    marketingConsent: '/marketing-consent',
   },
 
   /* 채용정보 */
