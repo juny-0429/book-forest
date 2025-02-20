@@ -10,7 +10,7 @@ import SampleBannerImg from '@/assets/images/sample-banner-1.png';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-export default function BannerSwiper() {
+export default function MainBannerSwiper() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(1);
@@ -42,7 +42,7 @@ export default function BannerSwiper() {
 
   return (
     <>
-      <div className='relative w-full max-w-[1000px] max-h-[300] mx-auto rounded-[12px] overflow-hidden'>
+      <div className='relative w-full max-w-[1000px] max-h-[300px] mx-auto rounded-[12px] overflow-hidden'>
         <Swiper
           modules={[Navigation, Autoplay]}
           spaceBetween={0}

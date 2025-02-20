@@ -6,7 +6,7 @@ export default function AppLayout({ children }: PropsWithChildren) {
   return (
     <div className=' flex flex-col min-h-screen w-full'>
       <Header />
-      <main className='flex-grow'>{children}</main>
+      <main className='flex-grow max-w-[1280px] mx-auto'>{children}</main>
       <Footer />
     </div>
   );
