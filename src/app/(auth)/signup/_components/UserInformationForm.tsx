@@ -4,6 +4,8 @@ import SignupPasswordInput from './SignupPasswordInput';
 import Button from 'src/components/Button/Button';
 import ErrorMessage from 'src/components/ErrorMessage/ErrorMessage';
 
+// todo: 이미 가입한 회원 모달로 알림
+
 export default function UserInformationForm() {
   return (
     <section>
