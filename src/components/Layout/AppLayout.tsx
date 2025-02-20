@@ -4,9 +4,9 @@ import Footer from '../Layout/Footer/Footer';
 
 export default function AppLayout({ children }: PropsWithChildren) {
   return (
-    <div className='mt-[172p]'>
+    <div className=' flex flex-col min-h-screen w-full'>
       <Header />
-      <main>{children}</main>
+      <main className='flex-grow'>{children}</main>
       <Footer />
     </div>
   );
