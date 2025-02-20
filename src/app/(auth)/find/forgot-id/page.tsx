@@ -1,13 +1,13 @@
-import Image from 'next/image';
 import React from 'react';
-import KoLogo from '@/assets/images/logos/ko-logo.png';
 import Link from 'next/link';
+import Image from 'next/image';
 import { appRoutes } from 'src/routes/appRoutes';
+import KoLogo from '@/assets/images/logos/ko-logo.png';
 import TextInput from 'src/components/TextInput/TextInput';
 import Button from 'src/components/Button/Button';
 import ErrorMessage from 'src/components/ErrorMessage/ErrorMessage';
 
-export default function FindIdPage() {
+export default function ForgotIdPage() {
   return (
     <div className='flex justify-center items-center w-full h-screen'>
       <Link href={appRoutes.home}>
