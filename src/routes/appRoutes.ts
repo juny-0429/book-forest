@@ -4,11 +4,15 @@ export const appRoutes = {
   /* 로그인 */
   login: '/login',
 
-  find: {
+  account: {
     /* 아이디 찾기 */
-    id: '/find/id',
+    forgotId: '/account/forgot-id',
     /* 비밀번호 찾기 */
-    password: '/find/password',
+    forgotPassword: '/account/forgot-password',
+    /* 아이디 찾기 결과 */
+    findId: '/account/fid-id',
+    /* 비밀번호 재설정 */
+    resetPassword: '/account/reset-password',
   },
 
   /* 회원가입 */
