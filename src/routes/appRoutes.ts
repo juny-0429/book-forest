@@ -17,8 +17,28 @@ export const appRoutes = {
 
   /* 회원가입 */
   signup: '/signup',
-  /* 카테고리 */
-  category: '/category',
+
+  category: {
+    /* 카테고리 */
+    category: '/category',
+    /* 소설 */
+    novel: '/category/novel',
+    /* 시/에세이 */
+    poetryEssay: '/category/poetry-essay',
+    /* 인문 */
+    humanities: '/category/humanities',
+    /* 건강 */
+    health: '/category/health',
+    /* 자기계발 */
+    selfDevelopment: '/category/self-development',
+    /* 정치/사회 */
+    politicsSociety: '/category/politics-society',
+    /* 과학 */
+    science: '/category/science',
+    /* 어린이 */
+    children: '/category/children',
+  },
+
   /* 신상품 */
   newArrivals: '/newArrivals',
   /* 베스트 */
