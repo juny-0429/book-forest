@@ -7,7 +7,7 @@ interface LineButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElem
   rightIcon?: React.ReactNode;
 }
 
-const lineButtonVariants = cva('flex justify-center items-center border disabled:opacity-30 disabled:cursor-not-allowed', {
+const lineButtonVariants = cva('flex justify-center items-center w-full border disabled:opacity-30 disabled:cursor-not-allowed', {
   variants: {
     height: {
       32: 'h-[32px] gap-[2px] px-3 rounded-[4px] text-body-12r',
