@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import SampleAuthorImg from '@/assets/images/author/이슬아.png';
+import SectionTitle from './SectionTitle';
 
 export default function MeetTheAuthor() {
   const mockAuthorList = Array.from({ length: 3 }, (_, index) => ({
@@ -13,12 +14,8 @@ export default function MeetTheAuthor() {
 
   return (
     <section className='flex flex-col gap-10 w-full'>
-      {' '}
-      <div className='flex items-center gap-2'>
-        <h2 className='text-title-24b text-ui-text-title'>작가와의 만남</h2>
-        <hr className='w-[1px] h-[15px] bg-gray-600' />
-        <p className='text-body-16l text-ui-text-description'>책숲이 소개하는 이달의 특별한 작가</p>
-      </div>
+      <SectionTitle title='작가와의 만남' description='책숲이 소개하는 이달의 특별한 작가' />
+
       <div className='flex justify-center items-center'>
         {mockAuthorList &&
           mockAuthorList.map((author, intex) => (

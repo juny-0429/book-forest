@@ -3,6 +3,7 @@ import React from 'react';
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, CarouselApi } from '@/components/Carousel/Carousel';
 import Image from 'next/image';
 import SampleBookImg from '@/assets/images/books/새마음으로.jpg';
+import SectionTitle from './SectionTitle';
 
 export default function NewBookSlider() {
   const [api, setApi] = React.useState<CarouselApi>();
@@ -41,11 +42,7 @@ export default function NewBookSlider() {
 
   return (
     <section className='flex flex-col gap-10 w-full'>
-      <div className='flex items-center gap-2'>
-        <h2 className='text-title-24b text-ui-text-title'>화제의 신간</h2>
-        <hr className='w-[1px] h-[15px] bg-gray-600' />
-        <p className='text-body-16l text-ui-text-description'>지금 가장 핫한 신작을 한눈에</p>
-      </div>
+      <SectionTitle title='화제의 신간' description='지금 가장 핫한 신작을 한눈에' />
 
       <div className='flex items-center gap-[53px]'>
         <Image src={currentBook.bookImage} width={200} alt='book image' className='book-item' />

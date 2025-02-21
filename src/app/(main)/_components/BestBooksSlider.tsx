@@ -4,6 +4,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext
 import Image from 'next/image';
 import SampleBookImg from '@/assets/images/books/새마음으로.jpg';
 import { cn } from 'src/lib/utils';
+import SectionTitle from './SectionTitle';
 
 export default function BestBooksSlider() {
   const [api, setApi] = React.useState<CarouselApi>();
@@ -30,11 +31,7 @@ export default function BestBooksSlider() {
 
   return (
     <section className='flex flex-col gap-10 w-full'>
-      <div className='flex items-center gap-2'>
-        <h2 className='text-title-24b text-ui-text-title'>베스트</h2>
-        <hr className='w-[1px] h-[15px] bg-gray-600' />
-        <p className='text-body-16l text-ui-text-description'>독자들에게 가장 사랑받는 인기 도서</p>
-      </div>
+      <SectionTitle title='베스트' description='독자들에게 가장 사랑받는 인기 도서' />
 
       {/* 슬라이드 부분 */}
       {/* 참고: https://www.embla-carousel.com/examples/predefined/ */}
