@@ -1,8 +1,8 @@
 'use client';
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, CarouselApi } from '@/components/Carousel/Carousel';
 import React from 'react';
-import SampleBookImg from '@/assets/images/books/새마음으로.jpg';
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, CarouselApi } from '@/components/Carousel/Carousel';
 import Image from 'next/image';
+import SampleBookImg from '@/assets/images/books/새마음으로.jpg';
 
 export default function NewBookSlider() {
   const [api, setApi] = React.useState<CarouselApi>();

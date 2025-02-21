@@ -5,6 +5,7 @@ import CategoryNavigationBar from './(main)/_components/CategoryNavigationBar';
 import DualBanner from 'src/components/Banner/DualBanner';
 import TripleBanner from 'src/components/Banner/TripleBanner';
 import NewBooksSlider from './(main)/_components/NewBooksSlider';
+import BestBooksSlider from './(main)/_components/BestBooksSlider';
 
 export default function Home() {
   return (
@@ -18,11 +19,14 @@ export default function Home() {
       {/* 카테고리 네비게이션 */}
       <CategoryNavigationBar />
 
+      {/* 화제의 신간 */}
+      <NewBooksSlider />
+
       {/* 가로 2열 배너 */}
       <DualBanner />
 
-      {/* 화제의 신간 */}
-      <NewBooksSlider/>
+      {/* 베스트 도서 */}
+      <BestBooksSlider />
 
       {/* 가로 3열 배너 */}
       <TripleBanner />
