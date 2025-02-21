@@ -7,6 +7,7 @@ import TripleBanner from 'src/components/Banner/TripleBanner';
 import NewBooksSlider from './(main)/_components/NewBooksSlider';
 import BestBooksSlider from './(main)/_components/BestBooksSlider';
 import MeetTheAuthor from './(main)/_components/MeetTheAuthor';
+import RecommendedBooks from './(main)/_components/RecommendedBooks';
 import SaleBooksSlider from './(main)/_components/SaleBooksSlider';
 
 export default function Home() {
@@ -32,6 +33,9 @@ export default function Home() {
 
       {/* 작가와의 만남 */}
       <MeetTheAuthor />
+
+      {/* 추천의 숲 */}
+      <RecommendedBooks />
 
       {/* 가로 3열 배너 */}
       <TripleBanner />
