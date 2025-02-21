@@ -6,6 +6,7 @@ import DualBanner from 'src/components/Banner/DualBanner';
 import TripleBanner from 'src/components/Banner/TripleBanner';
 import NewBooksSlider from './(main)/_components/NewBooksSlider';
 import BestBooksSlider from './(main)/_components/BestBooksSlider';
+import MeetTheAuthor from './(main)/_components/MeetTheAuthor';
 
 export default function Home() {
   return (
@@ -27,6 +28,9 @@ export default function Home() {
 
       {/* 베스트 도서 */}
       <BestBooksSlider />
+
+      {/* 작가와의 만남 */}
+      <MeetTheAuthor />
 
       {/* 가로 3열 배너 */}
       <TripleBanner />
