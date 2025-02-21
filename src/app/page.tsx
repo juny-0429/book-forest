@@ -4,6 +4,7 @@ import AppLayout from 'src/components/Layout/AppLayout';
 import CategoryNavigationBar from './(main)/_components/CategoryNavigationBar';
 import DualBanner from 'src/components/Banner/DualBanner';
 import TripleBanner from 'src/components/Banner/TripleBanner';
+import NewBooksSlider from './(main)/_components/NewBooksSlider';
 
 export default function Home() {
   return (
@@ -19,6 +20,9 @@ export default function Home() {
 
       {/* 가로 2열 배너 */}
       <DualBanner />
+
+      {/* 화제의 신간 */}
+      <NewBooksSlider/>
 
       {/* 가로 3열 배너 */}
       <TripleBanner />

@@ -101,7 +101,7 @@ const uiColors = {
     body: baseColors.gray[800], // 서브 타이틀 및 강조
     description: baseColors.gray[600], // 설명 및 비활성화
     caption: baseColors.gray[300], // 약관이나 설명글
-    cto: baseColors.green[700], // 상품명 및 가격
+    cto: baseColors.green[700], // 상품명 및 할인 안내
   },
   background: baseColors.gray[50], // 페이지 배경 색상
 };
