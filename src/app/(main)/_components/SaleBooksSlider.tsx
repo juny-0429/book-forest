@@ -3,7 +3,6 @@ import React from 'react';
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, CarouselApi } from '@/components/Carousel/Carousel';
 import Image from 'next/image';
 import SampleBookImg from '@/assets/images/books/새마음으로.jpg';
-import { cn } from 'src/lib/utils';
 
 export default function SaleBooksSlider() {
   const mockNewBookList = Array.from({ length: 10 }, (_, index) => ({
@@ -22,7 +21,7 @@ export default function SaleBooksSlider() {
 
       {/* 슬라이드 부분 */}
       {/* 참고: https://www.embla-carousel.com/examples/predefined/ */}
-      <Carousel opts={{ align: 'start', loop: true, slidesToScroll: 4 }} lassName='w-full'>
+      <Carousel opts={{ align: 'start', loop: true, slidesToScroll: 4 }} className='w-full'>
         <CarouselContent>
           {mockNewBookList &&
             mockNewBookList.map((book) => (
