@@ -7,6 +7,7 @@ import TripleBanner from 'src/components/Banner/TripleBanner';
 import NewBooksSlider from './(main)/_components/NewBooksSlider';
 import BestBooksSlider from './(main)/_components/BestBooksSlider';
 import MeetTheAuthor from './(main)/_components/MeetTheAuthor';
+import SaleBooksSlider from './(main)/_components/SaleBooksSlider';
 
 export default function Home() {
   return (
@@ -34,6 +35,9 @@ export default function Home() {
 
       {/* 가로 3열 배너 */}
       <TripleBanner />
+
+      {/* 놓치면 후회할 할인 도서 */}
+      <SaleBooksSlider />
     </AppLayout>
   );
 }
