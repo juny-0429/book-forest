@@ -16,11 +16,14 @@ const headingTypography: ThemeConfig['fontSize'] = {
   'H5-24r': ['24px', { lineHeight: '32px', fontWeight: '400' }],
   'H5-24b': ['24px', { lineHeight: '32px', fontWeight: '700' }],
 
-  'H6-20-': ['20px', { lineHeight: '28px', fontWeight: '400' }],
+  'H6-20r': ['20px', { lineHeight: '28px', fontWeight: '400' }],
   'H6-20b': ['20px', { lineHeight: '28px', fontWeight: '700' }],
 };
 
 const titleTypography: ThemeConfig['fontSize'] = {
+  'title-32r': ['32px', { lineHeight: '40px', fontWeight: '400' }],
+  'title-32b': ['32px', { lineHeight: '40px', fontWeight: '700' }],
+
   'title-24r': ['24px', { lineHeight: '32px', fontWeight: '400' }],
   'title-24b': ['24px', { lineHeight: '32px', fontWeight: '700' }],
 

@@ -18,6 +18,7 @@ export default {
       ...animations,
       boxShadow: {
         'blur-4-25': '0 0 4px rgba(0, 0, 0, 0.25)',
+        'blur-6-10': '0 0 6px rgba(0, 0, 0, 0.10)',
         'blur-6-50': '0 0 6px rgba(0, 0, 0, 0.50)',
       },
     },

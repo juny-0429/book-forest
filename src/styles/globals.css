@@ -13,3 +13,9 @@
     @apply text-ui-text-title;
   }
 }
+
+@layer components {
+  .book-item {
+    @apply border border-solid border-gray-300;
+  }
+}

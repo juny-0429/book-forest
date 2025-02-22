@@ -10,7 +10,7 @@ import { mockNavigationList } from '../NavigationBar/NavigationBar.data';
 
 export default function Header() {
   return (
-    <header className='sticky top-0 z-100 bg-ui-background border-b border-solid border-gray-300'>
+    <header className='sticky top-0 z-100 bg-ui-background border-b border-solid border-gray-300 z-50'>
       <nav className='bg-gray-200'>
         <ul className='flex justify-end items-center w-full max-w-[1400px] mx-auto gap-5 px-[50px] py-[10px] text-ui-text-title '>
           <li>
@@ -47,12 +47,12 @@ export default function Header() {
 
       <div className='flex justify-between items-center w-full max-w-[1200px] mx-auto py-3'>
         <div className='flex flex-col items-start gap-[20px] w-fit'>
-          <div className='flex items-center gap-[40px] w-full'>
+          <h1 className='flex items-center gap-[40px] w-full'>
             <Link href='/'>
               <Image src={KoLogo} width={120} alt='logo image' />
             </Link>
             <SearchBar className='w-[400px]' />
-          </div>
+          </h1>
 
           <NavigationBar navigationList={mockNavigationList} />
         </div>
