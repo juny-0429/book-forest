@@ -6,7 +6,7 @@ import LucideIcons from 'src/theme/lucideIcon';
 export default function CategoryNavigationBar() {
   return (
     <nav>
-      <ul className='flex justify-center items-center gap-[50px]'>
+      <ul className='flex justify-center items-center gap-[50px] mt-10'>
         {mockCategoryNavigationList.map((navItem) => (
           <li key={navItem.label}>
             <Link href={navItem.url} className='flex flex-col justify-center items-center gap-3'>
