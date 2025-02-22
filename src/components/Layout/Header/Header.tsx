@@ -47,12 +47,12 @@ export default function Header() {
 
       <div className='flex justify-between items-center w-full max-w-[1200px] mx-auto py-3'>
         <div className='flex flex-col items-start gap-[20px] w-fit'>
-          <div className='flex items-center gap-[40px] w-full'>
+          <h1 className='flex items-center gap-[40px] w-full'>
             <Link href='/'>
               <Image src={KoLogo} width={120} alt='logo image' />
             </Link>
             <SearchBar className='w-[400px]' />
-          </div>
+          </h1>
 
           <NavigationBar navigationList={mockNavigationList} />
         </div>

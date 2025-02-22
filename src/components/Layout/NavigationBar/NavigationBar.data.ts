@@ -8,7 +8,7 @@ export const mockNavigationList = [
   },
   {
     label: '카테고리',
-    url: appRoutes.category,
+    url: appRoutes.category.category,
     isActive: true,
   },
   {
