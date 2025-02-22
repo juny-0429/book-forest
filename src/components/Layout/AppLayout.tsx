@@ -4,9 +4,10 @@ import Footer from '../Layout/Footer/Footer';
 
 export default function AppLayout({ children }: PropsWithChildren) {
   return (
-    <div className=' flex flex-col min-h-screen w-full'>
+    <div className='flex flex-col min-h-screen w-full'>
       <Header />
-      <main className='flex-grow max-w-[1280px] mx-auto'>{children}</main>
+      {/* header 높이 171px */}
+      <div className='flex flex-grow w-full max-w-[1280px] h-[calc(100vh-171px)]  mx-auto mt-[50px]'>{children}</div>
       <Footer />
     </div>
   );
