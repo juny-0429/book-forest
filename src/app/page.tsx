@@ -9,6 +9,7 @@ import BestBooksSlider from './(main)/_components/BestBooksSlider';
 import MeetTheAuthor from './(main)/_components/MeetTheAuthor';
 import RecommendedBooks from './(main)/_components/RecommendedBooks';
 import SaleBooksSlider from './(main)/_components/SaleBooksSlider';
+import MonthlyBookPick from './(main)/_components/MonthlyBookPick';
 
 export default function Home() {
   return (
@@ -36,6 +37,9 @@ export default function Home() {
 
       {/* 추천의 숲 */}
       <RecommendedBooks />
+
+      {/* 이달의 책 */}
+      <MonthlyBookPick />
 
       {/* 가로 3열 배너 */}
       <TripleBanner />

@@ -12,6 +12,7 @@ export default function SaleBooksSlider() {
     discount: 10,
     bookImage: SampleBookImg,
   }));
+
   return (
     <section className='flex flex-col gap-10 w-full'>
       <SectionTitle title='놓치면 후회할 할인 도서' description='한정 기간 동안 제공되는 특별가 도서들을 지금 확인하세요.' />
