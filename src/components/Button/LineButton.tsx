@@ -16,8 +16,8 @@ const lineButtonVariants = cva('flex justify-center items-center w-full border d
       56: 'h-[56px] gap-[8px] px-5 rounded-[8px] text-body-18r',
     },
     color: {
-      gray: 'border-gray-500 text-ui-gray enabled:hover:bg-gray-200',
-      cta: 'border-ui-cta text-ui-cta enabled:hover:bg-green-50',
+      gray: 'border-gray-500 text-ui-gray text-nowrap enabled:hover:bg-gray-200',
+      cta: 'border-ui-cta text-ui-cta text-nowrap enabled:hover:bg-green-50',
     },
   },
   defaultVariants: {
