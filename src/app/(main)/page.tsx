@@ -1,19 +1,19 @@
 import MainBannerSwiper from 'src/components/Banner/MainBannerSwiper';
 import SideBanner from 'src/components/Banner/SideBanner';
 import AppLayout from 'src/components/Layout/AppLayout';
-import CategoryNavigationBar from './(main)/_components/CategoryNavigationBar';
+import CategoryNavigationBar from './_components/CategoryNavigationBar';
 import DualBanner from 'src/components/Banner/DualBanner';
 import TripleBanner from 'src/components/Banner/TripleBanner';
-import NewBooksSlider from './(main)/_components/NewBooksSlider';
-import BestBooksSlider from './(main)/_components/BestBooksSlider';
-import MeetTheAuthor from './(main)/_components/MeetTheAuthor';
-import RecommendedBooks from './(main)/_components/RecommendedBooks';
-import SaleBooksSlider from './(main)/_components/SaleBooksSlider';
-import MonthlyBookPick from './(main)/_components/MonthlyBookPick';
+import NewBooksSlider from './_components/NewBooksSlider';
+import BestBooksSlider from './_components/BestBooksSlider';
+import MeetTheAuthor from './_components/MeetTheAuthor';
+import RecommendedBooks from './_components/RecommendedBooks';
+import SaleBooksSlider from './_components/SaleBooksSlider';
+import MonthlyBookPick from './_components/MonthlyBookPick';
 
 export default function Home() {
   return (
-    <AppLayout>
+    <div>
       {/* 메인 베너 */}
       <div className='flex justify-center items-center gap-5'>
         <MainBannerSwiper />
@@ -41,6 +41,6 @@ export default function Home() {
         {/* 놓치면 후회할 할인 도서 */}
         <SaleBooksSlider />
       </div>
-    </AppLayout>
+    </div>
   );
 }
