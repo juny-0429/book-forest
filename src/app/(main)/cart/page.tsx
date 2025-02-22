@@ -5,8 +5,11 @@ import CheckBox from 'src/components/CheckBox/CheckBox';
 import LucideIcons from 'src/theme/lucideIcon';
 import SampleBookImg from '@/assets/images/books/새마음으로.jpg';
 import { Badge } from 'src/components/Badge/Badge';
+import Link from 'next/link';
 
 export default function CartPage() {
+  const isLogin = false;
+
   const mockCartList = Array.from({ length: 3 }, (_, index) => ({
     id: `${index + 1}`,
     title: '끝내주는 인생',
@@ -18,6 +21,24 @@ export default function CartPage() {
     deliveryInfo: '내일 새벽 7시 이전 도착 예정',
     image: SampleBookImg,
   }));
+
+  // 로그인 여부 판단 후
+  if (isLogin) {
+    return (
+      <div className='flex flex-grow flex-col justify-center items-center gap-[30px] mb-[50px] bg-gray-200'>
+        <div className='flex flex-col items-center gap-2'>
+          <p className='text-title-24b text-ui-text-title'>장바구니에 담긴 상품이 없습니다.</p>
+          <p className='text-body-16l text-ui-text-description'>로그인하시면 장바구니에 저장된 상품을 볼 수 있습니다.</p>
+        </div>
+
+        <Link href='/login'>
+          <Button height={48} className='w-[200px]'>
+            로그인하기
+          </Button>
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className='flex flex-grow flex-col gap-[30px]'>
