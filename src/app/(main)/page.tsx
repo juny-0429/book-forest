@@ -13,9 +13,9 @@ import MonthlyBookPick from './_components/MonthlyBookPick';
 
 export default function Home() {
   return (
-    <div>
+    <div className='flex flex-col w-full'>
       {/* 메인 베너 */}
-      <div className='flex justify-center items-center gap-5'>
+      <div className='flex justify-center items-center gap-2'>
         <MainBannerSwiper />
         <SideBanner />
       </div>

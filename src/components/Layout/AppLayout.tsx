@@ -7,7 +7,7 @@ export default function AppLayout({ children }: PropsWithChildren) {
     <div className='flex flex-col min-h-screen w-full'>
       <Header />
       {/* header 높이 171px */}
-      <div className='flex flex-grow w-full max-w-[1280px] h-[calc(100vh-171px-50px)]  mx-auto mt-[50px]'>{children}</div>
+      <div className='flex flex-grow w-full max-w-[1280px] min-h-[calc(100vh-171px-50px)]  mx-auto mt-[50px]'>{children}</div>
       <Footer />
     </div>
   );
