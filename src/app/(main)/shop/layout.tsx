@@ -1,9 +1,9 @@
 import React from 'react';
-import ShopSidebar from './ShopSidebar';
+import ShopSidebar from './_components/ShopSidebar';
 
 export default function ShopLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
+    <div className='flex gap-[50px] mb-[50px]'>
       <ShopSidebar />
       {children}
     </div>

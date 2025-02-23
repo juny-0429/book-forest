@@ -28,7 +28,7 @@ const shopMenuList = {
       { label: '1:1 문의', path: appRoutes.shop.customerSupport.helpContact },
     ],
   },
-  Alerts: {
+  alerts: {
     label: '알림센터',
     subMenu: [
       { label: '알림함', path: appRoutes.shop.notifications.notificationList },

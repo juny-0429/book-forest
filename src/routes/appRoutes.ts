@@ -74,6 +74,8 @@ export const appRoutes = {
 
   /* 마이페이지 */
   shop: {
+    main: '/shop/main',
+
     /* 쇼핑 내역 */
     shoppingHistory: {
       /* 주문 조회/변경/취소 */
