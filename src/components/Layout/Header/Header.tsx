@@ -30,7 +30,7 @@ export default function Header() {
           <hr className='w-[2px] h-[10px] bg-gray-600' />
 
           <li>
-            <Link href={appRoutes.myPage} className='text-body-16m'>
+            <Link href={appRoutes.shop.main} className='text-body-16m'>
               마이페이지
             </Link>
           </li>
@@ -62,7 +62,7 @@ export default function Header() {
             <LucideIcons.ShoppingCart size={40} />
           </Link>
 
-          <Link href={appRoutes.myPage} className='flex justify-center items-center w-[60px] h-[60px] bg-green-700 text-white rounded-full shadow-blur-6-50'>
+          <Link href={appRoutes.shop.main} className='flex justify-center items-center w-[60px] h-[60px] bg-green-700 text-white rounded-full shadow-blur-6-50'>
             <LucideIcons.User size={30} />
           </Link>
         </div>
