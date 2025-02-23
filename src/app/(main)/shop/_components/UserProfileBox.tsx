@@ -4,6 +4,7 @@ import SampleUserImg from '@/assets/images/author/이슬아.png';
 import LucideIcons from 'src/theme/lucideIcon';
 import IconButton from 'src/components/Button/IconButton';
 import Link from 'next/link';
+import { appRoutes } from 'src/routes/appRoutes';
 
 export default function UserProfileBox() {
   return (
@@ -40,7 +41,7 @@ export default function UserProfileBox() {
           </li>
 
           <li>
-            <Link href='#' className='flex flex-col items-center gap-1'>
+            <Link href={appRoutes.shop.shoppingHistory.wishlist} className='flex flex-col items-center gap-1'>
               <LucideIcons.Heart size={24} />
               <p className='text-body-16m text-ui-text-title'>찜하기</p>
               <p className='text-body-18m text-ui-text-body'>3</p>
