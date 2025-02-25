@@ -12,8 +12,8 @@ export default function WishlistGridList({ wishlist }: Props) {
   return (
     <ul className='grid grid-cols-6 gap-x-8 gap-y-[60px]'>
       {wishlist &&
-        wishlist.map((book, index) => (
-          <li className='flex justify-end'>
+        wishlist.map((book) => (
+          <li key={book.id} className='flex justify-end'>
             <article className='relative flex flex-col gap-5 w-fit'>
               <div className='absolute top-0 left-[-30px]'>
                 <CheckBox />
