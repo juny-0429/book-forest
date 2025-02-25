@@ -51,7 +51,7 @@ export default function Header() {
             <Link href='/'>
               <Image src={KoLogo} width={120} alt='logo image' />
             </Link>
-            <SearchBar className='w-[400px]' />
+            <SearchBar className='w-[400px]' placeholder='검색어를 입력하세요' />
           </h1>
 
           <NavigationBar navigationList={mockNavigationList} />
