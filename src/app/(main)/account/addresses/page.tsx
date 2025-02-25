@@ -1,13 +1,19 @@
+'use client';
+
 import React from 'react';
 import Button from 'src/components/Button/Button';
 import IconButton from 'src/components/Button/IconButton';
 import LineButton from 'src/components/Button/LineButton';
 import Radio from 'src/components/Radio/Radio';
 import SearchBar from 'src/components/SearchBar/SearchBar';
+import { useAlertModal, useCustomModal } from 'src/hooks/useModal';
 import LucideIcons from 'src/theme/lucideIcon';
+import AddressModalContent from './_components/AddressModalContent';
 
-// todo: 최대 배송지 10개 넘을 시 모달창 알림 띄우기
 export default function AddressesPage() {
+  const { openAlertModal } = useAlertModal();
+  const { openCustomModal } = useCustomModal();
+
   const mockAddressList = Array.from({ length: 3 }, (_, index) => ({
     id: `${index + 1}`,
     title: `우리집 ${index + 1}`,
@@ -16,6 +22,20 @@ export default function AddressesPage() {
     address: '서울특별시 강남구 테헤란로 123', // 받는이 주소
     detailAddress: '101동 202호', // 상세 주소
   }));
+
+  const addAddressHandle = () => {
+    if (mockAddressList.length >= 10) {
+      openAlertModal({
+        title: '최대 배송지 개수 초과',
+        content: '배송지는 최대 10개까지 등록 가능합니다.',
+      });
+      return;
+    }
+
+    openCustomModal({
+      children: <AddressModalContent />,
+    });
+  };
 
   return (
     <div className='flex flex-col w-full gap-[60px]'>
@@ -32,7 +52,7 @@ export default function AddressesPage() {
 
           <div className='flex justify-center items-center gap-5'>
             <small className='text-body-14r text-ui-text-description'>*배송지는 최대 10개만 등록 가능합니다.</small>
-            <LineButton height={48} color='gray' leftIcon={<LucideIcons.Plus size={20} className='text-gray-900' />} className='w-fit'>
+            <LineButton height={48} color='gray' onClick={addAddressHandle} leftIcon={<LucideIcons.Plus size={20} className='text-gray-900' />} className='w-fit'>
               새 배송지 등록
             </LineButton>
           </div>
