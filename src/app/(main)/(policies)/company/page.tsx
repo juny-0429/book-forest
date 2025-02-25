@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function CompanyPage() {
   return (
-    <div className='space-y-20 mb-[50px]'>
+    <div className='space-y-20'>
       <small className='text-body-18l text-ui-text-description'>회사 정보를 표시하는 페이지 입니다.</small>
 
       <section className='flex flex-col gap-5'>

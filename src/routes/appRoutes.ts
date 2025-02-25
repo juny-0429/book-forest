@@ -111,7 +111,7 @@ export const appRoutes = {
     /* 회사소개 */
     companyInfo: '/company',
     /* 이용약관 */
-    termsOfService: '/use-policy',
+    termsOfService: '/terms-of-service',
     /* 개인정보처리방침 */
     privacyPolicy: '/privacy',
     /* 청소년보호정책 */
