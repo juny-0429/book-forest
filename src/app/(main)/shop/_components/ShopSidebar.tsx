@@ -1,11 +1,17 @@
+'use client';
+
 import React from 'react';
 import shopMenuList from '../_data/shopMenuList.data';
 import Link from 'next/link';
 import UserProfileBox from './UserProfileBox';
+import { usePathname } from 'next/navigation';
+import { cn } from 'src/lib/utils';
 
 export default function ShopSidebar() {
+  const pathname = usePathname();
+
   return (
-    <aside className='flex flex-col gap-[33px]'>
+    <aside className='flex flex-col gap-[33px] w-[210px]'>
       {/* 유저 프로필 */}
       <UserProfileBox />
 
@@ -17,13 +23,17 @@ export default function ShopSidebar() {
               <p className='text-body-18m text-ui-text-title'>{category.label}</p>
 
               <ul className='flex flex-col gap-2 ml-2'>
-                {category.subMenu.map((menu) => (
-                  <li key={menu.label}>
-                    <Link href={menu.path || '#'} className='text-body-14r text-ui-text-title'>
-                      {menu.label}
-                    </Link>
-                  </li>
-                ))}
+                {category.subMenu.map((menu) => {
+                  const isActive = pathname === menu.path;
+
+                  return (
+                    <li key={menu.label}>
+                      <Link href={menu.path || '#'} className={cn('text-body-16r', isActive ? 'text-ui-cta font-semibold' : 'text-ui-text-body')}>
+                        {menu.label}
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             </li>
           ))}
