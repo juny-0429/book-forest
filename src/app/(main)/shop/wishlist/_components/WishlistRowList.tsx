@@ -15,8 +15,8 @@ export default function WishlistRowList({ wishlist }: Props) {
   return (
     <ul>
       {wishlist &&
-        wishlist.map((book, index) => (
-          <li>
+        wishlist.map((book) => (
+          <li key={book.id}>
             <article className='relative flex justify-between h-[260px] pl-[30px] py-[30px]'>
               <div className='absolute top-[30px] left-0'>
                 <CheckBox />
