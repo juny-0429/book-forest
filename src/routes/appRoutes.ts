@@ -29,8 +29,8 @@ export const appRoutes = {
   signup: '/signup',
 
   category: {
-    /* 카테고리 */
-    category: '/category',
+    /* 전체 */
+    category: '/category/all',
     /* 소설 */
     novel: '/category/novel',
     /* 시/에세이 */
