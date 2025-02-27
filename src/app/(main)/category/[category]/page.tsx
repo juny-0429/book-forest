@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { CATEGORY_PATHS } from '../_data/mockCategories.data';
+import { CATEGORY_PATHS } from './_data/mockCategories.data';
 
 interface CategoryPageProps {
   params: { category: string };
