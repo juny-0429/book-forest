@@ -29,7 +29,7 @@ const SignupPasswordInput = forwardRef<HTMLInputElement, SignupPasswordInputProp
         className={className}
         rightIcon={
           <button type='button' onClick={() => setIsVisible((prev) => !prev)}>
-            {isVisible ? <LucideIcons.EyeOff /> : <LucideIcons.Eye />}
+            {isVisible ? <LucideIcons.Eye /> : <LucideIcons.EyeOff />}
           </button>
         }
         placeholder='비밀번호를 입력해주세요.'
