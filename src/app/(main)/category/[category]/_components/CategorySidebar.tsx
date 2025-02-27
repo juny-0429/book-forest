@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function CategorySidebar() {
   return (
-    <nav className='flex flex-col gap-[50px]'>
+    <nav className='flex flex-col gap-[50px] w-[150px]'>
       <section className='flex flex-col gap-5'>
         <h2 className='text-body-18b text-ui-text-title'>소설</h2>
 

@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { CATEGORY_PATHS } from './_data/mockCategories.data';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from 'src/components/Breadcrumb/Breadcrumb';
+import CategoryBanner from 'src/components/Banner/CategoryBanner/CategoryBanner';
 
 interface CategoryPageProps {
   params: { category: string };
@@ -12,9 +13,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   if (!CATEGORY_PATHS.includes(category)) return notFound();
 
   return (
-    <div>
+    <div className='w-full'>
       <h2 className='text-title-32b text-ui-text-title'>한국소설</h2>
 
+      {/* 탐색 경로 */}
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -30,6 +32,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
+
+      <CategoryBanner />
     </div>
   );
 }
