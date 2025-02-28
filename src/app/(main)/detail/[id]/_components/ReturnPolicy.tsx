@@ -4,7 +4,7 @@ import { returnPolicy } from '../_data/returnPolicy.data';
 export default function ReturnPolicy() {
   return (
     <section>
-      <h3 className='mb-10 text-title-24b text-ui-text-title'>교환/반품/품절 안내</h3>
+      <h3 className='mb-5 text-title-24b text-ui-text-title'>교환/반품/품절 안내</h3>
 
       {/* 반품/교환 방법 */}
       <div className='flex'>
