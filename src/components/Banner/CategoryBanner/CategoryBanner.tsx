@@ -6,12 +6,12 @@ import { type CarouselApi } from '@/components/Carousel/Carousel';
 import SampleBannerImg from '@/assets/images/sample-banner-7.png';
 import Image from 'next/image';
 import { cn } from 'src/lib/utils';
+import Autoplay from 'embla-carousel-autoplay';
 
 export default function CategoryBanner() {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
-  const [scrollSnaps, setScrollSnaps] = React.useState<number[]>([]);
 
   React.useEffect(() => {
     if (!api) {
@@ -28,7 +28,16 @@ export default function CategoryBanner() {
 
   return (
     <div className='relative mx-10'>
-      <Carousel opts={{ align: 'start', loop: true }} setApi={setApi} className='w-full'>
+      <Carousel
+        opts={{ align: 'start', loop: true }}
+        plugins={[
+          Autoplay({
+            delay: 4000,
+          }),
+        ]}
+        setApi={setApi}
+        className='w-full'
+      >
         <CarouselContent className='w-full'>
           {Array.from({ length: 5 }).map((_, index) => (
             <CarouselItem key={index}>
