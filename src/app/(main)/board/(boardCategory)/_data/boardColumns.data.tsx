@@ -1,6 +1,6 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown } from 'lucide-react';
-import { BoardTableColumn } from 'src/types/boardTable.types';
+import { BoardTableColumn } from 'src/types/table/boardTable.types';
 
 export const boardColumns: ColumnDef<BoardTableColumn>[] = [
   { accessorKey: 'id', header: 'ID', size: 70 },
