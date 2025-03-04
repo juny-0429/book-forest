@@ -71,8 +71,37 @@ export const appRoutes = {
   payment: '/payment',
   /* 장바구니 */
   cart: '/cart',
+
   /* 관리자 */
-  admin: '/admin',
+  admin: {
+    main: '/admin',
+
+    /* 회원 관리 */
+    userManagement: {
+      list: '/admin/user-management',
+      roles: '/admin/user-management/roles',
+      admins: '/admin/user-management/admins',
+    },
+
+    /* 상품 관리 */
+    productManagement: {
+      list: '/admin/products',
+      categories: '/admin/products/categories',
+    },
+
+    /* 게시판 관리 */
+    boardManagement: {
+      faq: '/admin/board/faq',
+      inquiries: '/admin/board/inquiries',
+    },
+
+    /* 콘텐츠 관리 */
+    contentManagement: {
+      siteSettings: '/admin/content/site-settings',
+      events: '/admin/content/events',
+      banners: '/admin/content/banners',
+    },
+  },
 
   /* 마이페이지 */
   shop: {
