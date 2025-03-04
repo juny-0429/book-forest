@@ -63,6 +63,8 @@ export const appRoutes = {
     notice: '/board/notice',
     /* Q&A 게시판 */
     qna: '/board/qna',
+    /* 게시글 쓰기 */
+    write: '/board/write',
   },
 
   /* 결제 */
