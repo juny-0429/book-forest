@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: '책숲 | 공시사항',
+  title: '책숲 | 공시사항 게시판',
   description: '책숲의 최신 공지사항을 확인하세요.',
 };
 

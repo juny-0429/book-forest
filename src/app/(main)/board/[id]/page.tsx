@@ -9,6 +9,8 @@ export default function BoardDetailPage() {
         <h2 className='text-title-24r text-ui-text-title'>배송관련 안내</h2>
 
         <div className='flex items-center gap-2'>
+          <span className='text-body-16r text-ui-text-description'>공지사항</span>
+          <hr className='w-[1px] h-2 bg-gray-600' />
           <span className='text-body-16r text-ui-text-description'>juny_0429</span>
           <hr className='w-[1px] h-2 bg-gray-600' />
           <time className='text-body-16r text-ui-text-description'>2025-12-12</time>
