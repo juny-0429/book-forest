@@ -7,7 +7,7 @@ import TextInput from 'src/components/TextInput/TextInput';
 import Button from 'src/components/Button/Button';
 import { appRoutes } from 'src/routes/appRoutes';
 import Link from 'next/link';
-import { BoardTableColumn } from 'src/types/boardTable.types';
+import { BoardTableColumn } from 'src/types/table/boardTable.types';
 import { boardColumns } from '../_data/boardColumns.data';
 
 const mockData: BoardTableColumn[] = [

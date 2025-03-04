@@ -28,12 +28,12 @@ const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTML
 TableRow.displayName = 'TableRow';
 
 const TableHead = React.forwardRef<HTMLTableCellElement, React.ThHTMLAttributes<HTMLTableCellElement>>(({ className, ...props }, ref) => (
-  <th ref={ref} className={cn('h-12 px-4 text-center align-middle text-[16px] font-semibold text-ui-text-title [&:has([role=checkbox])]:pr-0', className)} {...props} />
+  <th ref={ref} className={cn('h-12 px-4 text-center text-nowrap align-middle text-[16px] font-semibold text-ui-text-title [&:has([role=checkbox])]:pr-0', className)} {...props} />
 ));
 TableHead.displayName = 'TableHead';
 
 const TableCell = React.forwardRef<HTMLTableCellElement, React.TdHTMLAttributes<HTMLTableCellElement>>(({ className, ...props }, ref) => (
-  <td ref={ref} className={cn('p-4 text-center border-b border-solid border-gray-300 align-middle [&:has([role=checkbox])]:pr-0', className)} {...props} />
+  <td ref={ref} className={cn('p-4 text-center text-nowrap border-b border-solid border-gray-300 align-middle [&:has([role=checkbox])]:pr-0', className)} {...props} />
 ));
 TableCell.displayName = 'TableCell';
 
