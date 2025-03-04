@@ -11,16 +11,19 @@ export default function BoardNavigation() {
 
   return (
     <nav className='flex justify-center w-full mb-[50px]'>
-      <ul className='flex justify-center items-center w-fit rounded-[5px] overflow-hidden  text-body-18m text-ui-text-title'>
-        <li className={cn('flex justify-center items-center w-[150px] px-10 py-3', pathname === appRoutes.board.notice ? 'bg-blue-400 text-white' : 'bg-gray-300')}>
+      <ul className='flex justify-center items-center w-fit rounded-[5px] overflow-hidden text-body-18m text-ui-text-title'>
+        {/* 공지사항 */}
+        <li className={cn('flex justify-center items-center w-[150px] px-10 py-3', pathname.startsWith(appRoutes.board.notice) ? 'bg-blue-400 text-white' : 'bg-gray-300')}>
           <Link href={appRoutes.board.notice}>공지사항</Link>
         </li>
 
-        <li className={cn('flex justify-center items-center w-[150px] px-10 py-3', pathname === appRoutes.board.event ? 'bg-blue-400 text-white' : 'bg-gray-300')}>
+        {/* 이벤트 */}
+        <li className={cn('flex justify-center items-center w-[150px] px-10 py-3', pathname.startsWith(appRoutes.board.event) ? 'bg-blue-400 text-white' : 'bg-gray-300')}>
           <Link href={appRoutes.board.event}>이벤트</Link>
         </li>
 
-        <li className={cn('flex justify-center items-center w-[150px] px-10 py-3', pathname === appRoutes.board.qna ? 'bg-blue-400 text-white' : 'bg-gray-300')}>
+        {/* Q&A */}
+        <li className={cn('flex justify-center items-center w-[150px] px-10 py-3', pathname.startsWith(appRoutes.board.qna) ? 'bg-blue-400 text-white' : 'bg-gray-300')}>
           <Link href={appRoutes.board.qna}>Q&A</Link>
         </li>
       </ul>
