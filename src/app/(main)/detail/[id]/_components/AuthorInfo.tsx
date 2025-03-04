@@ -9,8 +9,8 @@ export default function AuthorInfo() {
   };
 
   return (
-    <section>
-      <h3 className='mb-5 text-title-24b text-ui-text-title'>작가정보</h3>
+    <section className='pb-8 border-b border-solid border-gray-300'>
+      <h3 className='mb-5 text-title-24r text-ui-text-title'>작가정보</h3>
 
       <dl className='flex flex-col gap-3 p-5 bg-gray-200 rounded-[15px]'>
         <div className='flex gap-3'>

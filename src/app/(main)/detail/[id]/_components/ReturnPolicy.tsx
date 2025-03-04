@@ -3,8 +3,8 @@ import { returnPolicy } from '../_data/returnPolicy.data';
 
 export default function ReturnPolicy() {
   return (
-    <section>
-      <h3 className='mb-5 text-title-24b text-ui-text-title'>교환/반품/품절 안내</h3>
+    <section className='pb-8 border-b border-solid border-gray-300'>
+      <h3 className='mb-5 text-title-24r text-ui-text-title'>교환/반품/품절 안내</h3>
 
       {/* 반품/교환 방법 */}
       <div className='flex'>
