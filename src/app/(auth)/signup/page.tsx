@@ -8,6 +8,7 @@ import KoLogo from '@/assets/images/logos/ko-logo.png';
 import TermsAgreement from './_components/TermsAgreement';
 import UserInformationForm from './_components/UserInformationForm';
 import SnsLoginButtons from './_components/SnsLoginButtons';
+import BottomCopyRight from '../_components/BottomCopyRight';
 
 export default function SignUpPage() {
   const [step, setStep] = useState(1);
@@ -29,7 +30,7 @@ export default function SignUpPage() {
 
       {step === 2 && <UserInformationForm />}
 
-      <p className='fixed bottom-5 text-caption-12b text-ui-text-caption'>© Book Forest, All Rights Reserved.</p>
+      <BottomCopyRight />
     </div>
   );
 }
