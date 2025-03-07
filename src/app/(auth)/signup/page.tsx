@@ -9,7 +9,7 @@ import TermsAgreement from './_components/TermsAgreement';
 import UserInformationForm from './_components/UserInformationForm';
 
 export default function SignUpPage() {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
 
   return (
     <div className='flex justify-center items-center w-full h-screen'>
