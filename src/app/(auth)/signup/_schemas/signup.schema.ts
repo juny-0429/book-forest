@@ -23,6 +23,18 @@ export const signupSchema = z
       .regex(/^[a-zA-Z0-9가-힣]+$/, '닉네임은 한글, 영문, 숫자만 가능합니다'),
 
     email: z.string().email('올바른 이메일을 입력하세요'),
+
+    agreeAge: z.coerce.boolean().refine((val) => val === true, {
+      message: '만 14세 이상이어야 합니다',
+    }),
+    agreeTerms: z.coerce.boolean().refine((val) => val === true, {
+      message: '이용약관에 동의해야 합니다',
+    }),
+    agreePrivacy: z.coerce.boolean().refine((val) => val === true, {
+      message: '개인정보 수집 및 이용에 동의해야 합니다',
+    }),
+    agreeMarketing: z.coerce.boolean().optional(), // 선택 항목이므로 required 아님
+    agreeEvent: z.coerce.boolean().optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: '비밀번호와 비밀번호 확인이 일치하지 않습니다',
