@@ -24,7 +24,7 @@ export const signupSchema = z
 
     email: z.string().min(1, '이메일을 입력해주세요.').email('올바른 이메일 형식이 아닙니다.'),
 
-    phone: z.string().length(13, "전화번호는 '-'포함  11자리 여야 합니다."),
+    user_phone: z.string().length(13, "전화번호는 '-'포함  11자리 여야 합니다."),
 
     agreeAge: z.coerce.boolean().refine((val) => val === true, {
       message: '만 14세 이상이어야 합니다',

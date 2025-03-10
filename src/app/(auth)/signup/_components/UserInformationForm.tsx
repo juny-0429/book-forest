@@ -15,14 +15,16 @@ interface UserInformationFormProps {
 }
 
 export default function UserInformationForm({ register, errors, watch }: UserInformationFormProps) {
-  const [isUserIdChecked, setIsUserIdChecked] = useState(false);
-  const [isUserIdAvailable, setIsUserIdAvailable] = useState<boolean | null>(null);
-  const [isEmailSent, setIsEmailSent] = useState(false);
-  const [isEmailVerified, setIsEmailVerified] = useState(false);
-  const [otp, setOtp] = useState('');
+  const [isUserIdChecked, setIsUserIdChecked] = useState(false); // 아이디 중복 여부
+  const [isUserIdAvailable, setIsUserIdAvailable] = useState<boolean | null>(null); // 아이디 사용 가능 여부
+  const [isEmailSent, setIsEmailSent] = useState(false); // 이메일 인증번호 전송 여부
+  const [isEmailVerified, setIsEmailVerified] = useState(false); // 이메일 인증 여부
+  const [otp, setOtp] = useState(''); // 이메일 인증번호
+
   const id = watch('id');
   const email = watch('email');
 
+  // 아이디 중복 체크
   const handleCheckUserId = async () => {
     if (!id) return alert('아이디를 입력해주세요.');
 
@@ -42,6 +44,7 @@ export default function UserInformationForm({ register, errors, watch }: UserInf
     }
   };
 
+  // 이메일 인증 코드 전송
   const handleSendOtp = async () => {
     if (!email) return alert('이메일을 입력해주세요.');
 
@@ -66,6 +69,7 @@ export default function UserInformationForm({ register, errors, watch }: UserInf
     }
   };
 
+  // 이메일 인증 코드 확인
   const handleVerifyOtp = async () => {
     if (!otp) return alert('인증번호를 입력해주세요.');
 
@@ -125,14 +129,8 @@ export default function UserInformationForm({ register, errors, watch }: UserInf
         {/* 전화번호 */}
         <label className='flex flex-col gap-2 w-full'>
           <span className='text-body-18b text-ui-text-title'>전화번호</span>
-          <p className='text-body-12m text-ui-text-description'>'-'를 제외한 숫자만 입력</p>
-          <TextInput type='tel' {...register('phone')} placeholder='전화번호' maxLength={13} />
-        </label>
-
-        {/* 주소 */}
-        <label className='flex flex-col gap-2 w-full'>
-          <span className='text-body-18b text-ui-text-title'>주소</span>
-          <TextInput {...register('address')} placeholder='주소' />
+          <p className='text-body-12m text-ui-text-description'>'-'를 포함한 전화번호 입력</p>
+          <TextInput type='tel' {...register('user_phone')} placeholder='전화번호' maxLength={13} />
         </label>
 
         {/* 이메일 */}

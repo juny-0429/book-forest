@@ -803,8 +803,6 @@ export type Database = {
       };
       user: {
         Row: {
-          address: string;
-          address_detail: string;
           agree_event_notification: boolean;
           agree_marketing: boolean;
           agree_privacy: boolean;
@@ -815,12 +813,11 @@ export type Database = {
           update_at: string | null;
           account_id: string;
           user_id: string;
+          user_phone: string;
           user_name: string;
           user_profile_image_url: string | null;
         };
         Insert: {
-          address: string;
-          address_detail: string;
           agree_event_notification?: boolean;
           agree_marketing?: boolean;
           agree_privacy?: boolean;
@@ -831,12 +828,11 @@ export type Database = {
           update_at?: string | null;
           account_id: string;
           user_id?: string;
+          user_phone: string;
           user_name: string;
           user_profile_image_url?: string | null;
         };
         Update: {
-          address?: string;
-          address_detail?: string;
           agree_event_notification?: boolean;
           agree_marketing?: boolean;
           agree_privacy?: boolean;
@@ -847,6 +843,7 @@ export type Database = {
           update_at?: string | null;
           account_id?: string;
           user_id?: string;
+          user_phone?: string;
           user_name?: string;
           user_profile_image_url?: string | null;
         };
