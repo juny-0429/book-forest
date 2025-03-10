@@ -4,7 +4,7 @@ import { createSupabaseServer } from 'src/lib/supabaseServer'; // supabaseServer
 
 export async function POST(request: Request) {
   try {
-    const { id, password, user_name, address, address_detail, email, phone, agreeAge, agreeTerms, agreePrivacy, agreeMarketing, agreeEvent }: SignupSchema = await request.json();
+    const { id, password, user_name, email, user_phone, agreeAge, agreeTerms, agreePrivacy, agreeMarketing, agreeEvent }: SignupSchema = await request.json();
 
     if (!agreeAge || !agreeTerms || !agreePrivacy) return NextResponse.json({ error: '필수 항목에 동의해야 합니다.' }, { status: 400 });
 
@@ -26,9 +26,7 @@ export async function POST(request: Request) {
         user_id: user?.id,
         account_id: id,
         user_name,
-        address,
-        address_detail,
-        phone,
+        user_phone,
         agree_marketing: agreeMarketing,
         agree_event_notification: agreeEvent,
       },
