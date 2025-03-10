@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const signupSchema = z
   .object({
-    userId: z
+    id: z
       .string()
       .min(4, '아이디는 최소 4자 이상이어야 합니다')
       .max(12, '아이디는 최대 12자까지 가능합니다')
@@ -10,19 +10,24 @@ export const signupSchema = z
 
     password: z
       .string()
-      .min(8, '비밀번호는 최소 8자 이상이어야 합니다')
-      .max(20, '비밀번호는 최대 20자까지 가능합니다')
-      .regex(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&+=!]).*$/, '비밀번호는 영문자, 숫자, 특수문자를 포함해야 합니다'),
+      .min(8, '비밀번호는 최소 8자 이상이어야 합니다.')
+      .max(20, '비밀번호는 최대 20자까지 가능합니다.')
+      .regex(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&+=!]).*$/, '비밀번호는 영문자, 숫자, 특수문자를 포함해야 합니다.'),
 
     confirmPassword: z.string().min(8, '비밀번호 확인은 최소 8자 이상이어야 합니다').max(20, '비밀번호 확인은 최대 20자까지 가능합니다'),
 
-    nickname: z
+    user_name: z
       .string()
-      .min(2, '닉네임은 최소 2자 이상이어야 합니다')
-      .max(16, '닉네임은 최대 16자까지 가능합니다')
-      .regex(/^[a-zA-Z0-9가-힣]+$/, '닉네임은 한글, 영문, 숫자만 가능합니다'),
+      .min(2, '이름은 최소 2자 이상이어야 합니다')
+      .max(30, '이름은 최대 30자까지 가능합니다')
+      .regex(/^[가-힣a-zA-Z]+$/, '이름은 한글 또는 영문자만 사용 가능합니다'),
 
-    email: z.string().email('올바른 이메일을 입력하세요'),
+    address: z.string().min(5, '주소는 최소 5자 이상이어야 합니다').max(100, '주소는 최대 100자까지 가능합니다'),
+    address_detail: z.string().min(2),
+
+    email: z.string().min(1, '이메일을 입력해주세요.').email('올바른 이메일 형식이 아닙니다.'),
+
+    phone: z.string().length(13, "전화번호는 '-'포함  11자리 여야 합니다."),
 
     agreeAge: z.coerce.boolean().refine((val) => val === true, {
       message: '만 14세 이상이어야 합니다',
