@@ -8,6 +8,7 @@ import Link from 'next/link';
 import KoLogo from '@/assets/images/logos/ko-logo.png';
 import { appRoutes } from 'src/routes/appRoutes';
 import LucideIcons from 'src/theme/lucideIcon';
+import LoginMenu from './_components/LoginMenu';
 
 export default function LoginPage() {
   const [isPasswordShow, setIsPasswordShow] = useState(false);
@@ -36,25 +37,7 @@ export default function LoginPage() {
         </Button>
       </form>
 
-      <nav>
-        <ul className='flex justify-center items-center gap-4'>
-          <li className='text-body-14m text-ui-text-title'>
-            <Link href={appRoutes.account.forgotId}>아이디 찾기</Link>
-          </li>
-
-          <hr className='w-[1px] h-[10px] bg-gray-600' />
-
-          <li className='text-body-14m text-ui-text-title'>
-            <Link href={appRoutes.account.forgotPassword}>비밀번호 찾기</Link>
-          </li>
-
-          <hr className='w-[1px] h-[10px] bg-gray-600' />
-
-          <li className='text-body-14m text-ui-text-title'>
-            <Link href={appRoutes.signup}>회원가입</Link>
-          </li>
-        </ul>
-      </nav>
+      <LoginMenu />
 
       {/* 소셜 로그인 */}
       <div className='flex flex-col items-center gap-4'>
