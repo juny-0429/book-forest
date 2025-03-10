@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import '../styles/globals.css';
 import Modals from 'src/components/Modals/Modals';
+import Providers from 'src/utils/queryProvider';
 
 export const metadata: Metadata = {
   title: '책숲 - 독서를 사랑하는 당신을 위한 책 쇼핑몰',
@@ -12,8 +13,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang='ko'>
       <body>
-        <main>{children}</main>
-        <Modals />
+        <Providers>
+          <main>{children}</main>
+          <Modals />
+        </Providers>
       </body>
     </html>
   );
