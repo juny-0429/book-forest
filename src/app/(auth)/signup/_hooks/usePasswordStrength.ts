@@ -7,8 +7,8 @@ const strengthLevels = [
   { label: '강함', color: 'text-state-success', progressColor: 'bg-state-success' },
 ];
 
-export const usePasswordStrength = (password: string, userId?: string) => {
-  const rules = useMemo(() => validatePassword(password, userId), [password, userId]);
+export const usePasswordStrength = (password: string) => {
+  const rules = useMemo(() => validatePassword(password), [password]);
   const passedCount = rules.filter((r) => r.passed).length;
   const progressValue = (passedCount / rules.length) * 100;
   const strength = strengthLevels[passedCount > 0 ? passedCount - 1 : 0];

@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import React from 'react';
+import BottomCopyRight from './_components/BottomCopyRight';
 
 export const metadata: Metadata = {
   title: '책숲',
@@ -7,5 +8,10 @@ export const metadata: Metadata = {
 };
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
-  return <div>{children}</div>;
+  return (
+    <div className='h-screen overflow-y-auto'>
+      <div className='flex-grow'>{children}</div>
+      <BottomCopyRight />
+    </div>
+  );
 }
