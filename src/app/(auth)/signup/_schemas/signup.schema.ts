@@ -22,9 +22,6 @@ export const signupSchema = z
       .max(30, '이름은 최대 30자까지 가능합니다')
       .regex(/^[가-힣a-zA-Z]+$/, '이름은 한글 또는 영문자만 사용 가능합니다'),
 
-    address: z.string().min(5, '주소는 최소 5자 이상이어야 합니다').max(100, '주소는 최대 100자까지 가능합니다'),
-    address_detail: z.string().min(2),
-
     email: z.string().min(1, '이메일을 입력해주세요.').email('올바른 이메일 형식이 아닙니다.'),
 
     phone: z.string().length(13, "전화번호는 '-'포함  11자리 여야 합니다."),
