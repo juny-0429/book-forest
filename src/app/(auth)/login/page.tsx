@@ -10,6 +10,7 @@ import { appRoutes } from 'src/routes/appRoutes';
 import LucideIcons from 'src/theme/lucideIcon';
 import LoginMenu from './_components/LoginMenu';
 import SnsLoginButtons from './_components/SnsLoginButtons';
+import BottomCopyRight from '../_components/BottomCopyRight';
 
 export default function LoginPage() {
   const [isPasswordShow, setIsPasswordShow] = useState(false);
@@ -40,8 +41,6 @@ export default function LoginPage() {
 
       <LoginMenu />
       <SnsLoginButtons />
-
-      <p className='fixed bottom-5 text-caption-12b text-ui-text-caption'>© Book Forest, All Rights Reserved.</p>
     </div>
   );
 }
