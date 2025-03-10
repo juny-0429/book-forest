@@ -25,7 +25,7 @@ export default function LoginPage() {
           placeholder='비밀번호를 입력하세요'
           rightIcon={
             <button type='button' onClick={() => setIsPasswordShow((prev) => !prev)}>
-              {isPasswordShow ? <LucideIcons.EyeOff /> : <LucideIcons.Eye />}
+              {isPasswordShow ? <LucideIcons.Eye /> : <LucideIcons.EyeOff />}
             </button>
           }
           className='mt-[10px]'
