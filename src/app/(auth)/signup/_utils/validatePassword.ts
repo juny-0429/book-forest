@@ -1,4 +1,4 @@
-export const validatePassword = (password: string, userId?: string) => {
+export const validatePassword = (password: string) => {
   return [
     {
       rule: '비밀번호는 8자 이상 13자 이하여야 합니다.',
