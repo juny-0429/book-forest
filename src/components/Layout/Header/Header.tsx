@@ -1,42 +1,42 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
 import { appRoutes } from 'src/routes/appRoutes';
 import KoLogo from '@/assets/images/logos/ko-logo.png';
 import SearchBar from '../../SearchBar/SearchBar';
 import LucideIcons from 'src/theme/lucideIcon';
 import NavigationBar from '../NavigationBar/NavigationBar';
 import { mockNavigationList } from '../NavigationBar/NavigationBar.data';
+import { useAuth } from 'src/provider/authProvider';
 
 export default function Header() {
+  const { user, loading } = useAuth();
+
   return (
     <header className='sticky top-0 z-100 bg-ui-background border-b border-solid border-gray-300 z-50'>
       <nav className='bg-gray-200'>
         <ul className='flex justify-end items-center w-full max-w-[1400px] mx-auto gap-5 px-[50px] py-[10px] text-ui-text-title '>
-          <li>
-            <Link href={appRoutes.login} className='text-body-16m'>
-              로그인
-            </Link>
-          </li>
-
-          <hr className='w-[2px] h-[10px] bg-gray-600' />
-
+          {!user && !loading && (
+            <li>
+              <Link href={appRoutes.login} className='text-body-16m'>
+                로그인
+              </Link>
+            </li>
+          )}
+          {!user && !loading && <hr className='w-[2px] h-[10px] bg-gray-600' />}
           <li>
             <Link href={appRoutes.signup} className='text-body-16m'>
               회원가입
             </Link>
           </li>
-
           <hr className='w-[2px] h-[10px] bg-gray-600' />
-
           <li>
             <Link href={appRoutes.shop.main} className='text-body-16m'>
               마이페이지
             </Link>
           </li>
-
           <hr className='w-[2px] h-[10px] bg-gray-600' />
-
           <li>
             <Link href={appRoutes.cart} className='text-body-16m'>
               장바구니

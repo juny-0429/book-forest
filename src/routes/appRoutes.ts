@@ -11,18 +11,21 @@ export const appRoutes = {
     forgotPassword: '/account/forgot-password',
     /* 아이디 찾기 결과 */
     findId: '/account/find-id',
-    /* 비밀번호 재설정 */
-    resetPassword: '/account/reset-password',
-    /* 회원정보 수정 */
-    profile: '/account/profile',
-    /* 마케팅 수신 설정 */
-    marketingPreferences: '/account/marketing-preferences',
-    /* 배송지 목록 */
-    addresses: '/account/addresses',
-    /* 마일리지 관리 */
-    mileage: '/account/mileage',
-    /* 회원탈퇴 */
-    deleteAccount: '/account/delete',
+
+    auth: {
+      /* 비밀번호 재설정 */
+      resetPassword: '/account/auth/reset-password',
+      /* 회원정보 수정 */
+      profile: '/account/auth/profile',
+      /* 마케팅 수신 설정 */
+      marketingPreferences: '/account/auth/marketing-preferences',
+      /* 배송지 목록 */
+      addresses: '/account/auth/addresses',
+      /* 마일리지 관리 */
+      mileage: '/account/auth/mileage',
+      /* 회원탈퇴 */
+      deleteAccount: '/account/auth/delete',
+    },
   },
 
   /* 회원가입 */
@@ -124,7 +127,7 @@ export const appRoutes = {
     /* 고객센터 */
     customerSupport: {
       /* 자주 묻는 질문 */
-      helpFaq: '/shop/help/faq',
+      helpFaq: '/board/qna',
       /* 1:1 문의 */
       helpContact: '/shop/help/contact',
     },
