@@ -6,9 +6,11 @@ import Link from 'next/link';
 import UserProfileBox from './UserProfileBox';
 import { usePathname } from 'next/navigation';
 import { cn } from 'src/lib/utils';
+import { useSignOut } from 'src/hooks/userLogout';
 
 export default function ShopSidebar() {
   const pathname = usePathname();
+  const { signOut } = useSignOut();
 
   return (
     <aside className='flex flex-col gap-[33px] w-[210px]'>
@@ -36,10 +38,12 @@ export default function ShopSidebar() {
                 })}
               </ul>
             </li>
-          ))}
+        ))}
         </ul>
 
-        <button className='text-body-16b text-ui-cta'>로그아웃</button>
+        <button onClick={signOut} className='text-body-16b text-ui-cta'>
+          로그아웃
+        </button>
       </nav>
     </aside>
   );
