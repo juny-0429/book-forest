@@ -18,7 +18,7 @@ function makeQueryClient() {
 
 let browserQueryClient: QueryClient | undefined = undefined;
 
-export default function Providers({ children }: { children: React.ReactNode }) {
+export default function QueryProviders({ children }: { children: React.ReactNode }) {
   const queryClient = browserQueryClient ?? makeQueryClient();
 
   if (typeof window !== 'undefined') {
