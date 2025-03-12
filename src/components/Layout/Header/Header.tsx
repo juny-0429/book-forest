@@ -9,9 +9,11 @@ import LucideIcons from 'src/theme/lucideIcon';
 import NavigationBar from '../NavigationBar/NavigationBar';
 import { mockNavigationList } from '../NavigationBar/NavigationBar.data';
 import { useAuth } from 'src/provider/authProvider';
+import { useSignOut } from 'src/hooks/userLogout';
 
 export default function Header() {
-  const { user, loading } = useAuth();
+  const { user, loading, authority } = useAuth();
+  const { signOut } = useSignOut();
 
   return (
     <header className='sticky top-0 z-100 bg-ui-background border-b border-solid border-gray-300 z-50'>
@@ -25,6 +27,14 @@ export default function Header() {
             </li>
           )}
           {!user && !loading && <hr className='w-[2px] h-[10px] bg-gray-600' />}
+          {user && !loading && (
+            <li>
+              <button onClick={signOut} className='text-body-16m'>
+                로그아웃
+              </button>
+            </li>
+          )}
+          {user && !loading && <hr className='w-[2px] h-[10px] bg-gray-600' />}
           <li>
             <Link href={appRoutes.signup} className='text-body-16m'>
               회원가입
