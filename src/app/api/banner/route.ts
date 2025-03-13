@@ -10,8 +10,6 @@ export async function GET(request: Request) {
   const todayUTC = new Date();
   const todayKST = new Date(todayUTC.getTime() + 9 * 60 * 60 * 1000).toISOString();
 
-  console.log('오늘시간', todayKST);
-
   const { data, error } = await supabase
     .from('banner')
     .select('banner_name, banner_image_url, banner_link')
