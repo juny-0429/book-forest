@@ -1,3 +1,4 @@
+import { BannerListItemDto } from 'src/app/(main)/_dtos/getBannerList.dto';
 import { createSupabaseServer } from 'src/lib/supabaseServer';
 
 export async function GET(request: Request) {
@@ -6,11 +7,18 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const position = searchParams.get('position');
 
+  const todayUTC = new Date();
+  const todayKST = new Date(todayUTC.getTime() + 9 * 60 * 60 * 1000).toISOString();
+
+  console.log('오늘시간', todayKST);
+
   const { data, error } = await supabase
     .from('banner')
-    .select('banner_name, banner_image_url')
+    .select('banner_name, banner_image_url, banner_link')
     .eq('is_active', true)
-    .eq('banner_position', position || '');
+    .eq('banner_position', position || '')
+    .lte('banner_start_date', todayKST)
+    .gte('banner_end_date', todayKST);
 
   if (error) {
     return new Response(JSON.stringify({ message: '데이터 조회 싪패', error: error.message }), {
@@ -19,7 +27,12 @@ export async function GET(request: Request) {
     });
   }
 
-  return new Response(JSON.stringify({ message: '데이터 조회 성공', data }), {
+  const response: { message: string; data: BannerListItemDto[] } = {
+    message: '데이터 조회 성공',
+    data,
+  };
+
+  return new Response(JSON.stringify(response), {
     headers: { 'Content-Type': 'application/json' },
     status: 200,
   });
