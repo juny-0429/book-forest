@@ -7,6 +7,7 @@ import { Switch } from 'src/components/Switch/Switch';
 import SampleBannerImg from '@/assets/images/sample-banner-1.png';
 import { useAlertModal, useCustomModal } from 'src/hooks/useModal';
 import AddBannerModalContent from './_components/AddBannerModalContent';
+import SideBannerForm from './_components/SideBannerForm';
 
 interface Banner {
   id: number;
@@ -66,6 +67,7 @@ export default function BannerManagementPage() {
           배너 등록
         </Button>
       </div>
+      <SideBannerForm />
 
       {bannerSections.map((section) => (
         <div key={section.key} className='border rounded-lg p-4 mb-6'>
