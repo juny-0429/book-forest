@@ -1,19 +1,21 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from 'src/components/Carousel/Carousel';
 import { type CarouselApi } from '@/components/Carousel/Carousel';
-import SampleBannerImg from '@/assets/images/sample-banner-7.png';
 import Image from 'next/image';
 import { cn } from 'src/lib/utils';
 import Autoplay from 'embla-carousel-autoplay';
+import { useGetBannerList } from 'src/app/(main)/_hooks/react-query/useGetBannerList';
 
 export default function CategoryBanner() {
-  const [api, setApi] = React.useState<CarouselApi>();
-  const [current, setCurrent] = React.useState(0);
-  const [count, setCount] = React.useState(0);
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
 
-  React.useEffect(() => {
+  const { data: categoryBannerList, isLoading } = useGetBannerList('category');
+
+  useEffect(() => {
     if (!api) {
       return;
     }
@@ -39,13 +41,14 @@ export default function CategoryBanner() {
         className='w-full'
       >
         <CarouselContent className='w-full'>
-          {Array.from({ length: 5 }).map((_, index) => (
-            <CarouselItem key={index}>
-              <div className='w-full rounded-[16px] overflow-hidden'>
-                <Image src={SampleBannerImg} alt='sample banner image' className='w-full h-auto object-cover' />
-              </div>
-            </CarouselItem>
-          ))}
+          {categoryBannerList &&
+            categoryBannerList.map((banner, index) => (
+              <CarouselItem key={index}>
+                <div className='w-full rounded-[16px] overflow-hidden'>
+                  <Image src={banner.banner_image_url} width={1000} height={300} alt={`${banner.banner_name} image`} className='w-full h-auto object-cover' />
+                </div>
+              </CarouselItem>
+            ))}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
