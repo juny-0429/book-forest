@@ -6,10 +6,12 @@ import { Switch } from 'src/components/Switch/Switch';
 import Button from 'src/components/Button/Button';
 import { useUpdateBannerStatus } from 'src/app/(main)/_hooks/react-query/useUpdateBannerStatus';
 import { useGetAdminBannerList } from 'src/app/(main)/_hooks/react-query/useGetAdminBannerList';
+import { useDeleteBanner } from 'src/app/(main)/_hooks/react-query/useDeleteBanner';
 
 export default function SideBannerForm() {
   const { data: sideBannerList, isLoading } = useGetAdminBannerList('side');
   const { mutate: updateBannerStatus, isPending } = useUpdateBannerStatus('side');
+  const { mutate: deleteBanner, isPending: isDeleting } = useDeleteBanner('dual');
 
   const sideBanner = sideBannerList?.[0];
 
@@ -18,6 +20,14 @@ export default function SideBannerForm() {
 
     updateBannerStatus({ update_banner_id: sideBanner.banner_id, is_active: !sideBanner.is_active });
   };
+
+  const handleDelete = (banner_id: number) => {
+    if (confirm('정말로 이 배너를 삭제하시겠습니까?')) {
+      deleteBanner(banner_id);
+    }
+  };
+
+  if (!sideBanner) return null;
 
   return (
     <section>
@@ -39,7 +49,7 @@ export default function SideBannerForm() {
             </label>
           </div>
 
-          <Button height={32} color='gray' className='w-fit'>
+          <Button height={32} color='gray' className='w-fit' onClick={() => handleDelete(sideBanner?.banner_id)} disabled={isDeleting}>
             삭제
           </Button>
         </div>

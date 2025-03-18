@@ -11,7 +11,7 @@ export async function GET(request: Request) {
   const { data, error } = await supabase
     .from('banner')
     .select('banner_id, banner_name, banner_image_url, banner_link, is_active')
-    .eq('banner_position', position || '')
+    .eq('banner_position', position || '');
 
   if (error) {
     return new Response(JSON.stringify({ message: '데이터 조회 싪패', error: error.message }), {
@@ -48,4 +48,20 @@ export async function PUT(request: Request) {
   } catch (error) {
     return NextResponse.json({ message: '서버 에러 발생' }, { status: 500 });
   }
+}
+
+export async function DELETE(request: Request) {
+  const { banner_id } = await request.json();
+
+  if (!banner_id) {
+    return NextResponse.json({ message: '배너 ID가 필요합니다.' }, { status: 400 });
+  }
+
+  const supabase = await createSupabaseServer();
+
+  const { error } = await supabase.from('banner').delete().eq('banner_id', banner_id);
+
+  if (error) return NextResponse.json({ message: `배너 삭제 실패: ${error.message}` }, { status: 500 });
+
+  return NextResponse.json({ message: '배너 삭제 성공' }, { status: 200 });
 }
