@@ -11,6 +11,7 @@ import SideBannerForm from './_components/SideBannerForm';
 import DualBannerForm from './_components/DualBannerForm';
 import TripleBannerForm from './_components/TripleBaannerForm';
 import CategoryBannerForm from './_components/CategoryBannerForm';
+import MainBannerForm from './_components/MainBannerForm';
 
 interface Banner {
   id: number;
@@ -70,6 +71,8 @@ export default function BannerManagementPage() {
           배너 등록
         </Button>
       </div>
+
+      <MainBannerForm />
       <SideBannerForm />
       <DualBannerForm />
       <TripleBannerForm />
