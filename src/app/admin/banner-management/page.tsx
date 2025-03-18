@@ -10,6 +10,7 @@ import AddBannerModalContent from './_components/AddBannerModalContent';
 import SideBannerForm from './_components/SideBannerForm';
 import DualBannerForm from './_components/DualBannerForm';
 import TripleBannerForm from './_components/TripleBaannerForm';
+import CategoryBannerForm from './_components/CategoryBannerForm';
 
 interface Banner {
   id: number;
@@ -72,6 +73,7 @@ export default function BannerManagementPage() {
       <SideBannerForm />
       <DualBannerForm />
       <TripleBannerForm />
+      <CategoryBannerForm />
 
       {bannerSections.map((section) => (
         <div key={section.key} className='border rounded-lg p-4 mb-6'>
