@@ -1,3 +1,4 @@
+import { NextResponse } from 'next/server';
 import { BannerListItemDto } from 'src/app/(main)/_dtos/getBannerList.dto';
 import { createSupabaseServer } from 'src/lib/supabaseServer';
 
@@ -12,7 +13,7 @@ export async function GET(request: Request) {
 
   const { data, error } = await supabase
     .from('banner')
-    .select('banner_name, banner_image_url, banner_link, is_active')
+    .select('banner_id, banner_name, banner_image_url, banner_link, is_active')
     .eq('is_active', true)
     .eq('banner_position', position || '')
     .lte('banner_start_date', todayKST)
