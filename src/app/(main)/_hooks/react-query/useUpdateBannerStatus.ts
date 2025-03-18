@@ -29,8 +29,6 @@ export const useUpdateBannerStatus = (position: string) => {
 
         return oldData.map((banner) => (banner.banner_id === update_banner_id ? { ...banner, is_active } : banner));
       });
-
-      queryClient.invalidateQueries({ queryKey: ['bannerList', position] });
     },
 
     onError: (error) => {
