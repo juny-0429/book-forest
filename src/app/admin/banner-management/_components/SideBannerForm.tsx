@@ -34,7 +34,7 @@ export default function SideBannerForm() {
       <h3 className='text-title-24r mb-3'>사이드 배너</h3>
 
       <div className='flex flex-col gap-2'>
-        {sideBanner?.banner_image_url ? <Image src={sideBanner.banner_image_url} alt='배너 미리보기' width={100} height={50} /> : <p>이미지가 없습니다.</p>}
+        {sideBanner?.banner_image_url ? <Image src={sideBanner.banner_image_url} alt='배너 미리보기' width={100} height={50} priority={true} /> : <p>이미지가 없습니다.</p>}
 
         <div className='flex items-center gap-1'>
           <span className='text-body-14b text-ui-text-title'>배너 링크: </span>

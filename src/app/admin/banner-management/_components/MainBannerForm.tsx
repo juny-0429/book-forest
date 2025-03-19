@@ -31,7 +31,7 @@ export default function MainBannerForm() {
         {sideBannerList &&
           sideBannerList.map((banner) => (
             <div key={banner.banner_id} className='flex flex-col gap-2 w-full max-w-[300px]'>
-              <Image src={banner.banner_image_url} alt='배너 미리보기' width={300} height={150} />
+              <Image src={banner.banner_image_url} alt='배너 미리보기' width={300} height={150} priority={true} />
 
               <div className='flex items-center gap-1'>
                 <span className='text-body-14b text-ui-text-title'>배너 링크: </span>
