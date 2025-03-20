@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from 'src/components/Breadcrumb/Breadcrumb';
-import CategoryBanner from 'src/components/Banner/CategoryBanner/CategoryBanner';
+import CategoryBanner from 'src/components/Banner/CategoryBanner';
 import LineButton from 'src/components/Button/LineButton';
 import LucideIcons from 'src/theme/lucideIcon';
 import { SelectOption } from 'src/types/select.types';
