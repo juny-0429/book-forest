@@ -4,9 +4,9 @@ import React from 'react';
 import Image from 'next/image';
 import { Switch } from 'src/components/Switch/Switch';
 import Button from 'src/components/Button/Button';
-import { useUpdateBannerStatus } from 'src/app/(main)/_hooks/react-query/useUpdateBannerStatus';
-import { useGetAdminBannerList } from 'src/app/(main)/_hooks/react-query/useGetAdminBannerList';
-import { useDeleteBanner } from 'src/app/(main)/_hooks/react-query/useDeleteBanner';
+import { useGetAdminBannerList } from '../_hooks/react-query/useGetAdminBannerList';
+import { useUpdateBannerStatus } from '../_hooks/react-query/useUpdateBannerStatus';
+import { useDeleteBanner } from '../_hooks/react-query/useDeleteBanner';
 
 export default function SideBannerForm() {
   const { data: sideBannerList, isLoading } = useGetAdminBannerList('side');

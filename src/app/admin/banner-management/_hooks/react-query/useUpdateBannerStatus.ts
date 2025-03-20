@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { BannerListItemDto } from '../../_dtos/getBannerList.dto';
+import { BannerListItemDto } from '../../../../(main)/_dtos/getBannerList.dto';
 
 const updateBannerStatus = async (banner_id: number, is_active: boolean) => {
   const response = await fetch('/api/banner/admin', {
