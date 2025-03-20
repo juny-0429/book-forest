@@ -1,6 +1,62 @@
 import { NextResponse } from 'next/server';
 import { BannerListItemDto } from 'src/app/(main)/_dtos/getBannerList.dto';
+import { CreateBannerSchema } from 'src/app/admin/banner-management/_schemas/createBanner.schema';
 import { createSupabaseServer } from 'src/lib/supabaseServer';
+
+export async function POST(request: Request) {
+  try {
+    const supabase = await createSupabaseServer();
+    const body: CreateBannerSchema = await request.json();
+
+    const { banner_name, banner_image_url, is_active, banner_position, banner_start_date, banner_end_date, banner_link, banner_description } = body;
+
+    if (!banner_name || !banner_image_url || is_active === undefined || !banner_position || !banner_start_date || !banner_end_date || !banner_link) {
+      return NextResponse.json({ error: '필수 항목을 입력해야 합니다.' }, { status: 400 });
+    }
+
+    const startDate = new Date(banner_start_date);
+    const endDate = new Date(banner_end_date);
+
+    const { data: existingBanners, error: countError } = await supabase.from('banner').select('banner_id', { count: 'exact' }).eq('banner_position', banner_position);
+
+    const maxBanners: Record<string, number> = {
+      main: 20,
+      side: 1,
+      category: 10,
+      dual: 2,
+      triple: 3,
+      popup: 1,
+      showHide: 1,
+    };
+
+    // 배너 갯수 제한 체크
+    if (existingBanners && existingBanners.length >= (maxBanners[banner_position] || Infinity)) {
+      const errorMessage = `해당 위치(${banner_position})에는 최대 ${maxBanners[banner_position]}개의 배너만 등록할 수 있습니다.`;
+      alert(errorMessage);
+      return NextResponse.json({ error: errorMessage }, { status: 400 });
+    }
+
+    const { data, error } = await supabase
+      .from('banner')
+      .insert({
+        banner_name,
+        banner_image_url,
+        is_active,
+        banner_position,
+        banner_start_date: startDate.toISOString(),
+        banner_end_date: endDate.toISOString(),
+        banner_link,
+        banner_description: banner_description || null,
+      })
+      .select();
+
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+    return NextResponse.json({ message: '배너 등록 성공', data }, { status: 201 });
+  } catch (error) {
+    return NextResponse.json({ error: '서버 내부 오류' }, { status: 500 });
+  }
+}
 
 export async function GET(request: Request) {
   const supabase = await createSupabaseServer();
