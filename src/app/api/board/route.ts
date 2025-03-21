@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { PostListDto } from 'src/app/(main)/board/[boardCode]/_dtos/getPostList.dto';
+
 import { createSupabaseServer } from 'src/lib/supabaseServer';
 
 export async function GET(request: Request) {

@@ -11,10 +11,13 @@ import { boardColumns } from './_data/boardColumns.data';
 import { useGetPostList } from './_hooks/react-qeury/useGetPostList';
 import { useParams } from 'next/navigation';
 import { BoardCategoryType } from 'src/types/boardCategory.types';
+import { getBoardTitle } from './utils/boardTitle';
 
 export default function BoardPage() {
   const { boardCode } = useParams();
-  const { data: eventPostList } = useGetPostList((boardCode as string)?.toUpperCase() as BoardCategoryType);
+  const upperBoardCode = (boardCode as string)?.toUpperCase() as BoardCategoryType;
+
+  const { data: eventPostList } = useGetPostList(upperBoardCode);
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({
@@ -28,7 +31,7 @@ export default function BoardPage() {
 
   return (
     <div>
-      <h2 className='text-title-24b text-ui-text-title mb-[50px]'>이벤트</h2>
+      <h2 className='text-title-24b text-ui-text-title mb-[50px]'>{getBoardTitle(upperBoardCode)}</h2>
 
       <div className='flex justify-between items-center mb-3'>
         <form className='flex items-center gap-2'>
@@ -44,7 +47,6 @@ export default function BoardPage() {
           </Button>
         </Link>
       </div>
-
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
