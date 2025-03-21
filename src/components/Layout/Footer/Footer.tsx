@@ -7,7 +7,7 @@ import { appRoutes } from 'src/routes/appRoutes';
 
 export default function Footer() {
   return (
-    <footer className='w-screen bg-gray-200'>
+    <footer className='w-full bg-gray-200'>
       <nav>
         <ul className='flex justify-center items-center gap-[30px] py-4 border-y border-solid border-gray-400'>
           <li className='hover:underline'>
