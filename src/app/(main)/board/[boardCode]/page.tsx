@@ -12,13 +12,14 @@ import { useGetPostList } from './_hooks/react-qeury/useGetPostList';
 import { useParams } from 'next/navigation';
 import { BoardCategoryType } from 'src/types/boardCategory.types';
 import { getBoardTitle } from './utils/boardTitle';
+import { useRouter } from 'next/navigation';
 
 export default function BoardPage() {
   const { boardCode } = useParams();
   const upperBoardCode = (boardCode as string)?.toUpperCase() as BoardCategoryType;
-
   const { data: eventPostList } = useGetPostList(upperBoardCode);
   const [sorting, setSorting] = useState<SortingState>([]);
+  const router = useRouter();
 
   const table = useReactTable({
     data: eventPostList ?? [],
@@ -63,7 +64,7 @@ export default function BoardPage() {
         <TableBody>
           {table.getRowModel().rows.length ? (
             table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id}>
+              <TableRow key={row.id} className='cursor-pointer' onClick={() => router.push(`/board/${boardCode}/${row.original.postId}`)}>
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id} style={{ width: cell.column.getSize() }} className={cell.column.id === 'postTitle' ? 'text-left' : 'text-center'}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
