@@ -9,6 +9,7 @@ import dayjs from 'dayjs';
 import LineButton from 'src/components/Button/LineButton';
 import LucideIcons from 'src/theme/lucideIcon';
 import { copyToClipboard } from 'src/utils/copyToClipboard';
+import { useGetCommentList } from '../_hooks/react-qeury/useGetCommentList';
 
 export default function BoardDetailPage() {
   const router = useRouter();
@@ -16,6 +17,10 @@ export default function BoardDetailPage() {
   const { data: postData } = useGetPostDetail(Number(postId));
 
   const { postTitle, postContent, accountId, createAt } = postData || {};
+
+  const { data: commentList } = useGetCommentList(Number(postId));
+
+  console.log('commentList = ', commentList);
 
   return (
     <div className='flex flex-col gap-5'>
@@ -53,35 +58,40 @@ export default function BoardDetailPage() {
           </Button>
         </form>
 
+        {/* 댓글 */}
         <div>
           <ul className='flex flex-col gap-5'>
-            <li className='flex flex-col gap-3'>
-              <div className='flex items-center gap-2'>
-                <span className='text-body-16r text-ui-text-description'>juny_0429</span>
-                <hr className='w-[1px] h-2 bg-gray-600' />
-                <time className='text-body-16r text-ui-text-description'>2025-12-12</time>
-              </div>
+            {commentList &&
+              commentList.map((comment) => (
+                <li key={comment.commentId} className='flex flex-col gap-3'>
+                  <div>
+                    <div className='flex items-center gap-2'>
+                      <span className='text-body-16r text-ui-text-description'>{comment.accountId}</span>
+                      <hr className='w-[1px] h-2 bg-gray-600' />
+                      <time className='text-body-16r text-ui-text-description'>{dayjs(comment.createAt).format('YYYY/MM/DD HH:mm')}</time>
+                    </div>
 
-              <p className='text-body-16m text-ui-text-title'>잘보고 갑니다.</p>
-            </li>
-            <li className='flex flex-col gap-3'>
-              <div className='flex items-center gap-2'>
-                <span className='text-body-16r text-ui-text-description'>juny_0429</span>
-                <hr className='w-[1px] h-2 bg-gray-600' />
-                <time className='text-body-16r text-ui-text-description'>2025-12-12</time>
-              </div>
+                    <p className='text-body-16m text-ui-text-title'>{comment.commentContent}</p>
+                  </div>
 
-              <p className='text-body-16m text-ui-text-title'>잘보고 갑니다.</p>
-            </li>
-            <li className='flex flex-col gap-3'>
-              <div className='flex items-center gap-2'>
-                <span className='text-body-16r text-ui-text-description'>juny_0429</span>
-                <hr className='w-[1px] h-2 bg-gray-600' />
-                <time className='text-body-16r text-ui-text-description'>2025-12-12</time>
-              </div>
+                  <ul>
+                    {comment.replies.map((replyComment) => (
+                      <li key={replyComment.commentId} className='flex gap-1'>
+                        <LucideIcons.CornerDownRight size={20} className='text-gray-800' />
+                        <div>
+                          <div className='flex items-center gap-2'>
+                            <span className='text-body-16r text-ui-text-description'>{replyComment.accountId}</span>
+                            <hr className='w-[1px] h-2 bg-gray-600' />
+                            <time className='text-body-16r text-ui-text-description'>{dayjs(replyComment.createAt).format('YYYY/MM/DD HH:mm')}</time>
+                          </div>
 
-              <p className='text-body-16m text-ui-text-title'>잘보고 갑니다.</p>
-            </li>
+                          <p className='text-body-16m text-ui-text-title'>{replyComment.commentContent}</p>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
           </ul>
         </div>
       </section>

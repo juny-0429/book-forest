@@ -234,7 +234,7 @@ export type Database = {
       };
       comment: {
         Row: {
-          comment_content: string | null;
+          comment_content: string;
           comment_id: number;
           create_at: string;
           is_delete: boolean;
@@ -243,7 +243,7 @@ export type Database = {
           user_id: string;
         };
         Insert: {
-          comment_content?: string | null;
+          comment_content?: string;
           comment_id?: number;
           create_at?: string;
           is_delete?: boolean;
@@ -252,7 +252,7 @@ export type Database = {
           user_id: string;
         };
         Update: {
-          comment_content?: string | null;
+          comment_content?: string;
           comment_id?: number;
           create_at?: string;
           is_delete?: boolean;
