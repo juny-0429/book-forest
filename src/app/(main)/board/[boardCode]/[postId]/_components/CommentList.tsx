@@ -7,10 +7,27 @@ import { useGetCommentList } from '../../_hooks/react-qeury/useGetCommentList';
 import { useParams } from 'next/navigation';
 import dayjs from 'dayjs';
 import LucideIcons from 'src/theme/lucideIcon';
+import TextButton from 'src/components/Button/TextButton';
+import { useAuth } from 'src/provider/authProvider';
+import { useDeleteComment } from '../../_hooks/react-qeury/useDeleteComment';
+import { useConfirmModal } from 'src/hooks/useModal';
 
 export default function CommentList() {
   const { postId } = useParams();
+  const { user } = useAuth();
   const { data: commentList } = useGetCommentList(Number(postId));
+  const { mutate: deleteComment } = useDeleteComment();
+  const { openConfirmModal } = useConfirmModal();
+
+  const handleDeleteComment = (commentId: number) => {
+    openConfirmModal({
+      title: '댓글 삭제',
+      content: '정말로 이 댓글을 삭제하시겠습니까?',
+      confirmButtonText: '삭제',
+      onConfirm: () => deleteComment(commentId),
+      onCancel: () => {},
+    });
+  };
 
   return (
     <section>
@@ -25,7 +42,14 @@ export default function CommentList() {
                   <time className='text-body-16r text-ui-text-description'>{dayjs(comment.createAt).format('YYYY/MM/DD HH:mm')}</time>
                 </div>
 
-                <p className='text-body-16m text-ui-text-title'>{comment.commentContent}</p>
+                <div className='flex items-center'>
+                  <p className='text-body-16m text-ui-text-title'>{comment.commentContent}</p>
+                  {user?.id === comment.userId && (
+                    <TextButton height={32} onClick={() => handleDeleteComment(comment.commentId)}>
+                      삭제
+                    </TextButton>
+                  )}
+                </div>
               </div>
 
               <ul className='flex flex-col gap-5'>

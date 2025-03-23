@@ -10,10 +10,10 @@ import { useCreateComment } from '../../_hooks/react-qeury/useCreateComment';
 import { useParams } from 'next/navigation';
 
 export default function CommentForm() {
-  const { user, loading } = useAuth();
+  const { postId } = useParams();
+  const { user } = useAuth();
   const { openAlertModal } = useAlertModal();
   const { mutate: createComment } = useCreateComment();
-  const { postId } = useParams();
 
   const { register, handleSubmit, reset } = useForm<CommentSchema>({
     resolver: zodResolver(commentSchema),

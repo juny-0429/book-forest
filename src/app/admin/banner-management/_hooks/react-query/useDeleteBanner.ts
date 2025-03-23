@@ -26,8 +26,6 @@ export const useDeleteBanner = (position: string) => {
 
         return oldData.filter((banner) => banner.banner_id !== banner_id);
       });
-
-      queryClient.invalidateQueries({ queryKey: ['bannerList', position] });
     },
 
     onError: (error) => {

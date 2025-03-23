@@ -3,6 +3,7 @@ export interface CommentListDto {
   commentContent: string;
   createAt: Date;
   accountId: string;
+  userId: string;
   parentCommentId: number | null;
   replies: CommentListDto[];
 }

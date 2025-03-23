@@ -19,6 +19,7 @@ export async function GET(request: Request) {
         comment_content,
         create_at,
         parent_comment_id,
+        user_id,
         user:user_id (account_id)
       `
       )
@@ -32,6 +33,7 @@ export async function GET(request: Request) {
       createAt: new Date(comment.create_at),
       accountId: comment.user.account_id,
       parentCommentId: comment.parent_comment_id ?? 0,
+      userId: comment.user_id,
       replies: [], // 대댓글을 담을 배열 추가
     }));
 
@@ -96,7 +98,6 @@ export async function POST(request: Request) {
 
     if (error) throw error;
 
-    // 4. DTO에 맞춰 변환
     const newComment = {
       commentId: data.comment_id,
       commentContent: data.comment_content,
@@ -109,5 +110,35 @@ export async function POST(request: Request) {
     return NextResponse.json(newComment);
   } catch (error: any) {
     return NextResponse.json({ error: error.message || '댓글 등록 중 오류 발생' }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: Request) {
+  const supabase = await createSupabaseServer();
+  const { searchParams } = new URL(request.url);
+  const commentId = Number(searchParams.get('commentId'));
+
+  if (!commentId) return NextResponse.json({ error: 'commentId가 필요합니다.' }, { status: 400 });
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return NextResponse.json({ error: '로그인이 필요합니다.' }, { status: 401 });
+
+  try {
+    const { data: commentData, error: commentError } = await supabase.from('comment').select('user_id').eq('comment_id', commentId).single();
+
+    if (commentError || !commentData) return NextResponse.json({ error: '댓글 정보를 찾을 수 없습니다.' }, { status: 404 });
+
+    if (commentData.user_id !== user.id) return NextResponse.json({ error: '본인의 댓글만 삭제할 수 있습니다.' }, { status: 403 });
+
+    const { error } = await supabase.from('comment').update({ is_delete: true }).eq('comment_id', commentId);
+
+    if (error) throw error;
+
+    return NextResponse.json({ message: '댓글이 삭제되었습니다.' });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message || '댓글 삭제 중 오류 발생' }, { status: 500 });
   }
 }
