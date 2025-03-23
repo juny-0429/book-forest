@@ -60,3 +60,54 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: error.message || '댓글 조회 중 오류 발생' }, { status: 500 });
   }
 }
+
+export async function POST(request: Request) {
+  const supabase = await createSupabaseServer();
+
+  try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) return NextResponse.json({ error: '로그인이 필요합니다.' }, { status: 401 });
+
+    const body = await request.json();
+    const { postId, commentContent } = body;
+
+    if (!postId || !commentContent) return NextResponse.json({ error: '필수 값 누락' }, { status: 400 });
+
+    const { data, error } = await supabase
+      .from('comment')
+      .insert({
+        post_id: postId,
+        comment_content: commentContent,
+        user_id: user.id,
+      })
+      .select(
+        `
+      comment_id,
+      comment_content,
+      create_at,
+      parent_comment_id,
+      user:user_id (account_id)
+    `
+      )
+      .single();
+
+    if (error) throw error;
+
+    // 4. DTO에 맞춰 변환
+    const newComment = {
+      commentId: data.comment_id,
+      commentContent: data.comment_content,
+      createAt: new Date(data.create_at),
+      accountId: data.user.account_id,
+      parentCommentId: data.parent_comment_id ?? 0,
+      replies: [],
+    };
+
+    return NextResponse.json(newComment);
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message || '댓글 등록 중 오류 발생' }, { status: 500 });
+  }
+}
