@@ -7,20 +7,22 @@ import TextInput from 'src/components/TextInput/TextInput';
 import Button from 'src/components/Button/Button';
 import { appRoutes } from 'src/routes/appRoutes';
 import Link from 'next/link';
-import { BoardTableColumn } from 'src/types/table/boardTable.types';
-import { boardColumns } from '../_data/boardColumns.data';
+import { boardColumns } from './_data/boardColumns.data';
+import { useGetPostList } from './_hooks/react-qeury/useGetPostList';
+import { useParams } from 'next/navigation';
+import { BoardCategoryType } from 'src/types/boardCategory.types';
+import { getBoardTitle } from './utils/boardTitle';
+import { useRouter } from 'next/navigation';
 
-const mockData: BoardTableColumn[] = [
-  { id: 1, title: '첫 번째 게시글', userId: 'user_001', createdAt: '2025-03-05' },
-  { id: 2, title: 'React Table 적용', userId: 'user_002', createdAt: '2025-03-04' },
-  { id: 3, title: '게시판 UI 퍼블리싱', userId: 'admin', createdAt: '2025-03-03' },
-];
-
-export default function EventBoardPage() {
+export default function BoardPage() {
+  const { boardCode } = useParams();
+  const upperBoardCode = (boardCode as string)?.toUpperCase() as BoardCategoryType;
+  const { data: eventPostList } = useGetPostList(upperBoardCode);
   const [sorting, setSorting] = useState<SortingState>([]);
+  const router = useRouter();
 
   const table = useReactTable({
-    data: mockData,
+    data: eventPostList ?? [],
     columns: boardColumns,
     state: { sorting },
     getCoreRowModel: getCoreRowModel(),
@@ -30,7 +32,7 @@ export default function EventBoardPage() {
 
   return (
     <div>
-      <h2 className='text-title-24b text-ui-text-title mb-[50px]'>이벤트</h2>
+      <h2 className='text-title-24b text-ui-text-title mb-[50px]'>{getBoardTitle(upperBoardCode)}</h2>
 
       <div className='flex justify-between items-center mb-3'>
         <form className='flex items-center gap-2'>
@@ -46,7 +48,6 @@ export default function EventBoardPage() {
           </Button>
         </Link>
       </div>
-
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -63,9 +64,9 @@ export default function EventBoardPage() {
         <TableBody>
           {table.getRowModel().rows.length ? (
             table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id}>
+              <TableRow key={row.id} className='cursor-pointer' onClick={() => router.push(`/board/${boardCode}/${row.original.postId}`)}>
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id} style={{ width: cell.column.getSize() }}>
+                  <TableCell key={cell.id} style={{ width: cell.column.getSize() }} className={cell.column.id === 'postTitle' ? 'text-left' : 'text-center'}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
