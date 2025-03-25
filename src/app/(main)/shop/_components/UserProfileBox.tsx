@@ -1,4 +1,3 @@
-import React, { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import LucideIcons from 'src/theme/lucideIcon';
 import IconButton from 'src/components/Button/IconButton';
@@ -6,39 +5,31 @@ import Link from 'next/link';
 import { appRoutes } from 'src/routes/appRoutes';
 import DefaultProfileImg from '@/assets/images/default_profile.png';
 import { useGetUserProfile } from '../_hooks/react-query/useGetUserProfile';
-import { useProfileUpload } from '../_hooks/useProfileUpload';
-import { useUpdateUserProfile } from '../_hooks/react-query/useUpdateUserProfile';
+import { useCustomModal } from 'src/hooks/useModal';
+import UserProfileCropContent from './UserProfileCropContent';
 
 export default function UserProfileBox() {
+  const { openCustomModal } = useCustomModal();
   const { data: userInfo } = useGetUserProfile();
-  const { handleProfileUpload, profileUrl } = useProfileUpload();
-  const { mutate: updateUserProfile } = useUpdateUserProfile();
 
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  const profileImageSrc = profileUrl || userInfo?.userProfileImageUrl || DefaultProfileImg;
+  const profileImageSrc = userInfo?.userProfileImageUrl || DefaultProfileImg;
 
   const handleButtonClick = () => {
-    inputRef.current?.click();
+    openCustomModal({
+      children: <UserProfileCropContent />,
+    });
   };
-
-  useEffect(() => {
-    if (profileUrl) {
-      updateUserProfile(profileUrl);
-    }
-  }, [profileUrl]);
 
   return (
     <section className='flex flex-col items-center gap-4 px-5 py-4 border border-solid border-gray-300 rounded-[6px]'>
       <figure className='relative'>
         <div className='relative w-[100px] h-[100px] rounded-full overflow-hidden'>
-          {profileImageSrc && <Image src={profileImageSrc} alt='user profile' fill sizes='100px' className='object-cover' />}
+          {profileImageSrc && <Image src={userInfo?.userProfileImageUrl || DefaultProfileImg} alt='user profile' fill sizes='100px' className='object-cover' />}
         </div>
 
         <button onClick={handleButtonClick} className='absolute bottom-0 right-0 flex justify-center items-center w-7 h-7 bg-gray-600 rounded-full'>
           <LucideIcons.Camera size={16} className='text-white' />
         </button>
-
-        <input ref={inputRef} type='file' accept='image/*' className='hidden' onChange={handleProfileUpload} />
       </figure>
 
       <div className='flex justify-between items-center w-full'>
