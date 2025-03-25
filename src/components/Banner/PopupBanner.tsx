@@ -2,14 +2,13 @@
 
 import Image from 'next/image';
 import LucideIcons from 'src/theme/lucideIcon';
-import SampleBannerImg from '@/assets/images/sample-banner-2.png';
 import useHideForOneDay from 'src/hooks/useHideForOneDay';
 import { useGetBannerList } from 'src/app/(main)/_hooks/react-query/useGetBannerList';
 
 export default function PopupBanner() {
   const { isVisible, hideForOneDay } = useHideForOneDay('popupBanner');
 
-  const { data: popupBannerList, isLoading } = useGetBannerList('popup');
+  const { data: popupBannerList, isLoading } = useGetBannerList('popup', isVisible === true);
 
   if (isLoading || !popupBannerList?.length) return null;
 
@@ -24,7 +23,7 @@ export default function PopupBanner() {
         </div>
 
         <a href='https://github.com/juny-0429' target='_blank' rel='noopener noreferrer'>
-          <Image src={popupBannerList[0].banner_image_url} width={300} height={170} alt={`${popupBannerList[0].banner_name} image`} className='rounded-[4px]' />
+          <Image src={popupBannerList[0].banner_image_url} width={300} height={170} alt={`${popupBannerList[0].banner_name} image`} className='rounded-[4px]' priority />
         </a>
       </div>
     )

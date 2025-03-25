@@ -59,7 +59,7 @@ export default function Header() {
         <div className='flex flex-col items-start gap-[20px] w-fit'>
           <h1 className='flex items-center gap-[40px] w-full'>
             <Link href='/'>
-              <Image src={KoLogo} width={120} alt='logo image' />
+              <Image src={KoLogo} width={120} alt='logo image' priority />
             </Link>
             <SearchBar className='w-[400px]' placeholder='검색어를 입력하세요' />
           </h1>
