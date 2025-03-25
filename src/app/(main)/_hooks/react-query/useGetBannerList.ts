@@ -15,10 +15,10 @@ const getBannerList = async (position: BannerPositionType): Promise<BannerListIt
   return result.data;
 };
 
-export const useGetBannerList = (position: BannerPositionType) => {
+export const useGetBannerList = (position: BannerPositionType, isVisible: boolean) => {
   return useQuery({
     queryKey: ['bannerList', position],
     queryFn: () => getBannerList(position),
-    enabled: !!position,
+    enabled: !!position && isVisible, // ✅ 둘 다 true일 때만 요청
   });
 };
