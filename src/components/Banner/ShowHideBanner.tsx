@@ -12,7 +12,7 @@ export default function ShowHideBanner() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const { isVisible, hideForOneDay } = useHideForOneDay('showHideBanner');
 
-  const { data: showHideBannerList, isLoading } = useGetBannerList('showHide');
+  const { data: showHideBannerList, isLoading } = useGetBannerList('showHide', isVisible === true);
 
   if (isLoading || !showHideBannerList?.length) return null;
 
@@ -29,7 +29,7 @@ export default function ShowHideBanner() {
               className='absolute bottom-12 left-0 w-[400px] h-fit bg-white rounded-[12px] overflow-hidden shadow-blur-6-50'
             >
               <Link href={showHideBannerList[0].banner_link}>
-                <Image src={showHideBannerList[0].banner_image_url} width={400} height={250} alt='sample book image' />
+                <Image src={showHideBannerList[0].banner_image_url} width={400} height={250} alt='show & hide banner image' priority />
               </Link>
               <button type='button' onClick={hideForOneDay} className='flex justify-end items-center gap-2 w-full px-2 py-1 text-body-12r text-ui-text-body hover:text-ui-cta'>
                 <span>오늘 하루 보지 않기</span>
