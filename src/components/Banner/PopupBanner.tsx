@@ -23,7 +23,7 @@ export default function PopupBanner() {
         </div>
 
         <a href='https://github.com/juny-0429' target='_blank' rel='noopener noreferrer'>
-          <Image src={popupBannerList[0].banner_image_url} width={300} height={170} alt={`${popupBannerList[0].banner_name} image`} className='rounded-[4px]' />
+          <Image src={popupBannerList[0].banner_image_url} width={300} height={170} alt={`${popupBannerList[0].banner_name} image`} className='rounded-[4px]' priority />
         </a>
       </div>
     )
