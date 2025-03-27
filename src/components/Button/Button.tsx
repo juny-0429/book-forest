@@ -23,6 +23,7 @@ const buttonVariants = cva('flex justify-center items-center w-full whitespace-p
     color: {
       gray: 'text-white bg-gray-500 enabled:hover:bg-gray-600',
       cta: 'text-white bg-ui-cta enabled:hover:bg-ui-cta-hover',
+      red: 'text-white bg-red-500 enabled:hover:bg-red-700',
     },
   },
   defaultVariants: {
