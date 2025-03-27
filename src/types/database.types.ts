@@ -7,25 +7,31 @@ export type Database = {
         Row: {
           author_awards: string;
           author_bio: string;
+          author_birth_place: string | null;
+          author_birth_year: number | null;
           author_id: number;
           author_name: string;
-          author_profile_image_url: string;
+          author_profile_image_url: string | null;
           created_date: string;
         };
         Insert: {
           author_awards: string;
           author_bio: string;
+          author_birth_place?: string | null;
+          author_birth_year?: number | null;
           author_id?: number;
           author_name: string;
-          author_profile_image_url: string;
+          author_profile_image_url?: string | null;
           created_date?: string;
         };
         Update: {
           author_awards?: string;
           author_bio?: string;
+          author_birth_place?: string | null;
+          author_birth_year?: number | null;
           author_id?: number;
           author_name?: string;
-          author_profile_image_url?: string;
+          author_profile_image_url?: string | null;
           created_date?: string;
         };
         Relationships: [];
@@ -72,13 +78,6 @@ export type Database = {
             referencedRelation: 'authority';
             referencedColumns: ['auth_id'];
           },
-          {
-            foreignKeyName: 'authority_log_user_id_fkey';
-            columns: ['user_id'];
-            isOneToOne: false;
-            referencedRelation: 'user';
-            referencedColumns: ['user_id'];
-          },
         ];
       };
       banner: {
@@ -95,13 +94,13 @@ export type Database = {
         };
         Insert: {
           banner_description?: string | null;
-          banner_end_date?: string;
+          banner_end_date: string;
           banner_id?: number;
           banner_image_url: string;
           banner_link: string;
           banner_name: string;
           banner_position: string;
-          banner_start_date?: string;
+          banner_start_date: string;
           is_active?: boolean;
         };
         Update: {
@@ -243,7 +242,7 @@ export type Database = {
           user_id: string;
         };
         Insert: {
-          comment_content?: string;
+          comment_content: string;
           comment_id?: number;
           create_at?: string;
           is_delete?: boolean;
@@ -274,13 +273,6 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'user';
             referencedColumns: ['user_id'];
-          },
-          {
-            foreignKeyName: 'FK_post_TO_comment_1';
-            columns: ['post_id'];
-            isOneToOne: false;
-            referencedRelation: 'post';
-            referencedColumns: ['post_id'];
           },
         ];
       };
@@ -533,42 +525,35 @@ export type Database = {
       post: {
         Row: {
           board_id: number;
-          create_at: string;
+          create_at: string | null;
           is_delete: boolean;
           is_notice: boolean;
           post_content: string;
           post_id: number;
           post_title: string;
-          user_id: string;
+          user_id: string | null;
         };
         Insert: {
           board_id: number;
-          create_at?: string;
+          create_at?: string | null;
           is_delete?: boolean;
           is_notice?: boolean;
           post_content: string;
           post_id?: number;
           post_title: string;
-          user_id: string;
+          user_id?: string | null;
         };
         Update: {
           board_id?: number;
-          create_at?: string;
+          create_at?: string | null;
           is_delete?: boolean;
           is_notice?: boolean;
           post_content?: string;
           post_id?: number;
           post_title?: string;
-          user_id?: string;
+          user_id?: string | null;
         };
         Relationships: [
-          {
-            foreignKeyName: 'FK_board_TO_post_1';
-            columns: ['board_id'];
-            isOneToOne: false;
-            referencedRelation: 'board';
-            referencedColumns: ['board_id'];
-          },
           {
             foreignKeyName: 'post_board_id_fkey';
             columns: ['board_id'];
@@ -593,26 +578,26 @@ export type Database = {
           is_active: boolean;
           isbn: string;
           price: number;
-          product_description: string | null;
           product_id: number;
           product_name: string;
+          product_summary: string | null;
           publisher: string;
           stock: number;
-          updated_at: string;
+          updated_at: string | null;
         };
         Insert: {
           author_id: number;
-          created_at: string;
+          created_at?: string;
           discount?: number | null;
           is_active?: boolean;
           isbn: string;
           price: number;
-          product_description?: string | null;
           product_id?: number;
           product_name: string;
+          product_summary?: string | null;
           publisher: string;
           stock: number;
-          updated_at?: string;
+          updated_at?: string | null;
         };
         Update: {
           author_id?: number;
@@ -621,12 +606,12 @@ export type Database = {
           is_active?: boolean;
           isbn?: string;
           price?: number;
-          product_description?: string | null;
           product_id?: number;
           product_name?: string;
+          product_summary?: string | null;
           publisher?: string;
           stock?: number;
-          updated_at?: string;
+          updated_at?: string | null;
         };
         Relationships: [
           {
@@ -725,28 +710,57 @@ export type Database = {
       product_detail: {
         Row: {
           detail_image_url: string;
+          product_description: string | null;
           product_detail_id: number;
           product_id: number;
-          product_image_url: string;
           publichedd_date: string;
         };
         Insert: {
           detail_image_url: string;
+          product_description?: string | null;
           product_detail_id?: number;
           product_id: number;
-          product_image_url: string;
           publichedd_date: string;
         };
         Update: {
           detail_image_url?: string;
+          product_description?: string | null;
           product_detail_id?: number;
           product_id?: number;
-          product_image_url?: string;
           publichedd_date?: string;
         };
         Relationships: [
           {
             foreignKeyName: 'product_detail_product_id_fkey';
+            columns: ['product_id'];
+            isOneToOne: false;
+            referencedRelation: 'product';
+            referencedColumns: ['product_id'];
+          },
+        ];
+      };
+      product_main_image: {
+        Row: {
+          created_at: string;
+          image_url: string;
+          product_id: number;
+          product_main_image_id: number;
+        };
+        Insert: {
+          created_at?: string;
+          image_url: string;
+          product_id: number;
+          product_main_image_id: number;
+        };
+        Update: {
+          created_at?: string;
+          image_url?: string;
+          product_id?: number;
+          product_main_image_id?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'product_main_image_product_id_fkey';
             columns: ['product_id'];
             isOneToOne: false;
             referencedRelation: 'product';
@@ -803,6 +817,7 @@ export type Database = {
       };
       user: {
         Row: {
+          account_id: string;
           agree_event_notification: boolean;
           agree_marketing: boolean;
           agree_privacy: boolean;
@@ -811,28 +826,28 @@ export type Database = {
           is_delete: boolean;
           is_over_14: boolean;
           update_at: string | null;
-          account_id: string;
           user_id: string;
-          user_phone: string;
           user_name: string;
+          user_phone: string;
           user_profile_image_url: string | null;
         };
         Insert: {
-          agree_event_notification?: boolean;
-          agree_marketing?: boolean;
+          account_id: string;
+          agree_event_notification: boolean;
+          agree_marketing: boolean;
           agree_privacy?: boolean;
           agree_terms?: boolean;
           created_at?: string;
           is_delete?: boolean;
           is_over_14?: boolean;
           update_at?: string | null;
-          account_id: string;
           user_id?: string;
-          user_phone: string;
           user_name: string;
+          user_phone: string;
           user_profile_image_url?: string | null;
         };
         Update: {
+          account_id?: string;
           agree_event_notification?: boolean;
           agree_marketing?: boolean;
           agree_privacy?: boolean;
@@ -841,10 +856,9 @@ export type Database = {
           is_delete?: boolean;
           is_over_14?: boolean;
           update_at?: string | null;
-          account_id?: string;
           user_id?: string;
-          user_phone?: string;
           user_name?: string;
+          user_phone?: string;
           user_profile_image_url?: string | null;
         };
         Relationships: [];
