@@ -188,19 +188,19 @@ export type Database = {
           category_code: string;
           category_id: number;
           category_name: string;
-          parent_id?: number;
+          parent_code?: string;
         };
         Insert: {
           category_code: string;
           category_id: number;
           category_name: string;
-          parent_id?: number;
+          parent_code?: string;
         };
         Update: {
           category_code?: string;
           category_id?: number;
           category_name?: string;
-          parent_id?: number;
+          parent_code?: string;
         };
         Relationships: [];
       };

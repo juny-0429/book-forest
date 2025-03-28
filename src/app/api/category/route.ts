@@ -13,19 +13,19 @@ export async function GET(request: Request) {
       category_id,
       category_name,
       category_code,
-      parent_id
+      parent_code
     `);
 
     if (!data || data.length === 0) return NextResponse.json({ error: '카테고리가 존재하지 않습니다.' }, { status: 404 });
 
-    const categoryMap = new Map<number, string>();
+    const categoryMap = new Map<string, string>();
     data.forEach((item) => {
-      categoryMap.set(item.category_id, item.category_name);
+      categoryMap.set(item.category_code, item.category_name);
     });
 
     const filtered = data.filter((category) => {
-      if (categoryLevel === 'TOP') return category.parent_id === null;
-      if (categoryLevel === 'SUB') return category.parent_id !== null;
+      if (categoryLevel === 'TOP') return category.parent_code === null;
+      if (categoryLevel === 'SUB') return category.parent_code !== null;
       return true;
     });
 
@@ -34,7 +34,7 @@ export async function GET(request: Request) {
         categoryId: category.category_id,
         categoryName: category.category_name,
         categoryCode: category.category_code,
-        parentName: category.parent_id ? (categoryMap.get(category.parent_id) ?? '-') : '-',
+        parentName: category.parent_code ? (categoryMap.get(category.parent_code) ?? '-') : '-',
       }))
       .sort((a, b) => a.categoryId - b.categoryId);
 
