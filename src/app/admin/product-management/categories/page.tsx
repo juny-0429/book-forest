@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 's
 import { categoriesColumns } from './_data/categories.columns';
 import { useCustomModal } from 'src/hooks/useModal';
 import AddCategoryModalContent from './_components/AddCategoryModalContent';
+import { useGetCategoryList } from './_hooks/react-query/useGetCategoryList';
 
 const mockData = [
   {
@@ -25,9 +26,10 @@ const mockData = [
 
 export default function CategoriesPage() {
   const { openCustomModal } = useCustomModal();
+  const { data: categoryList } = useGetCategoryList('ALL');
 
   const table = useReactTable({
-    data: mockData,
+    data: categoryList ?? [],
     columns: categoriesColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -75,7 +77,7 @@ export default function CategoriesPage() {
           ) : (
             <TableRow>
               <TableCell colSpan={mockData.length} className='text-center'>
-                게시글이 없습니다.
+                카테고리가 없습니다.
               </TableCell>
             </TableRow>
           )}
