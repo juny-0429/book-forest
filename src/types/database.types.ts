@@ -192,7 +192,7 @@ export type Database = {
         };
         Insert: {
           category_code: string;
-          category_id: number;
+          category_id?: number;
           category_name: string;
           parent_code?: string;
         };

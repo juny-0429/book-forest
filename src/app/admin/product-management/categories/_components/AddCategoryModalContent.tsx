@@ -9,24 +9,19 @@ import { useGetCategoryList } from '../_hooks/react-query/useGetCategoryList';
 import { Controller, useForm } from 'react-hook-form';
 import { categorySchema, CategorySchema } from 'src/app/admin/_schema/category.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useCreateCategory } from '../_hooks/react-query/useCreateCategory';
+import { useCustomModal } from 'src/hooks/useModal';
 
 export default function AddCategoryModalContent() {
   const [categoryType, setCategoryType] = useState<'TOP' | 'SUB' | null>(null);
+  const { closeCustomModal } = useCustomModal();
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    watch,
-    formState: { errors },
-  } = useForm<CategorySchema>({
+  const { register, handleSubmit, control } = useForm<CategorySchema>({
     resolver: zodResolver(categorySchema),
+    defaultValues: {
+      parentCode: null,
+    },
   });
-
-  console.log('errors = ', errors);
-
-  const values = watch();
-  console.log('현재 입력값:', values);
 
   const { data: categoryTopList } = useGetCategoryList('TOP');
 
@@ -35,8 +30,14 @@ export default function AddCategoryModalContent() {
     { value: 'SUB', label: '중분류' },
   ];
 
+  const { mutate } = useCreateCategory();
+
   const onSubmit = (data: CategorySchema) => {
-    console.log('제출 데이터:', data);
+    mutate(data, {
+      onSuccess: () => {
+        closeCustomModal();
+      },
+    });
   };
 
   return (
