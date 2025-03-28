@@ -9,21 +9,6 @@ import { useCustomModal } from 'src/hooks/useModal';
 import AddCategoryModalContent from './_components/AddCategoryModalContent';
 import { useGetCategoryList } from './_hooks/react-query/useGetCategoryList';
 
-const mockData = [
-  {
-    categoryId: 1,
-    categoryName: '소설',
-    categoryCode: 'novel',
-    parentName: '-',
-  },
-  {
-    categoryId: 2,
-    categoryName: '소설',
-    categoryCode: 'novel',
-    parentName: '-',
-  },
-];
-
 export default function CategoriesPage() {
   const { openCustomModal } = useCustomModal();
   const { data: categoryList } = useGetCategoryList('ALL');
@@ -76,7 +61,7 @@ export default function CategoriesPage() {
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={mockData.length} className='text-center'>
+              <TableCell colSpan={categoryList?.length} className='text-center'>
                 카테고리가 없습니다.
               </TableCell>
             </TableRow>
