@@ -19,7 +19,7 @@ export default function mainBannerListSwiper() {
 
   const { data: mainBannerList, isLoading } = useGetBannerList('main');
 
-  const handleSwiper = (swiper: SwiperClass) => {
+  const onSwiper = (swiper: SwiperClass) => {
     swiperRef.current = swiper;
   };
 
@@ -48,7 +48,7 @@ export default function mainBannerListSwiper() {
             nextEl: '.custom-swiper-next',
             prevEl: '.custom-swiper-prev',
           }}
-          onSwiper={handleSwiper}
+          onSwiper={onSwiper}
           onSlideChange={(swiper) => setCurrentIndex(swiper.realIndex + 1)}
           className='w-full h-[400px] [&_.swiper-button-prev]:hidden [&_.swiper-button-next]:hidden'
         >

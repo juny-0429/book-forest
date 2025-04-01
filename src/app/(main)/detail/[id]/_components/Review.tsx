@@ -9,11 +9,11 @@ export default function Review() {
   const [selectedRating, setSelectedRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
 
-  const handleStarClick = (rating: number) => {
+  const onStarClick = (rating: number) => {
     setSelectedRating(rating);
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setReviewText(event.target.value);
   };
 
@@ -68,7 +68,7 @@ export default function Review() {
             {Array.from({ length: 5 }).map((_, index) => {
               const ratingValue = index + 1; // ⭐ 1~5
               return (
-                <button key={ratingValue} onClick={() => handleStarClick(ratingValue)}>
+                <button key={ratingValue} onClick={() => onStarClick(ratingValue)}>
                   <LucideIcons.Star
                     fill='currentColor'
                     size={30}
@@ -80,7 +80,7 @@ export default function Review() {
           </div>
 
           <form onSubmit={handleSubmit} className='flex justify-center items-center gap-2'>
-            <TextInput placeholder='배송 문의나 욕설 및 인신공격성 글은 노출 제외 처리됩니다.' value={reviewText} onChange={handleInputChange} />
+            <TextInput placeholder='배송 문의나 욕설 및 인신공격성 글은 노출 제외 처리됩니다.' value={reviewText} onChange={onInputChange} />
             <Button height={48} className='w-[100px]' type='submit'>
               등록
             </Button>

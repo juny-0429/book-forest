@@ -11,7 +11,7 @@ const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'
 export const useProfileUpload = () => {
   const [profileUrl, setProfileUrl] = useState<string | null>(null);
 
-  const handleProfileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onProfileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
 
     if (!file) return alert('파일을 선택해주세요.');
@@ -31,5 +31,5 @@ export const useProfileUpload = () => {
     setProfileUrl(uploadedImageUrl);
   };
 
-  return { handleProfileUpload, profileUrl };
+  return { onProfileUpload, profileUrl };
 };

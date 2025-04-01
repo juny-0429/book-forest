@@ -14,7 +14,7 @@ export default function UserProfileBox() {
 
   const profileImageSrc = userInfo?.userProfileImageUrl || DefaultProfileImg;
 
-  const handleButtonClick = () => {
+  const openProfileCropModal = () => {
     openCustomModal({
       children: <UserProfileCropContent />,
     });
@@ -27,7 +27,7 @@ export default function UserProfileBox() {
           {profileImageSrc && <Image src={userInfo?.userProfileImageUrl || DefaultProfileImg} alt='user profile' fill sizes='100px' className='object-cover' />}
         </div>
 
-        <button onClick={handleButtonClick} className='absolute bottom-0 right-0 flex justify-center items-center w-7 h-7 bg-gray-600 rounded-full'>
+        <button onClick={openProfileCropModal} className='absolute bottom-0 right-0 flex justify-center items-center w-7 h-7 bg-gray-600 rounded-full'>
           <LucideIcons.Camera size={16} className='text-white' />
         </button>
       </figure>

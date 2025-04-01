@@ -25,7 +25,7 @@ export default function UserInformationForm({ register, errors, watch }: UserInf
   const email = watch('email');
 
   // 아이디 중복 체크
-  const handleCheckUserId = async () => {
+  const onCheckUserId = async () => {
     if (!id) return alert('아이디를 입력해주세요.');
 
     try {
@@ -45,7 +45,7 @@ export default function UserInformationForm({ register, errors, watch }: UserInf
   };
 
   // 이메일 인증 코드 전송
-  const handleSendOtp = async () => {
+  const onSendOtp = async () => {
     if (!email) return alert('이메일을 입력해주세요.');
 
     try {
@@ -70,7 +70,7 @@ export default function UserInformationForm({ register, errors, watch }: UserInf
   };
 
   // 이메일 인증 코드 확인
-  const handleVerifyOtp = async () => {
+  const onVerifyOtp = async () => {
     if (!otp) return alert('인증번호를 입력해주세요.');
 
     try {
@@ -105,7 +105,7 @@ export default function UserInformationForm({ register, errors, watch }: UserInf
           <div>
             <div className='flex items-center gap-1 w-full'>
               <TextInput {...register('id')} autoComplete='username' placeholder='아이디' />
-              <Button type='button' height={48} onClick={handleCheckUserId} className='w-fit'>
+              <Button type='button' height={48} onClick={onCheckUserId} className='w-fit'>
                 중복확인
               </Button>
             </div>
@@ -139,7 +139,7 @@ export default function UserInformationForm({ register, errors, watch }: UserInf
           <label className='flex flex-col gap-2'>
             <div className='flex justify-center items-center gap-1 mt-2'>
               <TextInput type='email' {...register('email')} placeholder='이메일' autoComplete='email' disabled={isEmailSent} />
-              <Button type='button' height={48} onClick={handleSendOtp} disabled={isEmailSent} className='w-fit'>
+              <Button type='button' height={48} onClick={onSendOtp} disabled={isEmailSent} className='w-fit'>
                 {isEmailSent ? '인증번호 전송됨' : '인증번호 요청'}
               </Button>
             </div>
@@ -149,7 +149,7 @@ export default function UserInformationForm({ register, errors, watch }: UserInf
           {isEmailSent && (
             <label className='flex justify-end items-center gap-1 w-full'>
               <TextInput type='text' value={otp} onChange={(e) => setOtp(e.target.value)} placeholder='6자리 인증번호 입력' disabled={isEmailVerified} className='w-[200px]' />
-              <Button type='button' height={48} onClick={handleVerifyOtp} disabled={isEmailVerified} className='w-fit'>
+              <Button type='button' height={48} onClick={onVerifyOtp} disabled={isEmailVerified} className='w-fit'>
                 {isEmailVerified ? '인증 완료' : '인증 확인'}
               </Button>
             </label>

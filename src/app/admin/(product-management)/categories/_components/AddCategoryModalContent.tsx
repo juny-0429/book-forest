@@ -7,7 +7,7 @@ import TextInput from 'src/components/TextInput/TextInput';
 import { SelectOption } from 'src/types/select.types';
 import { useGetCategoryList } from '../_hooks/react-query/useGetCategoryList';
 import { Controller, useForm } from 'react-hook-form';
-import { categorySchema, CategorySchema } from 'src/app/admin/_schema/category.schema';
+import { categorySchema, CategorySchema } from 'src/app/admin/(product-management)/categories/_schema/category.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCreateCategory } from '../_hooks/react-query/useCreateCategory';
 import { useCustomModal } from 'src/hooks/useModal';

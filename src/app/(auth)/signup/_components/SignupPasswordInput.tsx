@@ -24,7 +24,7 @@ export default function SignupPasswordInput({ register, errors }: SignupPassword
 
   const { rules, progressValue, strength } = usePasswordStrength(password);
 
-  const handleConfirmChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setConfirmPassword(e.target.value);
     if (e.target.value !== password) {
       setConfirmError('비밀번호가 일치하지 않습니다.');
@@ -76,7 +76,7 @@ export default function SignupPasswordInput({ register, errors }: SignupPassword
         {...register('confirmPassword')}
         autoComplete='new-password'
         name='confirmPassword'
-        onChange={handleConfirmChange}
+        onChange={onConfirmPasswordChange}
         rightIcon={
           <button type='button' onClick={() => setIsConfirmVisible((prev) => !prev)}>
             {isConfirmVisible ? <LucideIcons.Eye /> : <LucideIcons.EyeOff />}

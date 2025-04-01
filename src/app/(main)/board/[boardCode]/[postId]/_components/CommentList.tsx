@@ -19,7 +19,7 @@ export default function CommentList() {
   const { mutate: deleteComment } = useDeleteComment();
   const { openConfirmModal } = useConfirmModal();
 
-  const handleDeleteComment = (commentId: number) => {
+  const onDeleteComment = (commentId: number) => {
     openConfirmModal({
       title: '댓글 삭제',
       content: '정말로 이 댓글을 삭제하시겠습니까?',
@@ -45,7 +45,7 @@ export default function CommentList() {
                 <div className='flex items-center'>
                   <p className='text-body-16m text-ui-text-title'>{comment.commentContent}</p>
                   {user?.id === comment.userId && (
-                    <TextButton height={32} onClick={() => handleDeleteComment(comment.commentId)}>
+                    <TextButton height={32} onClick={() => onDeleteComment(comment.commentId)}>
                       삭제
                     </TextButton>
                   )}
