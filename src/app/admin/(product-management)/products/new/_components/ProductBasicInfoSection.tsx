@@ -1,6 +1,9 @@
+'use client';
+
 import React from 'react';
 import ProductFormItem from './productFormItem';
 import TextInput from 'src/components/TextInput/TextInput';
+import DatePickerWithTime from 'src/components/DatePickerWithTime/DatePickerWithTime';
 
 export default function ProductBasicInfoSection() {
   return (
@@ -15,7 +18,7 @@ export default function ProductBasicInfoSection() {
 
       <div className='col-span-2'>
         <ProductFormItem label='간단소개'>
-          <TextInput placeholder='간단 소개' />
+          <textarea placeholder='간단소개' className='w-full p-5 outline-none bg-transparent border border-solid border-gray-600 rounded-[8px]' />
         </ProductFormItem>
       </div>
 
@@ -24,11 +27,11 @@ export default function ProductBasicInfoSection() {
       </ProductFormItem>
 
       <ProductFormItem label='출판일'>
-        <TextInput placeholder='출판일' />
+        <DatePickerWithTime value={null} onChange={() => {}} />
       </ProductFormItem>
 
       <ProductFormItem label='ISBN'>
-        <TextInput placeholder='ISBN' />
+        <TextInput type='number' placeholder='ISBN' />
       </ProductFormItem>
     </section>
   );
