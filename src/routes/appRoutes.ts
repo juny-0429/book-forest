@@ -89,6 +89,7 @@ export const appRoutes = {
     /* 상품 관리 */
     productManagement: {
       list: '/admin/products',
+      new: '/admin/products/new',
       categories: '/admin/categories',
     },
 
