@@ -15,7 +15,7 @@ export default function CustomModal({ children, onClose }: CustomModalProps) {
         </button>
       </div>
 
-      <div className='mb-4'>{children}</div>
+      <div className='my-4'>{children}</div>
     </ModalLayout>
   );
 }
