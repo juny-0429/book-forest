@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { BannerListItemDto } from 'src/app/(main)/_dtos/getBannerList.dto';
-import { CreateBannerSchema } from 'src/app/admin/banner-management/_schemas/createBanner.schema';
+import { CreateBannerSchema } from 'src/app/admin/banners/_schemas/createBanner.schema';
 import { createSupabaseServer } from 'src/lib/supabaseServer';
 
 export async function POST(request: Request) {

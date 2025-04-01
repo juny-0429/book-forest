@@ -102,7 +102,7 @@ export const appRoutes = {
     contentManagement: {
       siteSettings: '/admin/content/site-settings',
       events: '/admin/content/events',
-      banners: '/admin/banner-management',
+      banners: '/admin/banners',
     },
   },
 
