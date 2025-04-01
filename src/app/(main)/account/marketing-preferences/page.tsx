@@ -11,7 +11,7 @@ export default function MarketingPreferencesPage() {
   const [isSmsChecked, setIsSmsChecked] = useState(false); // 문자/카카오톡 체크 여부
   const [isEmailChecked, setIsEmailChecked] = useState(false); // 이메일 체크 여부
 
-  const handleSubCheckboxChange = (type: 'sms' | 'email') => {
+  const onSubCheckboxChange = (type: 'sms' | 'email') => {
     if (type === 'sms') {
       setIsSmsChecked((prev) => !prev);
     } else {
@@ -19,7 +19,7 @@ export default function MarketingPreferencesPage() {
     }
   };
 
-  const handleMarketingCheckboxChange = () => {
+  const onMarketingCheckboxChange = () => {
     const newValue = !isMarketingChecked;
     setIsMarketingChecked(newValue);
     setIsSmsChecked(newValue);
@@ -53,15 +53,15 @@ export default function MarketingPreferencesPage() {
       </section>
 
       <section className='flex justify-between items-center px-[50px] py-5 border-t border-b border-solid border-gray-300'>
-        <CheckBox checked={isMarketingChecked} onChange={handleMarketingCheckboxChange}>
+        <CheckBox checked={isMarketingChecked} onChange={onMarketingCheckboxChange}>
           책숲 마케팅 수신 동의 (선택)
         </CheckBox>
 
         <div className='flex justify-center items-center gap-5'>
-          <CheckBox checked={isSmsChecked} onChange={() => handleSubCheckboxChange('sms')}>
+          <CheckBox checked={isSmsChecked} onChange={() => onSubCheckboxChange('sms')}>
             문자/카카오톡
           </CheckBox>
-          <CheckBox checked={isEmailChecked} onChange={() => handleSubCheckboxChange('email')}>
+          <CheckBox checked={isEmailChecked} onChange={() => onSubCheckboxChange('email')}>
             이메일
           </CheckBox>
         </div>

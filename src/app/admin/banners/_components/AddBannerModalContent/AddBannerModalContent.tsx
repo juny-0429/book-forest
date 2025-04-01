@@ -29,7 +29,7 @@ const options: SelectOption[] = [
 export default function AddBannerModalContent() {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-  const { handleImageUpload, deleteImage, markAsSubmitted, imageUrl } = useBannerUpload();
+  const { onImageUpload, deleteImage, markAsSubmitted, imageUrl } = useBannerUpload();
   const { mutateAsync } = useCreateBanner();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -49,7 +49,7 @@ export default function AddBannerModalContent() {
   });
 
   // 배너 시작일 선택
-  const handleStartDateChange = (date: Date | null) => {
+  const onStartDateChange = (date: Date | null) => {
     if (!date) return alert('배너 시작일을 선택해야 합니다.');
 
     setStartDate(date);
@@ -57,7 +57,7 @@ export default function AddBannerModalContent() {
   };
 
   // 배너 종료일 선택
-  const handleEndDateChange = (date: Date | null) => {
+  const onEndDateChange = (date: Date | null) => {
     if (!date) return alert('배너 종료일을 선택해야 합니다.');
 
     setEndDate(date);
@@ -122,12 +122,12 @@ export default function AddBannerModalContent() {
 
         <label className='flex items-center gap-1'>
           <span className='w-[100px] flex-shrink-0 text-body-16r text-nowrap'>배너 시작일</span>
-          <DatePickerWithTime value={startDate} onChange={handleStartDateChange} />
+          <DatePickerWithTime value={startDate} onChange={onStartDateChange} />
         </label>
 
         <label className='flex items-center gap-1'>
           <span className='w-[100px] flex-shrink-0 text-body-16r text-nowrap'>배너 종료일</span>
-          <DatePickerWithTime value={endDate} onChange={handleEndDateChange} />
+          <DatePickerWithTime value={endDate} onChange={onEndDateChange} />
         </label>
 
         <label className='flex items-center gap-1'>
@@ -136,7 +136,7 @@ export default function AddBannerModalContent() {
             type='file'
             accept='image/*'
             ref={fileInputRef}
-            onChange={handleImageUpload}
+            onChange={onImageUpload}
             isDirty={!!imageUrl}
             onClear={() => {
               deleteImage();

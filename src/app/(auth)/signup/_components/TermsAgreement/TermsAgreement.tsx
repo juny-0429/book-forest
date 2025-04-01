@@ -27,7 +27,7 @@ export default function TermsAgreement({ setStep, register, watch, setValue, err
 
   const allRequiredChecked = agreeAgeChecked && agreeTermsChecked && agreePrivacyChecked;
 
-  const handleCheckAll = () => {
+  const onCheckAll = () => {
     const newState = !allRequiredChecked;
     setValue('agreeAge', newState);
     setValue('agreeTerms', newState);
@@ -48,7 +48,7 @@ export default function TermsAgreement({ setStep, register, watch, setValue, err
           <div className='flex flex-col items-center gap-4 p-[25px] w-[400px] border border-solid border-gray-300 rounded-[5px]'>
             {/* 전체동의 체크박스 */}
             <div className='flex flex-col items-start gap-1 w-full'>
-              <CheckBox checked={allRequiredChecked} onChange={handleCheckAll}>
+              <CheckBox checked={allRequiredChecked} onChange={onCheckAll}>
                 전체동의
               </CheckBox>
               <p className='text-caption-12r text-ui-text-description'>아래 모든 약관 및 마케팅 안내 수신 내용을 확인 및 동의합니다.</p>

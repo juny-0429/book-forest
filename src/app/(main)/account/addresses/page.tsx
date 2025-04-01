@@ -23,7 +23,7 @@ export default function AddressesPage() {
     detailAddress: '101동 202호', // 상세 주소
   }));
 
-  const addAddressHandle = () => {
+  const onAddAddress = () => {
     if (mockAddressList.length >= 10) {
       openAlertModal({
         title: '최대 배송지 개수 초과',
@@ -52,7 +52,7 @@ export default function AddressesPage() {
 
           <div className='flex justify-center items-center gap-5'>
             <small className='text-body-14r text-ui-text-description'>*배송지는 최대 10개만 등록 가능합니다.</small>
-            <LineButton height={48} color='gray' onClick={addAddressHandle} leftIcon={<LucideIcons.Plus size={20} className='text-gray-900' />} className='w-fit'>
+            <LineButton height={48} color='gray' onClick={onAddAddress} leftIcon={<LucideIcons.Plus size={20} className='text-gray-900' />} className='w-fit'>
               새 배송지 등록
             </LineButton>
           </div>

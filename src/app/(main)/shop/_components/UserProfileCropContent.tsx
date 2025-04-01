@@ -29,7 +29,7 @@ export default function UserProfileCropContent() {
     inputRef.current?.click();
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -96,7 +96,7 @@ export default function UserProfileCropContent() {
   }, [profileUrl, updateUserProfile]);
   return (
     <div className='flex flex-col gap-2 pt-5'>
-      <input ref={inputRef} type='file' accept='image/*' className='hidden' onChange={handleFileChange} />
+      <input ref={inputRef} type='file' accept='image/*' className='hidden' onChange={onFileChange} />
 
       <Button onClick={openFileDialog} color='gray' height={48}>
         파일 선택
