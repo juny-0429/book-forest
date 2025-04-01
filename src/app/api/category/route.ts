@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { CategoryListDto } from 'src/app/admin/product-management/categories/_dtos/getCategoryList.dto';
+import { CategoryListDto } from 'src/app/admin/(product-management)/categories/_dtos/getCategoryList.dto';
 import { createSupabaseServer } from 'src/lib/supabaseServer';
 
 export async function GET(request: Request) {
