@@ -1,57 +1,50 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextRequest, NextResponse } from 'next/server';
+import { Database } from './types/database.types';
 
-// 보호할 경로 목록
-const protectedRoutePatterns = [
-  /^\/admin(\/.*)?$/,
-  /^\/shop(\/.*)?$/,
-  /^\/account\/auth(\/.*)?$/,
-  '/board/write',
-  '/payment',
-];
+const loggedInRoutes = [/^\/admin(\/.*)?$/, /^\/shop(\/.*)?$/, /^\/account\/auth(\/.*)?$/, '/board/write', '/payment'];
+const loggedOutRoutes = ['/signup', '/login', '/account/forgot-id', '/account/forgot-password', '/account/find-id'];
 
 export const middleware = async (request: NextRequest) => {
-  let supabaseResponse = NextResponse.next({
-    request,
-  });
-
-  const supabase = createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, {
+  const supabase = createServerClient<Database>(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, {
     cookies: {
-      getAll() {
-        return request.cookies.getAll();
-      },
-      setAll(cookiesToSet) {
-        cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value));
-        supabaseResponse = NextResponse.next({
-          request,
-        });
-        cookiesToSet.forEach(({ name, value, options }) => supabaseResponse.cookies.set(name, value, options));
-      },
+      getAll: () => request.cookies.getAll(),
+      setAll: (cookiesToSet) => cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value)),
     },
   });
 
-  const pathname = request.nextUrl.pathname;
-  const isProtectedRoute = protectedRoutePatterns.some((pattern) => (typeof pattern === 'string' ? pathname.startsWith(pattern) : pattern.test(pathname)));
+  const token = request.cookies.get('sb-ookfvortvsnjnubjfwgk-auth-token')?.value;
+  const path = request.nextUrl.pathname;
+  const isAdminRoute = path.startsWith('/admin');
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  // 로그인한 사용자가 로그인 페이지로 가려고 할 때 홈 페이지로 리디렉션
-  if (user && pathname.startsWith('/login')) {
-    const url = request.nextUrl.clone();
-    url.pathname = '/';
-    return NextResponse.redirect(url);
+  // 로그인 상태만 접근 가능
+  if (loggedInRoutes.some((route) => (typeof route === 'string' ? path.startsWith(route) : route.test(path))) && !token) {
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 
-  // 로그인하지 않은 사용자가 보호된 경로로 가려고 하면 로그인 페이지로 리디렉션
-  if (isProtectedRoute && !user) {
-    const url = request.nextUrl.clone();
-    url.pathname = '/login';
-    return NextResponse.redirect(url);
+  // 로그인하면 접근하면 안 되는 페이지
+  if (loggedOutRoutes.includes(path) && token) {
+    return NextResponse.redirect(new URL('/', request.url));
   }
 
-  return supabaseResponse;
+  // 관리자만 접근 가능
+  if (isAdminRoute && token) {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) return NextResponse.redirect(new URL('/login', request.url));
+
+    const { data: authData } = await supabase.from('authority_log').select('authority:auth_id(auth_code)').eq('user_id', user.id).single();
+
+    const userAuthority = authData?.authority.auth_code;
+
+    if (userAuthority !== 'ADMIN' && userAuthority !== 'SUPER_ADMIN') {
+      return NextResponse.redirect(new URL('/unauthorized', request.url));
+    }
+  }
+
+  return NextResponse.next();
 };
 
 export const config = {
