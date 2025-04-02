@@ -34,7 +34,7 @@ export async function GET(request: Request) {
         board.post.map((post) => ({
           postId: post.post_id,
           postTitle: post.post_title,
-          createAt: new Date(post.create_at),
+          createAt: new Date(post.create_at!),
           accountId: post.user.account_id,
         }))
       )
