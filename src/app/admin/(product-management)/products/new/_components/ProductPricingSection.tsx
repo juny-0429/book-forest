@@ -37,6 +37,9 @@ export default function ProductPricingSection() {
               onChange={(option) => field.onChange(option ? Number(option.value) : null)}
               value={field.value ? options.find((opt) => opt.value === String(field.value)) : null}
               className='w-full'
+              menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
+              menuPosition='fixed'
+              styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
             />
           )}
         />

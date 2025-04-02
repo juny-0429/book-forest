@@ -5,9 +5,9 @@ export async function POST(request: Request) {
   const supabase = await createSupabaseServer();
   const body = await request.json();
 
-  const { categoryId, categoryName, categoryCode, parentCode } = body;
+  const { categoryName, categoryCode, parentCode } = body;
 
-  if (!categoryId || !categoryName || !categoryCode) return NextResponse.json({ error: '카테고리 이름과 코드가 필요합니다.' }, { status: 400 });
+  if (!categoryName || !categoryCode) return NextResponse.json({ error: '카테고리 이름과 코드가 필요합니다.' }, { status: 400 });
 
   const { data, error } = await supabase
     .from('category')
@@ -16,7 +16,6 @@ export async function POST(request: Request) {
       category_code: categoryCode,
       parent_code: parentCode ?? null,
     })
-    .eq('category_id', categoryId)
     .select()
     .single();
 

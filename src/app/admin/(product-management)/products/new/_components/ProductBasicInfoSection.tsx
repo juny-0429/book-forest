@@ -7,13 +7,31 @@ import DatePickerWithTime from 'src/components/DatePickerWithTime/DatePickerWith
 import { useFormContext } from 'react-hook-form';
 import { useCustomModal } from 'src/hooks/useModal';
 import SearchAuthorModalContent from './SearchAuthorModalContent';
+import { useGetTopCategoryList } from '../../../categories/_hooks/react-query/useGetTopCategoryList';
+import { useGetSubCategoryList } from '../../../categories/_hooks/react-query/useGetSubCategoryList';
+import { SelectOption } from 'src/types/select.types';
+import Select from 'src/components/Select/Select';
 
 export default function ProductBasicInfoSection() {
   const [publishedDate, setPublishedDate] = useState<Date | null>(null);
   const [selectedAuthorName, setSelectedAuthorName] = useState('');
+  const [selectedTopCode, setSelectedTopCode] = useState('');
 
   const { register, setValue } = useFormContext();
   const { openCustomModal } = useCustomModal();
+
+  const { data: topCategories = [] } = useGetTopCategoryList();
+  const { data: subCategories = [] } = useGetSubCategoryList(selectedTopCode);
+
+  const topOptions: SelectOption[] = topCategories.map((cat) => ({
+    value: cat.categoryCode,
+    label: cat.categoryName,
+  }));
+
+  const subOptions: SelectOption[] = subCategories.map((cat) => ({
+    value: cat.categoryCode,
+    label: cat.categoryName,
+  }));
 
   const searchAuthorModalOpen = () => {
     openCustomModal({
@@ -44,6 +62,31 @@ export default function ProductBasicInfoSection() {
       <ProductFormItem label='작가명'>
         <TextInput value={selectedAuthorName} readOnly onClick={searchAuthorModalOpen} placeholder='작가명' />
       </ProductFormItem>
+
+      <div className='flex items-center gap-1 w-full'>
+        <span className='w-[100px] flex-shrink-0 text-body-18m text-nowrap'>카테고리</span>
+
+        <Select
+          options={topOptions}
+          placeholder='대분류 선택'
+          onChange={(option) => {
+            setSelectedTopCode(option?.value ?? '');
+            setValue('categoryId', ''); // 중분류 초기화
+          }}
+          className='w-1/2'
+        />
+
+        <Select
+          options={subOptions}
+          placeholder='중분류 선택'
+          onChange={(option) => {
+            const category = subCategories.find((c) => c.categoryCode === option?.value);
+            setValue('categoryId', category?.categoryId ?? '');
+          }}
+          isDisabled={!selectedTopCode}
+          className='w-1/2'
+        />
+      </div>
 
       <div className='col-span-2'>
         <ProductFormItem label='간단소개'>

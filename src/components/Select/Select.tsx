@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import { useEffect, useId, useState } from 'react';
 import ReactSelect, { GroupBase, Props } from 'react-select';
 import { SelectOption } from 'src/types/select.types';
 import DropdownIndicator from './DropdownIndicator/DropdownIndicator';
@@ -13,11 +13,23 @@ export default function Select<Option extends SelectOption, IsMulti extends bool
   className,
   ...restProps
 }: SelectProps & Props<Option, IsMulti, Group>) {
+  const id = useId();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
     <div className={className}>
       <ReactSelect
         {...restProps}
-        instanceId={useId()}
+        instanceId={id}
+        menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
+        menuPosition='fixed'
+        styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
         components={{ DropdownIndicator, Option: CustomSelectOption }}
         unstyled={true}
         classNames={{
