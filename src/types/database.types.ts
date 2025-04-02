@@ -802,7 +802,7 @@ export type Database = {
           agree_marketing: boolean;
           agree_privacy: boolean;
           agree_terms: boolean;
-          created_at: string;
+          created_at?: string;
           is_delete: boolean;
           is_over_14: boolean;
           update_at: string | null;
@@ -821,7 +821,7 @@ export type Database = {
           is_delete?: boolean;
           is_over_14?: boolean;
           update_at?: string | null;
-          user_id?: string;
+          user_id: string;
           user_name: string;
           user_phone: string;
           user_profile_image_url?: string | null;
