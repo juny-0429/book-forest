@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
+import { BannerListItemDto } from 'src/app/(main)/_dtos/getBannerList.dto';
 import { BannerPositionType } from 'src/types/bannerPosition.types';
-import { BannerListItemDto } from '../../_dtos/getBannerList.dto';
 
 const getAdminBannerList = async (position: BannerPositionType): Promise<BannerListItemDto[]> => {
   const response = await fetch(`/api/banner/admin?position=${position}`, {
