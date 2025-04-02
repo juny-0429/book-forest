@@ -188,19 +188,19 @@ export type Database = {
           category_code: string;
           category_id: number;
           category_name: string;
-          parent_code?: string;
+          parent_code: string | null;
         };
         Insert: {
           category_code: string;
           category_id?: number;
           category_name: string;
-          parent_code?: string;
+          parent_code?: string | null;
         };
         Update: {
           category_code?: string;
           category_id?: number;
           category_name?: string;
-          parent_code?: string;
+          parent_code?: string | null;
         };
         Relationships: [];
       };
@@ -577,6 +577,7 @@ export type Database = {
         Row: {
           author_id: number;
           created_at: string;
+          delivery_price: number;
           discount: number | null;
           is_active: boolean;
           isbn: string;
@@ -584,6 +585,7 @@ export type Database = {
           product_id: number;
           product_name: string;
           product_summary: string | null;
+          published_date: string;
           publisher: string;
           stock: number;
           updated_at: string | null;
@@ -591,6 +593,7 @@ export type Database = {
         Insert: {
           author_id: number;
           created_at?: string;
+          delivery_price: number;
           discount?: number | null;
           is_active?: boolean;
           isbn: string;
@@ -598,6 +601,7 @@ export type Database = {
           product_id?: number;
           product_name: string;
           product_summary?: string | null;
+          published_date: string;
           publisher: string;
           stock: number;
           updated_at?: string | null;
@@ -605,6 +609,7 @@ export type Database = {
         Update: {
           author_id?: number;
           created_at?: string;
+          delivery_price?: number;
           discount?: number | null;
           is_active?: boolean;
           isbn?: string;
@@ -612,6 +617,7 @@ export type Database = {
           product_id?: number;
           product_name?: string;
           product_summary?: string | null;
+          published_date?: string;
           publisher?: string;
           stock?: number;
           updated_at?: string | null;
@@ -710,56 +716,27 @@ export type Database = {
           },
         ];
       };
-      product_detail: {
-        Row: {
-          detail_image_url: string;
-          product_description: string | null;
-          product_detail_id: number;
-          product_id: number;
-          publichedd_date: string;
-        };
-        Insert: {
-          detail_image_url: string;
-          product_description?: string | null;
-          product_detail_id?: number;
-          product_id: number;
-          publichedd_date: string;
-        };
-        Update: {
-          detail_image_url?: string;
-          product_description?: string | null;
-          product_detail_id?: number;
-          product_id?: number;
-          publichedd_date?: string;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'product_detail_product_id_fkey';
-            columns: ['product_id'];
-            isOneToOne: false;
-            referencedRelation: 'product';
-            referencedColumns: ['product_id'];
-          },
-        ];
-      };
-      product_main_image: {
+      product_image: {
         Row: {
           created_at: string;
+          image_type: string;
           image_url: string;
           product_id: number;
-          product_main_image_id: number;
+          product_image_id?: number;
         };
         Insert: {
           created_at?: string;
+          image_type: string;
           image_url: string;
           product_id: number;
-          product_main_image_id: number;
+          product_image_id?: number;
         };
         Update: {
           created_at?: string;
+          image_type?: string;
           image_url?: string;
           product_id?: number;
-          product_main_image_id?: number;
+          product_image_id?: number;
         };
         Relationships: [
           {

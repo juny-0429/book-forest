@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { CategoryDto } from '../../_dtos/createCategory.dto';
+import { CreateCategoryDto } from '../../_dtos/createCategory.dto';
 
-const createCategoryApi = async (categoryData: CategoryDto) => {
+const createCategoryApi = async (categoryData: CreateCategoryDto) => {
   const response = await fetch('/api/category/admin', {
     method: 'POST',
     headers: {

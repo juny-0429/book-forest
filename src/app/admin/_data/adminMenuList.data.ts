@@ -12,7 +12,8 @@ const adminMenuList = {
   productManagement: {
     label: '상품관리',
     subMenu: [
-      { label: '상품 목록 등록/수정/삭제', path: appRoutes.admin.productManagement.list },
+      { label: '상품 목록', path: appRoutes.admin.productManagement.list },
+      { label: '상품 등록', path: appRoutes.admin.productManagement.new },
       { label: '카테고리 관리', path: appRoutes.admin.productManagement.categories },
     ],
   },
