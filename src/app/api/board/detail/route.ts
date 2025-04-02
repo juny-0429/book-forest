@@ -31,8 +31,8 @@ export async function GET(request: Request) {
       postId: data.post_id,
       postTitle: data.post_title,
       postContent: data.post_content,
-      createAt: new Date(data.create_at),
-      accountId: data.user.account_id,
+      createAt: new Date(data.create_at!),
+      accountId: data.user!.account_id,
     };
 
     return NextResponse.json(formattedData);

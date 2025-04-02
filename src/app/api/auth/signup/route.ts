@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { SignupSchema } from 'src/app/(auth)/signup/_schemas/signup.schema';
 import { createSupabaseServer } from 'src/lib/supabaseServer'; // supabaseServer 사용
+import { Database } from 'src/types/database.types';
 
 export async function POST(request: Request) {
   try {
@@ -20,19 +21,21 @@ export async function POST(request: Request) {
 
     if (error) return NextResponse.json({ error: error.message }, { status: 400 });
 
-    // 회원 정보 테이블에 저장
-    const { error: insertError } = await supabase.from('user').insert([
-      {
-        user_id: user?.id,
-        account_id: id,
-        user_name,
-        user_phone,
-        agree_marketing: agreeMarketing,
-        agree_event_notification: agreeEvent,
-      },
-    ]);
+    if (!user?.id) {
+      return NextResponse.json({ error: '사용자 ID가 생성되지 않았습니다.' }, { status: 400 });
+    }
 
-    if (insertError) return NextResponse.json({ error: insertError.message }, { status: 400 });
+    // 회원 정보 테이블에 저장
+    const userData: Database['public']['Tables']['user']['Insert'] = {
+      user_id: user.id,
+      account_id: id,
+      user_name,
+      user_phone,
+      agree_marketing: agreeMarketing ?? false,
+      agree_event_notification: agreeEvent ?? false,
+    };
+
+    await supabase.from('user').insert(userData);
 
     const { error: authorityError } = await supabase.from('authority_log').insert([
       {

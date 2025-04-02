@@ -14,11 +14,11 @@ const shopMenuList = {
   userInfo: {
     label: '회원정보',
     subMenu: [
-      { label: '회원정보 수정', path: appRoutes.account.profile },
-      { label: '마케팅 수신 설정', path: appRoutes.account.marketingPreferences },
-      { label: '배송지 목록', path: appRoutes.account.addresses },
-      { label: '마일리지 관리', path: appRoutes.account.mileage },
-      { label: '회원탈퇴', path: appRoutes.account.deleteAccount },
+      { label: '회원정보 수정', path: appRoutes.account.auth.profile },
+      { label: '마케팅 수신 설정', path: appRoutes.account.auth.marketingPreferences },
+      { label: '배송지 목록', path: appRoutes.account.auth.addresses },
+      { label: '마일리지 관리', path: appRoutes.account.auth.mileage },
+      { label: '회원탈퇴', path: appRoutes.account.auth.deleteAccount },
     ],
   },
   helpCenter: {
