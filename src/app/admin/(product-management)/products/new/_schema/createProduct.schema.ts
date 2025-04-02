@@ -5,7 +5,11 @@ export const createProductSchema = z.object({
   authorId: z.number().int(),
   productSummary: z.string().optional(),
   publisher: z.string().min(1, '출판사를 입력해주세요.'),
-  isbn: z.string().min(1, 'ISBN을 입력해주세요.'),
+  isbn: z
+    .string()
+    .min(13, 'ISBN은 13자리여야 합니다.')
+    .max(13, 'ISBN은 13자리여야 합니다.')
+    .regex(/^\d{13}$/, '숫자 13자리만 입력 가능합니다.'),
   price: z.number().min(0, '가격은 0 이상이어야 합니다.'),
   discount: z.number().min(0).max(100).optional(),
   stock: z.number().min(0, '재고는 0 이상이어야 합니다.'),

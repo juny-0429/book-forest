@@ -6,12 +6,16 @@ const BUCKET_NAME = process.env.NEXT_PUBLIC_STORAGE_PRODUCT_BUCKET!;
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
-export const useProductMainUpload = () => {
-  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+export const useProductImageUpload = () => {
+  const [mainImageUrls, setMainImageUrls] = useState<string[]>([]);
+  const [detailImageUrls, setDetailImageUrls] = useState<string[]>([]);
 
-  const uploadFiles = async (files: File[]) => {
-    if (files.length < 1 || files.length > 5) {
-      alert('대표 이미지는 1~5장까지 업로드할 수 있습니다.');
+  const uploadImages = async (files: File[], type: 'main' | 'detail') => {
+    const maxCount = type === 'main' ? 5 : 20;
+    const currentUrls = type === 'main' ? mainImageUrls : detailImageUrls;
+
+    if (files.length < 1 || currentUrls.length + files.length > maxCount) {
+      alert(`${type === 'main' ? '대표' : '상세'} 이미지는 최대 ${maxCount}장까지 업로드할 수 있습니다.`);
       return { success: false, urls: [] };
     }
 
@@ -30,7 +34,7 @@ export const useProductMainUpload = () => {
 
       const ext = file.name.split('.').pop();
       const fileName = `${uuidv4()}.${ext}`;
-      const filePath = `main/${fileName}`;
+      const filePath = `${type}/${fileName}`;
 
       const { error } = await supabaseBrowser.storage.from(BUCKET_NAME).upload(filePath, file, {
         upsert: false,
@@ -42,12 +46,13 @@ export const useProductMainUpload = () => {
       }
 
       const { data: publicUrlData } = supabaseBrowser.storage.from(BUCKET_NAME).getPublicUrl(filePath);
-
       uploadedUrls.push(publicUrlData.publicUrl);
     }
 
     if (uploadedUrls.length > 0) {
-      setPreviewUrls(uploadedUrls);
+      const newUrls = [...currentUrls, ...uploadedUrls];
+      if (type === 'main') setMainImageUrls(newUrls);
+      else setDetailImageUrls(newUrls);
     }
 
     return {
@@ -62,8 +67,8 @@ export const useProductMainUpload = () => {
     return decodeURIComponent(pathname.replace(prefix, ''));
   };
 
-  const removeImage = async (url: string) => {
-    const path = getPathFromUrl(url); // ✅ 안전한 path 추출
+  const removeImage = async (url: string, type: 'main' | 'detail') => {
+    const path = getPathFromUrl(url);
 
     const { error } = await supabaseBrowser.storage.from(BUCKET_NAME).remove([path]);
     if (error) {
@@ -71,12 +76,17 @@ export const useProductMainUpload = () => {
       return;
     }
 
-    setPreviewUrls((prev) => prev.filter((item) => item !== url));
+    if (type === 'main') {
+      setMainImageUrls((prev) => prev.filter((item) => item !== url));
+    } else {
+      setDetailImageUrls((prev) => prev.filter((item) => item !== url));
+    }
   };
 
   return {
-    uploadFiles,
-    previewUrls,
+    mainImageUrls,
+    detailImageUrls,
+    uploadImages,
     removeImage,
   };
 };
