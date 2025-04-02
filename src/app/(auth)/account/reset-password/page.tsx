@@ -26,7 +26,7 @@ export default function ResetPasswordPage() {
           <form className='flex flex-col gap-10'>
             <label>
               <span className='text-body-18b text-ui-text-title'>새로운 비밀번호</span>
-              <SignupPasswordInput className='mt-2' />
+              <SignupPasswordInput />
             </label>
 
             <label>
