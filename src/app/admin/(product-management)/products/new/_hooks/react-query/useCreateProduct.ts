@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { CreateProductDto } from '../../_dtos/createProduct.dto';
 
 const createProductApi = async (productData: CreateProductDto) => {
-  const response = await fetch('/api/product/admin', {
+  const response = await fetch('/api/product/admin/new', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
