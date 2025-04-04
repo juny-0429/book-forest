@@ -580,7 +580,7 @@ export type Database = {
           delivery_price: number;
           discount: number | null;
           is_active: boolean;
-          isbn: string;
+          isbn: number;
           price: number;
           product_id: number;
           product_name: string;
@@ -596,7 +596,7 @@ export type Database = {
           delivery_price: number;
           discount?: number | null;
           is_active?: boolean;
-          isbn: string;
+          isbn: number;
           price: number;
           product_id?: number;
           product_name: string;
@@ -612,7 +612,7 @@ export type Database = {
           delivery_price?: number;
           discount?: number | null;
           is_active?: boolean;
-          isbn?: string;
+          isbn?: number;
           price?: number;
           product_id?: number;
           product_name?: string;
