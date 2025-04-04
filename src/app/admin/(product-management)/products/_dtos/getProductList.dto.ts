@@ -11,3 +11,9 @@ export interface GetProductListDto {
   deliveryPrice: number; // 배송비
   publishedDate: Date; // 출판일
 }
+
+export interface ProductListResponse {
+  productList: GetProductListDto[];
+  total: number;
+  totalPages: number;
+}

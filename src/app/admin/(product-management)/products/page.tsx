@@ -3,9 +3,11 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from 'src/components/Table/Table';
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from 'src/components/Pagination/pagination';
-import { productColumns } from './_data/productColumns.data';
+import { useProductColumns } from './_data/productColumns.data';
 import { useGetProductList } from './_hooks/react-query/useGetProductList';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useUpdateProductStatus } from './_hooks/react-query/useUpdateProductStatus';
+import { useState } from 'react';
 
 export default function ProductManagementPage() {
   const searchParams = useSearchParams();
@@ -14,6 +16,8 @@ export default function ProductManagementPage() {
 
   const { data } = useGetProductList(page);
   const productList = data?.productList ?? [];
+
+  const tableColumns = useProductColumns(page);
 
   // 전체 페이지 수 계산 (한 페이지 10개 기준)
   const totalPages = Math.ceil((data?.total ?? 0) / 10);
@@ -33,67 +37,70 @@ export default function ProductManagementPage() {
 
   const table = useReactTable({
     data: productList,
-    columns: productColumns,
+    columns: tableColumns,
     getCoreRowModel: getCoreRowModel(),
   });
 
   return (
-    <div>
+    <div className='flex-1 overflow-auto'>
       <h2 className='text-title-24b text-ui-text-title mb-[50px]'>상품 목록</h2>
-      <Table>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <TableHead key={header.id} style={{ width: header.getSize() }}>
-                  {flexRender(header.column.columnDef.header, header.getContext())}
-                </TableHead>
-              ))}
-            </TableRow>
-          ))}
-        </TableHeader>
 
-        <TableBody>
-          {table.getRowModel().rows.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id} className='cursor-pointer'>
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id} style={{ width: cell.column.getSize() }} className={cell.column.id === 'postTitle' ? 'text-left' : 'text-center'}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
+      <div className='flex flex-col gap-5 w-full'>
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id} style={{ width: header.getSize() }}>
+                    {flexRender(header.column.columnDef.header, header.getContext())}
+                  </TableHead>
                 ))}
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={productColumns.length} className='text-center'>
-                등록된 상품이 없습니다.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+            ))}
+          </TableHeader>
 
-      {/* 페이지네이션 */}
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious onClick={() => goToPage(Math.max(page - 1, 1))} />
-          </PaginationItem>
+          <TableBody>
+            {table.getRowModel().rows.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow key={row.id} className='cursor-pointer'>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id} style={{ width: cell.column.getSize(), minWidth: cell.column.getSize() }} className={cell.column.id === 'postTitle' ? 'text-left' : 'text-center'}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={tableColumns.length} className='text-center'>
+                  등록된 상품이 없습니다.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
 
-          {pageRange.map((p) => (
-            <PaginationItem key={p}>
-              <PaginationLink isActive={p === page} onClick={() => goToPage(p)}>
-                {p}
-              </PaginationLink>
+        {/* 페이지네이션 */}
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious onClick={() => goToPage(Math.max(page - 1, 1))} />
             </PaginationItem>
-          ))}
 
-          <PaginationItem>
-            <PaginationNext onClick={() => goToPage(Math.min(page + 1, totalPages))} />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+            {pageRange.map((p) => (
+              <PaginationItem key={p}>
+                <PaginationLink isActive={p === page} onClick={() => goToPage(p)}>
+                  {p}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+
+            <PaginationItem>
+              <PaginationNext onClick={() => goToPage(Math.min(page + 1, totalPages))} />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      </div>
     </div>
   );
 }
