@@ -6,8 +6,9 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 import { useProductColumns } from './_data/productColumns.data';
 import { useGetProductList } from './_hooks/react-query/useGetProductList';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useUpdateProductStatus } from './_hooks/react-query/useUpdateProductStatus';
-import { useState } from 'react';
+import Button from 'src/components/Button/Button';
+import { useProductSelection } from './_hooks/useProductSelection';
+import { useUpdateProductBatchStatus } from './_hooks/react-query/useUpdateProductBaatchStatus';
 
 export default function ProductManagementPage() {
   const searchParams = useSearchParams();
@@ -17,7 +18,29 @@ export default function ProductManagementPage() {
   const { data } = useGetProductList(page);
   const productList = data?.productList ?? [];
 
-  const tableColumns = useProductColumns(page);
+  const { selectedIds, isAllSelected, onCheckItem, onCheckItemAll, onClearSelectedIds } = useProductSelection(productList);
+
+  const columns = useProductColumns({
+    productList,
+    page,
+    selectedIds,
+    isAllSelected,
+    onCheckItem,
+    onCheckItemAll,
+  });
+
+  const { mutate: updateProductBatchStatus } = useUpdateProductBatchStatus();
+
+  const onStatusChange = (isActive: boolean) => {
+    updateProductBatchStatus(
+      { productIds: selectedIds, isActive, page },
+      {
+        onSuccess: () => {
+          onClearSelectedIds();
+        },
+      }
+    );
+  };
 
   // 전체 페이지 수 계산 (한 페이지 10개 기준)
   const totalPages = Math.ceil((data?.total ?? 0) / 10);
@@ -37,13 +60,30 @@ export default function ProductManagementPage() {
 
   const table = useReactTable({
     data: productList,
-    columns: tableColumns,
+    columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
   return (
     <div className='flex-1 overflow-auto'>
       <h2 className='text-title-24b text-ui-text-title mb-[50px]'>상품 목록</h2>
+
+      <div className='flex justify-between items-center mb-2'>
+        <span className='text-body-16r text-ui-text-body'>선택된 상품: {selectedIds.length}개</span>
+
+        <div className='flex items-center gap-1'>
+          <Button height={40} disabled={selectedIds.length === 0} onClick={() => onStatusChange(true)} className='w-fit'>
+            활성화
+          </Button>
+
+          <Button height={40} color='gray' disabled={selectedIds.length === 0} onClick={() => onStatusChange(false)} className='w-fit'>
+            비활성화
+          </Button>
+          <Button height={40} color='red' disabled={selectedIds.length === 0} className='w-fit'>
+            삭제
+          </Button>
+        </div>
+      </div>
 
       <div className='flex flex-col gap-5 w-full'>
         <Table>
@@ -72,7 +112,7 @@ export default function ProductManagementPage() {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={tableColumns.length} className='text-center'>
+                <TableCell colSpan={columns.length} className='text-center'>
                   등록된 상품이 없습니다.
                 </TableCell>
               </TableRow>

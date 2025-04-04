@@ -1,13 +1,31 @@
+'use client';
 import { ColumnDef } from '@tanstack/react-table';
 import { GetProductListDto } from '../_dtos/getProductList.dto';
 import dayjs from 'dayjs';
 import { Switch } from 'src/components/Switch/Switch';
 import { useUpdateProductStatus } from '../_hooks/react-query/useUpdateProductStatus';
+import CheckBox from 'src/components/CheckBox/CheckBox';
+import { useProductSelection } from '../_hooks/useProductSelection';
 
-export const useProductColumns = (page: number) => {
+interface UseProductColumnsProps {
+  productList: GetProductListDto[];
+  page: number;
+  selectedIds: number[];
+  isAllSelected: boolean;
+  onCheckItem: (id: number) => void;
+  onCheckItemAll: () => void;
+}
+
+export const useProductColumns = ({ productList, page, selectedIds, isAllSelected, onCheckItem, onCheckItemAll }: UseProductColumnsProps) => {
   const { mutate: updateProductStatus } = useUpdateProductStatus();
 
   const columns: ColumnDef<GetProductListDto>[] = [
+    {
+      id: 'select',
+      header: () => <CheckBox onChange={onCheckItemAll} checked={isAllSelected} />,
+      size: 40,
+      cell: ({ row }) => <CheckBox checked={selectedIds.includes(row.original.productId)} onChange={() => onCheckItem(row.original.productId)} />,
+    },
     { accessorKey: 'productId', header: 'No', size: 70 },
     {
       accessorKey: 'productName',
@@ -16,8 +34,10 @@ export const useProductColumns = (page: number) => {
       cell: ({ getValue }) => {
         const value = getValue() as string;
         return (
-          <div className='truncate' style={{ maxWidth: '300px' }}>
-            {value}
+          <div className='flex justify-start'>
+            <span className=' truncate' style={{ maxWidth: '300px' }}>
+              {value}
+            </span>
           </div>
         );
       },
