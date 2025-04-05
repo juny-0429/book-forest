@@ -1,4 +1,3 @@
-import { NextResponse } from 'next/server';
 import { BannerListItemDto } from 'src/app/(main)/_dtos/getBannerList.dto';
 import { createSupabaseServer } from 'src/lib/supabaseServer';
 

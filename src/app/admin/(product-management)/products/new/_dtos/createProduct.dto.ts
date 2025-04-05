@@ -3,7 +3,7 @@ export interface CreateProductDto {
   authorId: number;
   categoryId: number;
   publisher: string;
-  isbn: string;
+  isbn: number;
   price: number;
   discount?: number;
   stock: number;
