@@ -14,9 +14,13 @@ const getUserProfileApi = async (): Promise<UserProfileDto> => {
   return result.userProfile;
 };
 
+const USER_PROFILE = 'USER_PROFILE';
+
+export const getUserProfileQueryOptions = () => ({
+  queryKey: [USER_PROFILE],
+  queryFn: () => getUserProfileApi(),
+});
+
 export const useGetUserProfile = () => {
-  return useQuery({
-    queryKey: ['userProfile'],
-    queryFn: () => getUserProfileApi(),
-  });
+  return useQuery(getUserProfileQueryOptions());
 };

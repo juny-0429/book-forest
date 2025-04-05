@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { getUserProfileQueryOptions } from './useGetUserProfile';
 
 const updateUserProfileApi = async (userProfileImageUrl: string) => {
   const response = await fetch('/api/user/profile', {
@@ -21,7 +22,7 @@ export const useUpdateUserProfile = () => {
   return useMutation({
     mutationFn: (userProfileImageUrl: string) => updateUserProfileApi(userProfileImageUrl),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['userProfile'] });
+      queryClient.invalidateQueries({ queryKey: getUserProfileQueryOptions().queryKey });
     },
     onError: (error) => {
       console.error('프로필 업데이트 오류:', error);
