@@ -11,9 +11,9 @@ const CheckBox = forwardRef<HTMLInputElement, CheckBoxProps>(({ children, disabl
     <label className={cn('flex items-center gap-x-1 cursor-pointer', { 'cursor-not-allowed opacity-60': disabled })}>
       <input type='checkbox' className='hidden' ref={ref} {...restProps} disabled={disabled} />
       {restProps.checked ? (
-        <LucideIcons.SquareCheck size={24} className={disabled ? 'text-gray-300' : 'text-gray-900'} />
+        <LucideIcons.SquareCheck size={24} fill='white' className={disabled ? 'text-gray-300' : 'text-gray-900'} />
       ) : (
-        <LucideIcons.Square size={24} className={disabled ? 'text-gray-300' : 'text-gray-400'} />
+        <LucideIcons.Square size={24} fill='white' className={disabled ? 'text-gray-300' : 'text-gray-400'} />
       )}
       {children && <span className={`text-title-16r ${disabled ? 'text-gray-400' : 'text-ui-text-title'}`}>{children}</span>}
     </label>
