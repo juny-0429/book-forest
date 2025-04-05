@@ -8,19 +8,24 @@ import { useUpdateProductBatchStatus } from './_hooks/react-query/useUpdateProdu
 import ProductToolbar from './_components/ProductToolbar';
 import ProductTable from './_components/ProductTable';
 import ProductPagination from './_components/ProdictPagination';
+import { useRouter } from 'next/navigation';
 
 export default function ProductManagementPage() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const page = Number(searchParams.get('page') ?? '1');
+  const searchType = searchParams.get('searchType') ?? '';
+  const keyword = searchParams.get('keyword') ?? '';
 
-  const { data } = useGetProductList(page);
+  const { data } = useGetProductList(page, searchType, keyword);
   const productList = data?.productList ?? [];
 
   const { selectedIds, isAllSelected, onCheckItem, onCheckItemAll, onClearSelectedIds } = useProductSelection(productList);
 
   const columns = useProductColumns({
-    productList,
     page,
+    searchType,
+    keyword,
     selectedIds,
     isAllSelected,
     onCheckItem,
@@ -31,7 +36,7 @@ export default function ProductManagementPage() {
 
   const onStatusChange = (isActive: boolean) => {
     updateProductBatchStatus(
-      { productIds: selectedIds, isActive, page },
+      { productIds: selectedIds, isActive, page, searchType, keyword },
       {
         onSuccess: () => {
           onClearSelectedIds();
@@ -48,7 +53,13 @@ export default function ProductManagementPage() {
         selectedCount={selectedIds.length}
         onClickActivate={() => onStatusChange(true)}
         onClickDeactivate={() => onStatusChange(false)}
-        onClickDelete={() => {}} // 나중에 연결
+        onSearch={(searchType, keyword) => {
+          const params = new URLSearchParams(searchParams.toString());
+          params.set('searchType', searchType);
+          params.set('keyword', keyword);
+          params.set('page', '1'); // 검색 시 첫 페이지로
+          router.push(`?${params.toString()}`);
+        }}
       />
 
       <div className='flex flex-col gap-5 w-full'>

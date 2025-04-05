@@ -8,15 +8,16 @@ import CheckBox from 'src/components/CheckBox/CheckBox';
 import { useProductSelection } from '../_hooks/useProductSelection';
 
 interface UseProductColumnsProps {
-  productList: GetProductListDto[];
   page: number;
+  searchType: string;
+  keyword: string;
   selectedIds: number[];
   isAllSelected: boolean;
   onCheckItem: (id: number) => void;
   onCheckItemAll: () => void;
 }
 
-export const useProductColumns = ({ productList, page, selectedIds, isAllSelected, onCheckItem, onCheckItemAll }: UseProductColumnsProps) => {
+export const useProductColumns = ({ page, searchType, keyword, selectedIds, isAllSelected, onCheckItem, onCheckItemAll }: UseProductColumnsProps) => {
   const { mutate: updateProductStatus } = useUpdateProductStatus();
 
   const columns: ColumnDef<GetProductListDto>[] = [
@@ -87,6 +88,8 @@ export const useProductColumns = ({ productList, page, selectedIds, isAllSelecte
                 updateProductId: product.productId,
                 isActive: next,
                 page,
+                searchType,
+                keyword,
               });
             }}
           />

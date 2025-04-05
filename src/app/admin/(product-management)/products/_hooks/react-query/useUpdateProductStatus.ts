@@ -19,12 +19,13 @@ export const useUpdateProductStatus = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ updateProductId, isActive, page }: { updateProductId: number; isActive: boolean; page: number }) => updateProductStatusApi(updateProductId, isActive),
+    mutationFn: ({ updateProductId, isActive, page, searchType, keyword }: { updateProductId: number; isActive: boolean; page: number; searchType: string; keyword: string }) =>
+      updateProductStatusApi(updateProductId, isActive),
 
     onSuccess: (_data, variables) => {
-      const { updateProductId, isActive, page } = variables;
+      const { updateProductId, isActive, page, searchType, keyword } = variables;
 
-      queryClient.setQueryData<ProductListResponse>(['productList', page], (oldData) => {
+      queryClient.setQueryData<ProductListResponse>(['productList', page, searchType, keyword], (oldData) => {
         if (!oldData) return oldData;
 
         return {
