@@ -9,9 +9,11 @@ const getTopCategoryListApi = async (): Promise<CategoryListDto[]> => {
   return data.categoryList;
 };
 
+const TOP_CATEGORY_LIST = 'TOP_CATEGORY_LIST';
+
 export const useGetTopCategoryList = () => {
   return useQuery({
-    queryKey: ['categoryList', 'TOP'],
+    queryKey: [TOP_CATEGORY_LIST],
     queryFn: getTopCategoryListApi,
   });
 };

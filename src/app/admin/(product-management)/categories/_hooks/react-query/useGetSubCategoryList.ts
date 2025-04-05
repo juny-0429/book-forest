@@ -9,9 +9,11 @@ const getSubCategoryListApi = async (parentCode: string): Promise<CategoryListDt
   return data.categoryList;
 };
 
+const SUB_CATEGORY_LIST = 'SUB_CATEGORY_LIST';
+
 export const useGetSubCategoryList = (parentCode: string) => {
   return useQuery({
-    queryKey: ['categoryList', 'SUB', parentCode],
+    queryKey: [SUB_CATEGORY_LIST, parentCode],
     queryFn: () => getSubCategoryListApi(parentCode),
     enabled: !!parentCode,
   });
