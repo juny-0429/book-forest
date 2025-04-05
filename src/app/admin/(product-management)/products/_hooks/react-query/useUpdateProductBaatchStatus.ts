@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ProductListResponse } from '../../_dtos/getProductList.dto';
+import { getProductListQueryOptions } from './useGetProductList';
 
 const updateProductBatchStatusApi = async (productIds: number[], isActive: boolean) => {
   const response = await fetch('/api/product/admin/batch-status', {
@@ -25,7 +26,7 @@ export const useUpdateProductBatchStatus = () => {
     onSuccess: (_data, variables) => {
       const { productIds, isActive, page, searchType, keyword } = variables;
 
-      queryClient.setQueryData<ProductListResponse>(['productList', page, searchType, keyword], (oldData) => {
+      queryClient.setQueryData<ProductListResponse>(getProductListQueryOptions(page, searchType, keyword).queryKey, (oldData) => {
         if (!oldData) return oldData;
 
         return {
