@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { getCategoryListQueryOptions } from './useGetCategoryList';
 
 const deleteCategoryApi = async (categoryId: number) => {
   const response = await fetch(`/api/category/admin?categoryId=${categoryId}`, {
@@ -15,7 +16,7 @@ export const useDeleteCategory = () => {
   return useMutation({
     mutationFn: deleteCategoryApi,
     onSuccess: (_, deletedId) => {
-      queryClient.setQueryData(['categoryList', 'ALL'], (old: any) => {
+      queryClient.setQueryData(getCategoryListQueryOptions('ALL').queryKey, (old: any) => {
         if (!old) return [];
         return old.filter((item: any) => item.categoryId !== deletedId);
       });

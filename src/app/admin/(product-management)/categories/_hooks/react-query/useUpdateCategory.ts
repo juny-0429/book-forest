@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'; // 수정할 타입 import
 import { UpdateCategoryDto } from '../../_dtos/updateCategory.dto';
+import { getCategoryListQueryOptions } from './useGetCategoryList';
 
 const updateCategoryApi = async (categoryData: UpdateCategoryDto) => {
   const response = await fetch('/api/category/admin', {
@@ -21,7 +22,7 @@ export const useUpdateCategory = () => {
   return useMutation({
     mutationFn: updateCategoryApi,
     onSuccess: (updatedCategory) => {
-      queryClient.setQueryData(['categoryList', 'ALL'], (oldData: any) => {
+      queryClient.setQueryData(getCategoryListQueryOptions('ALL').queryKey, (oldData: any) => {
         if (!oldData) return [updatedCategory];
 
         return oldData.map((category: any) => (category.categoryId === updatedCategory.categoryId ? updatedCategory : category));

@@ -3,6 +3,7 @@ import { CreateCommentPayload } from '../../_schemas/comment.schema';
 import { useAlertModal } from 'src/hooks/useModal';
 import { CommentListDto } from '../../_dtos/getCommentList.dto';
 import { useParams } from 'next/navigation';
+import { getCommentListQueryOptions } from './useGetCommentList';
 
 const createCommentApi = async (data: CreateCommentPayload) => {
   const response = await fetch('/api/board/comment', {
@@ -26,7 +27,7 @@ export const useCreateComment = () => {
   return useMutation({
     mutationFn: createCommentApi,
     onSuccess: (newComment) => {
-      queryClient.setQueryData<CommentListDto[]>(['commentList', Number(postId)], (oldData) => {
+      queryClient.setQueryData<CommentListDto[]>(getCommentListQueryOptions(Number(postId)).queryKey, (oldData) => {
         if (!oldData) return [newComment];
 
         return [...oldData, newComment];

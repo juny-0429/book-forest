@@ -14,9 +14,11 @@ const getPostListApi = async (boardCode: BoardCategoryType): Promise<PostListDto
   return await response.json();
 };
 
+const POST_LIST = 'POST_LIST';
+
 export const useGetPostList = (boardCode: BoardCategoryType) => {
   return useQuery({
-    queryKey: ['postList', boardCode],
+    queryKey: [POST_LIST, boardCode],
     queryFn: () => getPostListApi(boardCode),
     enabled: !!boardCode,
   });

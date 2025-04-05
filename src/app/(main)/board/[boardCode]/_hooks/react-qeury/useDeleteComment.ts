@@ -1,7 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
-import { useAlertModal } from "src/hooks/useModal";
-import { CommentListDto } from "../../_dtos/getCommentList.dto";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useParams } from 'next/navigation';
+import { useAlertModal } from 'src/hooks/useModal';
+import { CommentListDto } from '../../_dtos/getCommentList.dto';
+import { getCommentListQueryOptions } from './useGetCommentList';
 
 const deleteCommentApi = async (commentId: number) => {
   const response = await fetch(`/api/board/comment?commentId=${commentId}`, {
@@ -21,7 +22,7 @@ export const useDeleteComment = () => {
   return useMutation({
     mutationFn: deleteCommentApi,
     onSuccess: (_, commentId) => {
-      queryClient.setQueryData<CommentListDto[]>(['commentList', Number(postId)], (oldData) => {
+      queryClient.setQueryData<CommentListDto[]>(getCommentListQueryOptions(Number(postId)).queryKey, (oldData) => {
         if (!oldData) return [];
         return oldData.filter((comment) => comment.commentId !== commentId);
       });

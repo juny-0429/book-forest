@@ -10,10 +10,14 @@ const getCommentListApi = async (postId: number): Promise<CommentListDto[]> => {
   return data.commentList;
 };
 
+const COMMENT_LIST = 'COMMENT_LIST';
+
+export const getCommentListQueryOptions = (postId: number) => ({
+  queryKey: [COMMENT_LIST, postId],
+  queryFn: () => getCommentListApi(postId),
+  enabled: !!postId,
+});
+
 export const useGetCommentList = (postId: number) => {
-  return useQuery({
-    queryKey: ['commentList', postId],
-    queryFn: () => getCommentListApi(postId),
-    enabled: !!postId,
-  });
+  return useQuery(getCommentListQueryOptions(postId));
 };

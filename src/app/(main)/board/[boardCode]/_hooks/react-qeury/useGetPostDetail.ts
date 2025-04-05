@@ -13,9 +13,11 @@ const getPostDetailApi = async (postId: number): Promise<PostDetailDto> => {
   return await response.json();
 };
 
+const POST_DETAIL = 'POST_DETAIL';
+
 export const useGetPostDetail = (postId: number) => {
   return useQuery({
-    queryKey: ['postDetail', postId],
+    queryKey: [POST_DETAIL, postId],
     queryFn: () => getPostDetailApi(postId),
     enabled: !!postId,
   });

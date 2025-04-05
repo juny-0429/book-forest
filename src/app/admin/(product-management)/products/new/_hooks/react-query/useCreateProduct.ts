@@ -20,11 +20,5 @@ export const useCreateProduct = () => {
 
   return useMutation({
     mutationFn: createProductApi,
-    onSuccess: (newProduct) => {
-      queryClient.setQueryData(['productList'], (oldData: any) => {
-        if (!oldData) return [newProduct];
-        return [...oldData, newProduct];
-      });
-    },
   });
 };

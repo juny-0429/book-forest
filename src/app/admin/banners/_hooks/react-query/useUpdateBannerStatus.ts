@@ -1,7 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { BannerListItemDto } from '../../../../(main)/_dtos/getBannerList.dto';
+import { getAdminBannerListQueryOptions } from './useGetAdminBannerList';
+import { BannerPositionType } from 'src/types/bannerPosition.types';
 
-const updateBannerStatus = async (banner_id: number, is_active: boolean) => {
+const updateBannerStatusApi = async (banner_id: number, is_active: boolean) => {
   const response = await fetch('/api/banner/admin', {
     method: 'PUT',
     headers: {
@@ -15,16 +17,16 @@ const updateBannerStatus = async (banner_id: number, is_active: boolean) => {
   return response.json();
 };
 
-export const useUpdateBannerStatus = (position: string) => {
+export const useUpdateBannerStatus = (position: BannerPositionType) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ update_banner_id, is_active }: { update_banner_id: number; is_active: boolean }) => updateBannerStatus(update_banner_id, is_active),
+    mutationFn: ({ update_banner_id, is_active }: { update_banner_id: number; is_active: boolean }) => updateBannerStatusApi(update_banner_id, is_active),
 
     onSuccess: (_data, variables) => {
       const { update_banner_id, is_active } = variables;
 
-      queryClient.setQueryData(['bannerList', position], (oldData: BannerListItemDto[] | undefined) => {
+      queryClient.setQueryData(getAdminBannerListQueryOptions(position).queryKey, (oldData: BannerListItemDto[] | undefined) => {
         if (!oldData) return [];
 
         return oldData.map((banner) => (banner.banner_id === update_banner_id ? { ...banner, is_active } : banner));

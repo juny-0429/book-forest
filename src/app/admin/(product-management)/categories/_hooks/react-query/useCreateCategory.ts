@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { CreateCategoryDto } from '../../_dtos/createCategory.dto';
+import { getCategoryListQueryOptions } from './useGetCategoryList';
 
 const createCategoryApi = async (categoryData: CreateCategoryDto) => {
   const response = await fetch('/api/category/admin', {
@@ -21,7 +22,7 @@ export const useCreateCategory = () => {
   return useMutation({
     mutationFn: createCategoryApi,
     onSuccess: (newCategory) => {
-      queryClient.setQueryData(['categoryList', 'ALL'], (oldData: any) => {
+      queryClient.setQueryData(getCategoryListQueryOptions('ALL').queryKey, (oldData: any) => {
         if (!oldData) return [newCategory];
         return [...oldData, newCategory];
       });

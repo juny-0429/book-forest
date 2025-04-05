@@ -11,10 +11,14 @@ const getCategoryListApi = async (categoryLevel: CategoryLevelType): Promise<Cat
   return data.categoryList;
 };
 
+const CATEGORY_LIST = 'CATEGORY_LIST';
+
+export const getCategoryListQueryOptions = (categoryLevel: CategoryLevelType) => ({
+  queryKey: [CATEGORY_LIST, categoryLevel],
+  queryFn: () => getCategoryListApi(categoryLevel),
+  enabled: !!categoryLevel,
+});
+
 export const useGetCategoryList = (categoryLevel: CategoryLevelType) => {
-  return useQuery({
-    queryKey: ['categoryList', categoryLevel],
-    queryFn: () => getCategoryListApi(categoryLevel),
-    enabled: !!categoryLevel,
-  });
+  return useQuery(getCategoryListQueryOptions(categoryLevel));
 };
