@@ -15,9 +15,11 @@ const getBannerListApi = async (position: BannerPositionType): Promise<BannerLis
   return result.data;
 };
 
+const BANNER_LIST = 'BANNER_LIST';
+
 export const useGetBannerList = (position: BannerPositionType, isVisible = true) => {
   return useQuery({
-    queryKey: ['bannerList', position],
+    queryKey: [BANNER_LIST, position],
     queryFn: () => getBannerListApi(position),
     enabled: !!position && isVisible,
   });

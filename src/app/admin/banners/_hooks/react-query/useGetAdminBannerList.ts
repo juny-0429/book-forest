@@ -15,10 +15,14 @@ const getAdminBannerList = async (position: BannerPositionType): Promise<BannerL
   return result.data;
 };
 
+export const ADMIN_BANNER_LIST = 'ADMIN_BANNER_LIST';
+
+export const getAdminBannerListQueryOptions = (position: BannerPositionType) => ({
+  queryKey: [ADMIN_BANNER_LIST, position],
+  queryFn: () => getAdminBannerList(position),
+  enabled: !!position,
+});
+
 export const useGetAdminBannerList = (position: BannerPositionType) => {
-  return useQuery({
-    queryKey: ['bannerList', position],
-    queryFn: () => getAdminBannerList(position),
-    enabled: !!position,
-  });
+  return useQuery(getAdminBannerListQueryOptions(position));
 };
