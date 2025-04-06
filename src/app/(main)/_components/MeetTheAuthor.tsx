@@ -12,6 +12,7 @@ export default function MeetTheAuthor() {
     bookImage: SampleAuthorImg,
   }));
 
+  //  todo: api 연결하기
   return (
     <section className='flex flex-col gap-10 w-full'>
       <SectionTitle title='작가와의 만남' description='책숲이 소개하는 이달의 특별한 작가' />
