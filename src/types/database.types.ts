@@ -13,6 +13,7 @@ export type Database = {
           author_name: string;
           author_profile_image_url: string | null;
           created_date: string;
+          author_description: string | null;
         };
         Insert: {
           author_awards: string;
@@ -23,6 +24,7 @@ export type Database = {
           author_name: string;
           author_profile_image_url?: string | null;
           created_date?: string;
+          author_description?: string | null;
         };
         Update: {
           author_awards?: string;
@@ -33,6 +35,7 @@ export type Database = {
           author_name?: string;
           author_profile_image_url?: string | null;
           created_date?: string;
+          author_description?: string | null;
         };
         Relationships: [];
       };
@@ -723,6 +726,7 @@ export type Database = {
           image_url: string;
           product_id: number;
           product_image_id?: number;
+          is_main: boolean;
         };
         Insert: {
           created_at?: string;
@@ -730,6 +734,7 @@ export type Database = {
           image_url: string;
           product_id: number;
           product_image_id?: number;
+          is_main: boolean;
         };
         Update: {
           created_at?: string;
@@ -737,6 +742,7 @@ export type Database = {
           image_url?: string;
           product_id?: number;
           product_image_id?: number;
+          is_main?: boolean;
         };
         Relationships: [
           {
@@ -891,7 +897,20 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      get_products_by_tag: {
+        Args: { _tag_code: string };
+        Returns: {
+          product_id: number;
+          product_name: string;
+          product_summary: string;
+          author_name: string;
+          publisher: string;
+          price: number;
+          discount: number;
+          category_name: string;
+          main_image_url: string | null;
+        }[];
+      };
     };
     Enums: {
       [_ in never]: never;

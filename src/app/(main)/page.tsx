@@ -1,6 +1,5 @@
 import MainBannerSwiper from 'src/components/Banner/MainBannerSwiper';
 import SideBanner from 'src/components/Banner/SideBanner';
-import AppLayout from 'src/components/Layout/AppLayout';
 import CategoryNavigationBar from './_components/CategoryNavigationBar';
 import DualBanner from 'src/components/Banner/DualBanner';
 import TripleBanner from 'src/components/Banner/TripleBanner';
