@@ -13,6 +13,7 @@ export type Database = {
           author_name: string;
           author_profile_image_url: string | null;
           created_date: string;
+          author_description: string | null;
         };
         Insert: {
           author_awards: string;
@@ -23,6 +24,7 @@ export type Database = {
           author_name: string;
           author_profile_image_url?: string | null;
           created_date?: string;
+          author_description?: string | null;
         };
         Update: {
           author_awards?: string;
@@ -33,6 +35,7 @@ export type Database = {
           author_name?: string;
           author_profile_image_url?: string | null;
           created_date?: string;
+          author_description?: string | null;
         };
         Relationships: [];
       };
