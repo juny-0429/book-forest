@@ -35,7 +35,7 @@ export default function RecommendedBooks() {
                   {book.mainImageUrl && <Image src={book.mainImageUrl} width={180} height={180} alt='book image' className='book-item' />}
 
                   <div className='absolute inset-0 flex flex-col justify-center gap-[10px] w-[180px] p-[10px] opacity-0 group-hover:opacity-100 group-hover:bg-black group-hover:bg-opacity-60 transition-all duration-300'>
-                    <p className='text-body-16b text-white'>책속에서</p>
+                    <p className='text-body-16b text-white'>책소개</p>
                     <p className='h-full text-caption-10r text-white line-clamp-[12] overflow-hidden'>{book.productSummary}</p>
                     <p className='w-full text-end text-body-18b text-saffron-200'>{book.price.toLocaleString()}원</p>
                   </div>
