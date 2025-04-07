@@ -9,12 +9,17 @@ export async function GET(request: Request) {
   const categoryLevel = searchParams.get('categoryLevel'); // 'ALL' | 'TOP' | 'SUB' (or undefined = ALL)
 
   try {
-    const { data } = await supabase.from('category').select(`
+    const { data } = await supabase
+      .from('category')
+      .select(
+        `
       category_id,
       category_name,
       category_code,
-      parent_code
-    `);
+      parent_name
+    `
+      )
+      .order('category_code', { ascending: true });
 
     if (!data || data.length === 0) return NextResponse.json({ error: '카테고리가 존재하지 않습니다.' }, { status: 404 });
 
@@ -24,19 +29,18 @@ export async function GET(request: Request) {
     });
 
     const filtered = data.filter((category) => {
-      if (categoryLevel === 'TOP') return category.parent_code === null;
-      if (categoryLevel === 'SUB') return category.parent_code !== null;
+      if (categoryLevel === 'TOP') return category.category_code.length === 2;
+      if (categoryLevel === 'SUB') return category.category_code.length > 2;
       return true;
     });
 
-    const flattenedData: CategoryListDto[] = filtered
-      .map((category) => ({
-        categoryId: category.category_id,
-        categoryName: category.category_name,
-        categoryCode: category.category_code,
-        parentName: category.parent_code ? (categoryMap.get(category.parent_code) ?? '-') : '-',
-      }))
-      .sort((a, b) => a.categoryId - b.categoryId);
+    const flattenedData: CategoryListDto[] = filtered.map((category, index) => ({
+      no: index + 1,
+      categoryId: category.category_id,
+      categoryName: category.category_name,
+      categoryCode: category.category_code,
+      parentName: category.parent_name ? category.parent_name : '-',
+    }));
 
     return NextResponse.json({ categoryList: flattenedData });
   } catch (error: any) {
