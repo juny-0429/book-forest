@@ -15,21 +15,21 @@ import Select from 'src/components/Select/Select';
 export default function ProductBasicInfoSection() {
   const [publishedDate, setPublishedDate] = useState<Date | null>(null);
   const [selectedAuthorName, setSelectedAuthorName] = useState('');
-  const [selectedTopCode, setSelectedTopCode] = useState('');
+  const [selectedTopName, setSelectedTopName] = useState('');
 
   const { register, setValue } = useFormContext();
   const { openCustomModal } = useCustomModal();
 
   const { data: topCategories = [] } = useGetTopCategoryList();
-  const { data: subCategories = [] } = useGetSubCategoryList(selectedTopCode);
+  const { data: subCategories = [] } = useGetSubCategoryList(selectedTopName);
 
   const topOptions: SelectOption[] = topCategories.map((cat) => ({
-    value: cat.categoryCode,
+    value: cat.categoryName,
     label: cat.categoryName,
   }));
 
   const subOptions: SelectOption[] = subCategories.map((cat) => ({
-    value: cat.categoryCode,
+    value: cat.categoryName,
     label: cat.categoryName,
   }));
 
@@ -70,7 +70,7 @@ export default function ProductBasicInfoSection() {
           options={topOptions}
           placeholder='대분류 선택'
           onChange={(option) => {
-            setSelectedTopCode(option?.value ?? '');
+            setSelectedTopName(option?.value ?? '');
             setValue('categoryId', ''); // 중분류 초기화
           }}
           className='w-1/2'
@@ -83,7 +83,7 @@ export default function ProductBasicInfoSection() {
             const category = subCategories.find((c) => c.categoryCode === option?.value);
             setValue('categoryId', category?.categoryId ?? '');
           }}
-          isDisabled={!selectedTopCode}
+          isDisabled={!selectedTopName}
           className='w-1/2'
         />
       </div>

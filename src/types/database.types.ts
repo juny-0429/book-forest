@@ -191,19 +191,19 @@ export type Database = {
           category_code: string;
           category_id: number;
           category_name: string;
-          parent_code: string | null;
+          parent_name: string | null;
         };
         Insert: {
           category_code: string;
           category_id?: number;
           category_name: string;
-          parent_code?: string | null;
+          parent_name?: string | null;
         };
         Update: {
           category_code?: string;
           category_id?: number;
           category_name?: string;
-          parent_code?: string | null;
+          parent_name?: string | null;
         };
         Relationships: [];
       };
