@@ -1,5 +1,5 @@
 export interface CategoryListDto {
-  no: number;
+  no: number | null;
   categoryId: number;
   categoryName: string;
   categoryCode: string;

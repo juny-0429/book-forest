@@ -19,7 +19,7 @@ export default function AddCategoryModalContent() {
   const { register, handleSubmit, control } = useForm<CategorySchema>({
     resolver: zodResolver(categorySchema),
     defaultValues: {
-      parentCode: null,
+      parentName: null,
     },
   });
 
@@ -55,13 +55,13 @@ export default function AddCategoryModalContent() {
             <label className='flex items-center'>
               <span className='w-[150px] text-body-18b text-ui-text-title'>대분류 선택</span>
               <Controller
-                name='parentCode'
+                name='parentName'
                 control={control}
                 render={({ field }) => {
                   const selectedOption =
                     categoryTopList
                       ?.map((category) => ({
-                        value: category.categoryCode,
+                        value: category.categoryName,
                         label: category.categoryName,
                       }))
                       .find((option) => option.value === field.value) ?? null;
@@ -72,7 +72,7 @@ export default function AddCategoryModalContent() {
                       onChange={(option) => field.onChange(option?.value ?? '')}
                       options={
                         categoryTopList?.map((category) => ({
-                          value: category.categoryCode,
+                          value: category.categoryName,
                           label: category.categoryName,
                         })) || []
                       }

@@ -4,11 +4,9 @@ import { createSupabaseServer } from 'src/lib/supabaseServer';
 export async function GET(request: Request) {
   const supabase = await createSupabaseServer();
   const { searchParams } = new URL(request.url);
-  const parentCode = searchParams.get('parentCode');
+  const parentName = searchParams.get('parentName');
 
-  if (!parentCode) {
-    return NextResponse.json({ error: 'parentCode가 필요합니다.' }, { status: 400 });
-  }
+  if (!parentName) return NextResponse.json({ error: 'parentName이 필요합니다.' }, { status: 400 });
 
   try {
     const { data, error } = await supabase
@@ -17,11 +15,11 @@ export async function GET(request: Request) {
         `
         category_id,
         category_name,
-        category_code,
-        parent_code
+        category_code
       `
       )
-      .eq('parent_code', parentCode);
+      .eq('parent_name', parentName)
+      .order('category_code', { ascending: true });
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
     if (!data || data.length === 0) return NextResponse.json({ error: '중분류가 존재하지 않습니다.' }, { status: 404 });

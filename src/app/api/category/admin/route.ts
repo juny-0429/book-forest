@@ -5,7 +5,7 @@ export async function POST(request: Request) {
   const supabase = await createSupabaseServer();
   const body = await request.json();
 
-  const { categoryName, categoryCode, parentCode } = body;
+  const { categoryName, categoryCode, parentName } = body;
 
   if (!categoryName || !categoryCode) return NextResponse.json({ error: '카테고리 이름과 코드가 필요합니다.' }, { status: 400 });
 
@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     .insert({
       category_name: categoryName,
       category_code: categoryCode,
-      parent_code: parentCode ?? null,
+      parent_name: parentName ?? null,
     })
     .select()
     .single();
@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     categoryId: data.category_id,
     categoryName: data.category_name,
     categoryCode: data.category_code,
-    parentCode: data.parent_code,
+    parentName: data.parent_name,
   });
 }
 
@@ -33,7 +33,7 @@ export async function PUT(request: Request) {
   const supabase = await createSupabaseServer();
   const body = await request.json();
 
-  const { categoryId, categoryName, categoryCode, parentCode } = body;
+  const { categoryId, categoryName, categoryCode, parentName } = body;
 
   if (!categoryId || !categoryName || !categoryCode) return NextResponse.json({ error: '필수 값이 누락되었습니다.' }, { status: 400 });
 
@@ -42,7 +42,7 @@ export async function PUT(request: Request) {
     .update({
       category_name: categoryName,
       category_code: categoryCode,
-      parent_code: parentCode ?? null,
+      parent_name: parentName ?? null,
     })
     .eq('category_id', categoryId)
     .select()
@@ -54,7 +54,7 @@ export async function PUT(request: Request) {
     categoryId: data.category_id,
     categoryName: data.category_name,
     categoryCode: data.category_code,
-    parentCode: data.parent_code,
+    parentName: data.parent_name,
   });
 }
 
