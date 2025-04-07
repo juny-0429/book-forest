@@ -7,7 +7,6 @@ import KoLogo from '@/assets/images/logos/ko-logo.png';
 import SearchBar from '../../SearchBar/SearchBar';
 import LucideIcons from 'src/theme/lucideIcon';
 import NavigationBar from '../NavigationBar/NavigationBar';
-import { mockNavigationList } from '../NavigationBar/NavigationBar.data';
 import { useAuth } from 'src/provider/authProvider';
 import { useSignOut } from 'src/hooks/userLogout';
 
@@ -16,7 +15,7 @@ export default function Header() {
   const { signOut } = useSignOut();
 
   return (
-    <header className='sticky top-0 z-100 bg-ui-background border-b border-solid border-gray-300 z-50 w-full'>
+    <header className='sticky top-0 z-[9999]  w-full bg-ui-background border-b border-solid border-gray-300'>
       <nav className='bg-gray-200'>
         <ul className='flex justify-end items-center w-full max-w-[1400px] mx-auto gap-5 px-[50px] py-[10px] text-ui-text-title '>
           {!user && !loading && (
@@ -55,7 +54,7 @@ export default function Header() {
         </ul>
       </nav>
 
-      <div className='flex justify-between items-center w-full max-w-[1200px] mx-auto py-3'>
+      <div className='flex justify-between items-center w-full max-w-[1200px] mx-auto pt-3'>
         <div className='flex flex-col items-start gap-[20px] w-fit'>
           <h1 className='flex items-center gap-[40px] w-full'>
             <Link href='/'>
@@ -64,7 +63,7 @@ export default function Header() {
             <SearchBar className='w-[400px]' placeholder='검색어를 입력하세요' />
           </h1>
 
-          <NavigationBar navigationList={mockNavigationList} />
+          <NavigationBar />
         </div>
 
         <div className='flex justify-center items-center gap-[20px]'>
