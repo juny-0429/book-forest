@@ -37,7 +37,7 @@ export default function mainBannerListSwiper() {
 
   return (
     <>
-      <div className='relative w-full max-w-[1050px] max-h-[300px] mx-auto rounded-[12px] overflow-hidden'>
+      <div className='relative w-full max-w-[1050px] max-h-[300px] mx-auto rounded-[12px] overflow-hidden -z-30'>
         <Swiper
           modules={[Navigation, Autoplay]}
           spaceBetween={0}
