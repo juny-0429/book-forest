@@ -12,19 +12,23 @@ import { useGetCategoryProductList } from './_hooks/react-query/useGetCategoryPr
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import CategoryBreadcrumb from './_components/CategoryBreadcrumb';
 import { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { useGetCategoryPath } from './_hooks/react-query/useGetCategoryPath';
 
 export default function CategoryPage() {
   const params = useParams();
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const { ref, inView } = useInView();
 
   const view = searchParams.get('view') === 'list' ? 'list' : 'grid';
   const categoryCode = params.categoryCode;
 
-  const { data } = useGetCategoryProductList(categoryCode as string);
-  const categoryPath = data?.categoryPath ?? [];
-  const categoryProductList = data?.categoryProductList ?? [];
+  const { data: categoryPath } = useGetCategoryPath(categoryCode as string);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetCategoryProductList(categoryCode as string);
+
+  const categoryProductList = data?.pages.flatMap((page) => page.categoryProductList) ?? [];
 
   const options: SelectOption[] = [
     { value: '', label: '제목순' },
@@ -44,14 +48,22 @@ export default function CategoryPage() {
       const newUrl = `${pathname}?view=grid`;
       router.replace(newUrl);
     }
-  }, []);
+  }, [searchParams, pathname, router]);
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage]);
 
   return (
     <div className='flex flex-col gap-10 w-full'>
-      <div className='space-y-2'>
-        <h2 className='text-title-32b text-ui-text-title'>{categoryPath[categoryPath.length - 1]?.name ?? ''}</h2>
-        <CategoryBreadcrumb categoryPath={categoryPath} />
-      </div>
+      {categoryPath && (
+        <div className='space-y-2'>
+          <h2 className='text-title-32b text-ui-text-title'>{categoryPath[categoryPath.length - 1]?.name ?? ''}</h2>
+          <CategoryBreadcrumb categoryPath={categoryPath} />
+        </div>
+      )}
 
       <CategoryBanner />
 
@@ -82,6 +94,8 @@ export default function CategoryPage() {
 
       {view === 'grid' && <CategoryGridList categoryProductList={categoryProductList} />}
       {view === 'list' && <CategoryRowList categoryProductList={categoryProductList} />}
+
+      {categoryProductList.length !== 0 && !isFetchingNextPage && <div ref={ref} className='h-[1px]' />}
     </div>
   );
 }

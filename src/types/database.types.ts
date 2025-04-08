@@ -913,7 +913,11 @@ export type Database = {
       };
 
       get_products_by_category_code: {
-        Args: { _category_code: string };
+        Args: {
+          _category_code: string;
+          _limit: number;
+          _page: number;
+        };
         Returns: {
           product_id: number;
           product_name: string;
@@ -929,7 +933,10 @@ export type Database = {
       };
 
       get_all_products: {
-        Args: Record<string, never>;
+        Args: {
+          _page?: number;
+          _limit?: number;
+        };
         Returns: {
           product_id: number;
           product_name: string;

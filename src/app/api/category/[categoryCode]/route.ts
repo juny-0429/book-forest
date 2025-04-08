@@ -4,43 +4,20 @@ import { createSupabaseServer } from 'src/lib/supabaseServer';
 
 export async function GET(request: Request, { params }: { params: { categoryCode: string } }) {
   const supabase = await createSupabaseServer();
-  const { categoryCode } = params;
 
-  const categoryPath = [{ code: '00', name: '전체' }];
+  const { searchParams } = new URL(request.url);
+  const page = parseInt(searchParams.get('page') || '1');
+  const limit = parseInt(searchParams.get('limit') || '10');
 
-  if (categoryCode !== '00') {
-    const { data: subCategory } = await supabase.from('category').select('category_name').eq('category_code', categoryCode).single();
+  const categoryCode = (await params).categoryCode;
 
-    if (categoryCode.length === 2) {
-      // 대분류
-      categoryPath.push({
-        code: categoryCode,
-        name: subCategory?.category_name ?? '',
-      });
-    } else {
-      // 중분류
-      const parentCode = categoryCode.slice(0, 2);
-
-      const { data: parentCategory } = await supabase.from('category').select('category_name').eq('category_code', parentCode).single();
-
-      categoryPath.push({
-        code: parentCode,
-        name: parentCategory?.category_name ?? '',
-      });
-
-      categoryPath.push({
-        code: categoryCode,
-        name: subCategory?.category_name ?? '',
-      });
-    }
-  }
-
-  // 상품 목록 조회
   const { data, error } =
     categoryCode === '00'
-      ? await supabase.rpc('get_all_products')
+      ? await supabase.rpc('get_all_products', { _page: page, _limit: limit })
       : await supabase.rpc('get_products_by_category_code', {
           _category_code: categoryCode,
+          _page: page,
+          _limit: limit,
         });
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
@@ -58,8 +35,14 @@ export async function GET(request: Request, { params }: { params: { categoryCode
     mainImageUrl: product.main_image_url,
   }));
 
+  const nextPage = data.length === limit ? page + 1 : null;
+
   return NextResponse.json({
-    categoryPath,
     categoryProductList: flattenedData,
+    paginationMeta: {
+      currentPage: page,
+      nextPage,
+      pageSize: limit,
+    },
   });
 }

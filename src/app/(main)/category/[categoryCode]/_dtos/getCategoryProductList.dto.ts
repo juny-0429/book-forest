@@ -11,12 +11,11 @@ export interface CategoryProductListItem {
   mainImageUrl: string | null;
 }
 
-export interface CategoryPathItem {
-  code: string;
-  name: string;
-}
-
 export interface CategoryProductListDto {
-  categoryPath: CategoryPathItem[];
   categoryProductList: CategoryProductListItem[];
+  paginationMeta: {
+    currentPage: number;
+    nextPage: number | null;
+    pageSize: number;
+  };
 }
