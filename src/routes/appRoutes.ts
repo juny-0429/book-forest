@@ -33,7 +33,7 @@ export const appRoutes = {
 
   category: {
     /* 전체 */
-    category: '/category/all',
+    all: '/category',
     /* 소설 */
     novel: '/category/novel',
     /* 시/에세이 */
