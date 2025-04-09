@@ -911,6 +911,45 @@ export type Database = {
           main_image_url: string | null;
         }[];
       };
+
+      get_products_by_category_code: {
+        Args: {
+          _category_code: string;
+          _limit: number;
+          _page: number;
+        };
+        Returns: {
+          product_id: number;
+          product_name: string;
+          product_summary: string;
+          author_name: string;
+          category_name: string;
+          publisher: string;
+          price: number;
+          discount: number;
+          published_date: Date;
+          main_image_url: string | null;
+        }[];
+      };
+
+      get_all_products: {
+        Args: {
+          _page?: number;
+          _limit?: number;
+        };
+        Returns: {
+          product_id: number;
+          product_name: string;
+          product_summary: string;
+          author_name: string;
+          category_name: string;
+          publisher: string;
+          price: number;
+          discount: number;
+          published_date: Date;
+          main_image_url: string | null;
+        }[];
+      };
     };
     Enums: {
       [_ in never]: never;
