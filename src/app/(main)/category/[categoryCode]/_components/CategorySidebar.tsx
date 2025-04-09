@@ -23,7 +23,7 @@ export default function CategorySidebar() {
         <ul className='flex flex-col gap-2'>
           {currentGroup?.children.map((category) => (
             <li key={category.categoryCode} className='text-body-16r text-ui-text-body'>
-              <Link href={`${appRoutes.category.all}/${category.categoryCode}`}>{category.categoryName}</Link>
+              <Link href={`${appRoutes.category}/${category.categoryCode}`}>{category.categoryName}</Link>
             </li>
           ))}
         </ul>
@@ -35,7 +35,7 @@ export default function CategorySidebar() {
         <ul className='flex flex-col gap-2'>
           {otherTopCategoryList?.map((topCategory) => (
             <li key={topCategory.categoryCode}>
-              <Link href={`${appRoutes.category.all}/${topCategory.categoryCode}`} className='text-body-18b text-ui-text-title'>
+              <Link href={`${appRoutes.category}/${topCategory.categoryCode}`} className='text-body-18b text-ui-text-title'>
                 {topCategory.categoryName}
               </Link>
             </li>

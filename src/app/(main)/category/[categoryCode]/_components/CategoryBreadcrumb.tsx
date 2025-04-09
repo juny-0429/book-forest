@@ -14,7 +14,7 @@ export default function CategoryBreadcrumb({ categoryPath }: CategoryBreadcrumbP
         {categoryPath.map((path, idx) => (
           <Fragment key={path.code}>
             <BreadcrumbItem>
-              <BreadcrumbLink href={`${appRoutes.category.all}/${path.code}`}>{path.name}</BreadcrumbLink>
+              <BreadcrumbLink href={`${appRoutes.category}/${path.code}`}>{path.name}</BreadcrumbLink>
             </BreadcrumbItem>
             {idx < categoryPath.length - 1 && <BreadcrumbSeparator />}
           </Fragment>

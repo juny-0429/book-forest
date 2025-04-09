@@ -7,6 +7,7 @@ import { cn } from 'src/lib/utils';
 import { mockNavigationList } from '../NavigationBar/NavigationBar.data';
 import { useGetCategoryList } from 'src/app/admin/(product-management)/categories/_hooks/react-query/useGetCategoryList';
 import LucideIcons from 'src/theme/lucideIcon';
+import { appRoutes } from 'src/routes/appRoutes';
 
 export default function NavigationBar() {
   const pathname = usePathname();
@@ -41,7 +42,7 @@ export default function NavigationBar() {
                   <ul className='grid grid-cols-[.75fr_.75fr_.75fr_1fr] gap-x-4'>
                     {nestedCategoryList?.map((parent) => (
                       <li key={parent.categoryId} className='row-span-3 pb-5'>
-                        <Link href='' className='flex justify-between items-center mb-3 mr-4'>
+                        <Link href={`${appRoutes.category}/${parent.categoryCode}`} className='flex justify-between items-center mb-3 mr-4'>
                           <span className='text-body-16b text-ui-text-title'>{parent.categoryName}</span>
 
                           <LucideIcons.ChevronRight size={16} />
@@ -51,9 +52,9 @@ export default function NavigationBar() {
                           {parent.subCategories?.map((child) => (
                             <li key={child.categoryId}>
                               <NavigationMenuLink asChild>
-                                <a href={`/category/${child.categoryCode.toLowerCase()}`} className='text-body-14l hover:text-ui-cta transition'>
+                                <Link href={`${appRoutes.category}/${child.categoryCode}`} className='text-body-14l hover:text-ui-cta transition'>
                                   {child.categoryName}
-                                </a>
+                                </Link>
                               </NavigationMenuLink>
                             </li>
                           ))}
