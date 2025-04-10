@@ -950,6 +950,29 @@ export type Database = {
           main_image_url: string | null;
         }[];
       };
+
+      get_product_by_id: {
+        Args: {
+          _product_id: number;
+        };
+        Returns: {
+          product_id: number;
+          product_name: string;
+          product_summary: string;
+          author_name: string;
+          author_awards: string | null;
+          author_description: string | null;
+          badge_names: string[];
+          category_name: string;
+          publisher: string;
+          price: number;
+          discount: number;
+          delivery_price: number;
+          published_date: Date;
+          main_images: string[];
+          detail_images: string[];
+        }[];
+      };
     };
     Enums: {
       [_ in never]: never;
