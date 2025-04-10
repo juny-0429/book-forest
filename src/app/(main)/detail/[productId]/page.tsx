@@ -1,58 +1,26 @@
-'use client';
+import { Metadata } from 'next';
+import DetailPage from './DetailPage';
+import { createSupabaseServer } from 'src/lib/supabaseServer';
 
-import React from 'react';
-import ReturnPolicy from './_components/ReturnPolicy';
-import AuthorInfo from './_components/AuthorInfo';
-import BookInfo from './_components/BookInfo';
-import Review from './_components/Review';
-import PaymentBox from './_components/PaymentBox';
-import BookPriceInfo from './_components/BookPriceInfo/BookPriceInfo';
-import { useParams } from 'next/navigation';
-import { useGetProductDetail } from './_hooks/react-query/useGetProductDetail';
-import BookHeader from './_components/BookHeader';
-import BookDetailImageList from './_components/BookDetail';
+type Props = {
+  params: { productId: string };
+};
 
-export default function DetailPage() {
-  const { productId } = useParams();
-  const { data: productDetail } = useGetProductDetail(Number(productId));
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const supabase = await createSupabaseServer();
+  const { data, error } = await supabase.from('product').select('product_name').eq('product_id', Number(params.productId)).single();
 
-  if (!productDetail) return null;
+  if (error || !data) {
+    return {
+      title: '상품 정보를 불러올 수 없습니다 | 책숲',
+    };
+  }
 
-  const {
-    productId: ids,
-    productName,
-    productSummary,
-    authorName,
-    authorAwards,
-    authorDescription,
-    badgeNames,
-    categoryName,
-    publisher,
-    price,
-    discount,
-    deliveryPrice,
-    publishedDate,
-    mainImages,
-    detailImages,
-  } = productDetail ?? {};
+  return {
+    title: `${data.product_name} | 책숲 상세페이지`,
+  };
+}
 
-  return (
-    <div className='flex flex-col gap-16'>
-      {/* 상세페이지 정보 */}
-      <BookHeader productName={productName} authorName={authorName} publisher={publisher} publishedDate={publishedDate} />
-      <BookPriceInfo price={price} discount={discount} deliveryPrice={deliveryPrice} mainImageList={mainImages} badges={badgeNames} />
-      {/* 상세페이지 */}
-      <BookDetailImageList detailImageList={detailImages} />
-      {/* 책정보 */}
-      <BookInfo productSummary={productSummary} />
-      {/* 작가정보 */}
-      <AuthorInfo authorName={authorName} authorAwards={authorAwards} authorDescription={authorDescription} />
-      {/* 리뷰 */}
-      <Review />
-      {/* 교환/반품/품절 안내 */}
-      <ReturnPolicy />
-      {/* 결제 창 */}
-      <PaymentBox price={price} discount={discount} />
-    </div>
-  );
+export default function Page({ params }: Props) {
+  return <DetailPage productId={params.productId} />;
 }
