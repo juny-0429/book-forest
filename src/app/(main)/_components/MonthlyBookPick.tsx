@@ -7,6 +7,8 @@ import SectionTitle from './SectionTitle';
 import { cn } from 'src/lib/utils';
 import { useGetTagProductList } from '../_hooks/react-query/useGetTagProductList';
 import { TaggedProductItemDto } from '../_dtos/getTagProductList.dto';
+import Link from 'next/link';
+import { appRoutes } from 'src/routes/appRoutes';
 
 export default function MonthlyBookPick() {
   const [api, setApi] = useState<CarouselApi>();
@@ -46,40 +48,42 @@ export default function MonthlyBookPick() {
           {taggedProductList &&
             taggedProductList.map((book, index) => (
               <CarouselItem key={book.productId} className='md:basis-1/2 lg:basis-1/3'>
-                <div className={cn('flex justify-center items-center w-full h-full transition-transform duration-300', selectedIndex === index ? 'scale-150' : 'scale-70 opacity-75')}>
-                  <div className={cn('flex flex-col justify-center items-center gap-5 w-[270px] h-[390px] ', selectedIndex === index ? '' : 'bg-gray-200 rounded-[10px]')}>
-                    {selectedIndex !== index && <p className='text-body-14b text-ui-text-title'>[{book.categoryName}]</p>}
+                <Link href={`${appRoutes.productDetail}/${book.productId}`}>
+                  <div className={cn('flex justify-center items-center w-full h-full transition-transform duration-300', selectedIndex === index ? 'scale-150' : 'scale-70 opacity-75')}>
+                    <div className={cn('flex flex-col justify-center items-center gap-5 w-[270px] h-[390px] ', selectedIndex === index ? '' : 'bg-gray-200 rounded-[10px]')}>
+                      {selectedIndex !== index && <p className='text-body-14b text-ui-text-title'>[{book.categoryName}]</p>}
 
-                    {book.mainImageUrl && (
-                      <Image
-                        src={book.mainImageUrl}
-                        width={selectedIndex === index ? 200 : 150}
-                        height={170}
-                        alt={`${book.productName} book image`}
-                        className={cn('book-item', selectedIndex === index ? 'book-item shadow-[0px_0px_30px_rgba(23,87,97,0.6)]' : '')}
-                      />
-                    )}
+                      {book.mainImageUrl && (
+                        <Image
+                          src={book.mainImageUrl}
+                          width={selectedIndex === index ? 200 : 150}
+                          height={170}
+                          alt={`${book.productName} book image`}
+                          className={cn('book-item', selectedIndex === index ? 'book-item shadow-[0px_0px_30px_rgba(23,87,97,0.6)]' : '')}
+                        />
+                      )}
 
-                    {selectedIndex !== index && (
-                      <div className='flex flex-col gap-2'>
-                        <p className='text-body-14m text-ui-text-title'>{book.productName}</p>
+                      {selectedIndex !== index && (
+                        <div className='flex flex-col gap-2'>
+                          <p className='text-body-14m text-ui-text-title'>{book.productName}</p>
 
-                        <div className='flex items-center gap-2 w-[170px]'>
-                          <span className='text-body-12m text-ui-text-description'>{book.authorName}</span>
-                          <hr className='w-[1px] h-[8px] bg-gray-600' />
-                          <span className='text-body-12m text-ui-text-description'>{book.publisher}</span>
+                          <div className='flex items-center gap-2 w-[170px]'>
+                            <span className='text-body-12m text-ui-text-description'>{book.authorName}</span>
+                            <hr className='w-[1px] h-[8px] bg-gray-600' />
+                            <span className='text-body-12m text-ui-text-description'>{book.publisher}</span>
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
-                </div>
+                </Link>
               </CarouselItem>
             ))}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-      {/* todo: 별도 api 지정 */}
+
       <div className='flex flex-col items-center gap-5'>
         <p className='font-gyeonggiBatang text-title-24r text-ui-text-description text-center whitespace-pre-line'>{selectedBook?.productSummary}</p>
 
