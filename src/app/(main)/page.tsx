@@ -9,6 +9,7 @@ import MeetTheAuthor from './_components/MeetTheAuthor';
 import RecommendedBooks from './_components/RecommendedBooks';
 import SaleBooksSlider from './_components/SaleBooksSlider';
 import MonthlyBookPick from './_components/MonthlyBookPick';
+import { toastMessage } from 'src/hooks/useToast';
 
 export default function Home() {
   return (

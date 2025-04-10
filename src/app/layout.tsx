@@ -3,6 +3,7 @@ import '../styles/globals.css';
 import Modals from 'src/components/Modals/Modals';
 import QueryProviders from 'src/provider/queryProvider';
 import { AuthProvider } from 'src/provider/authProvider';
+import ToastMessage from 'src/components/ToastMessage/ToastMessage';
 
 export const metadata: Metadata = {
   title: '책숲 - 독서를 사랑하는 당신을 위한 책 쇼핑몰',
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <AuthProvider>
             <main>{children}</main>
             <Modals />
+            <ToastMessage />
           </AuthProvider>
         </QueryProviders>
       </body>

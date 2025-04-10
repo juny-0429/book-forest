@@ -15,7 +15,7 @@ export default function Header() {
   const { signOut } = useSignOut();
 
   return (
-    <header className='sticky top-0 z-[9999]  w-full bg-ui-background border-b border-solid border-gray-300'>
+    <header className='sticky top-0 z-[100]  w-full bg-ui-background border-b border-solid border-gray-300'>
       <nav className='bg-gray-200'>
         <ul className='flex justify-end items-center w-full max-w-[1400px] mx-auto gap-5 px-[50px] py-[10px] text-ui-text-title '>
           {!user && !loading && (
