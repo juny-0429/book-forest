@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { useToastStore } from 'src/store/useToastStore';
 import { cn } from 'src/lib/utils';
@@ -17,10 +19,10 @@ const toastIcons = {
 
 const toastVariants = {
   default: 'border-gray-600 bg-white',
-  success: 'border-state-success bg-green-50',
-  informative: 'border-state-informative bg-blue-50',
-  error: 'border-state-error bg-red-50',
-  warning: 'border-state-warning bg-saffron-50',
+  success: 'border-2 border-state-success bg-white',
+  informative: 'border-2 border-state-informative bg-white',
+  error: 'border-2 border-state-error bg-white',
+  warning: 'border-2 border-state-warning bg-white',
 };
 
 export default function ToastMessage() {

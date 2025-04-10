@@ -11,6 +11,7 @@ import { categorySchema, CategorySchema } from 'src/app/admin/(product-managemen
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCreateCategory } from '../_hooks/react-query/useCreateCategory';
 import { useCustomModal } from 'src/hooks/useModal';
+import { toastMessage } from 'src/hooks/useToast';
 
 export default function AddCategoryModalContent() {
   const [categoryType, setCategoryType] = useState<'TOP' | 'SUB' | null>(null);
@@ -35,7 +36,19 @@ export default function AddCategoryModalContent() {
   const onSubmit = (data: CategorySchema) => {
     mutate(data, {
       onSuccess: () => {
+        toastMessage({
+          title: '카테고리 등록 성공',
+          content: '카테고리 등록에 성공했습니다.',
+          type: 'success',
+        });
         closeCustomModal();
+      },
+      onError: () => {
+        toastMessage({
+          title: '카테고리 등록 실패',
+          content: '카테고리 등록에 실패했습니다.',
+          type: 'error',
+        });
       },
     });
   };

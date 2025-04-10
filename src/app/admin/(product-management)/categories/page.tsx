@@ -12,6 +12,7 @@ import { categoriesColumns } from './_data/categories.columns';
 import { useUpdateCategory } from './_hooks/react-query/useUpdateCategory';
 import { UpdateCategoryDto } from './_dtos/updateCategory.dto';
 import { useDeleteCategory } from './_hooks/react-query/useDeleteCategory';
+import { toastMessage } from 'src/hooks/useToast';
 
 export default function CategoriesPage() {
   const [editingRowId, setEditingRowId] = useState<string | null>(null); // 현재 수정 중인 행의 ID
@@ -68,6 +69,13 @@ export default function CategoriesPage() {
       content: '정말로 삭제하시겠습니까?',
       onConfirm: () =>
         deleteCategory(categoryId, {
+          onSuccess: () => {
+            toastMessage({
+              title: '카테고리 삭제 성공',
+              content: '카테고리 삭제에 성공했습니다.',
+              type: 'success',
+            });
+          },
           onError: () => {
             openAlertModal({
               content: '사용중인 카테고리 ID입니다.',
@@ -146,7 +154,7 @@ export default function CategoriesPage() {
             })
           ) : (
             <TableRow>
-            <TableCell colSpan={5} className='text-center'>
+              <TableCell colSpan={5} className='text-center'>
                 카테고리가 없습니다.
               </TableCell>
             </TableRow>
