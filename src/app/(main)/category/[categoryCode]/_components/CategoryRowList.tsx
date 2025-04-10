@@ -6,6 +6,8 @@ import LineButton from 'src/components/Button/LineButton';
 import LucideIcons from 'src/theme/lucideIcon';
 import { CategoryProductListItem } from '../_dtos/getCategoryProductList.dto';
 import dayjs from 'dayjs';
+import Link from 'next/link';
+import { appRoutes } from 'src/routes/appRoutes';
 
 interface Props {
   categoryProductList: CategoryProductListItem[];
@@ -23,12 +25,18 @@ export default function CategoryRowList({ categoryProductList }: Props) {
               </div>
 
               <div className='flex items-center gap-[30px] h-full'>
-                {product.mainImageUrl && <Image src={product.mainImageUrl} width={150} height={100} alt='book image' className='book-item' />}
+                {product.mainImageUrl && (
+                  <Link href={`${appRoutes.productDetail}/${product.productId}`} className='min-w-[150px]'>
+                    <Image src={product.mainImageUrl} width={150} height={100} alt='book image' className='book-item' />
+                  </Link>
+                )}
 
                 <div className='flex flex-col justify-between h-full'>
                   <div className='flex flex-col gap-2'>
                     <div className='flex items-center gap-3'>
-                      <h3 className='text-title-24r text-ui-text-title'>{product.authorName}</h3>
+                      <Link href={`${appRoutes.productDetail}/${product.productId}`} className='hover:underline'>
+                        <h3 className='text-title-24r text-ui-text-title'>{product.productName}</h3>
+                      </Link>
                       <button>
                         <LucideIcons.Heart size={26} className='text-gray-500' />
                       </button>

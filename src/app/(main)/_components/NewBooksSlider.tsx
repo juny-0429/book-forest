@@ -7,6 +7,8 @@ import SampleBookImg from '@/assets/images/books/새마음으로.jpg';
 import SectionTitle from './SectionTitle';
 import { useGetTagProductList } from '../_hooks/react-query/useGetTagProductList';
 import { TaggedProductItemDto } from '../_dtos/getTagProductList.dto';
+import Link from 'next/link';
+import { appRoutes } from 'src/routes/appRoutes';
 
 export default function NewBookSlider() {
   const [api, setApi] = useState<CarouselApi>();
@@ -39,7 +41,9 @@ export default function NewBookSlider() {
 
       {selectedBook && (
         <div className='flex items-start gap-[53px] h-[300px]'>
-          <Image src={selectedBook.mainImageUrl ?? SampleBookImg} width={200} height={100} loading='eager' alt='book image' className='book-item' />
+          <Link href={`${appRoutes.productDetail}/${selectedBook.productId}`}>
+            <Image src={selectedBook.mainImageUrl ?? SampleBookImg} width={200} height={100} loading='eager' alt='book image' className='book-item' />
+          </Link>
 
           <div className='flex flex-col items-start gap-10 pt-2 h-full'>
             <div className='flex flex-col gap-1'>
@@ -76,14 +80,16 @@ export default function NewBookSlider() {
           {taggedProductList &&
             taggedProductList.map((book) => (
               <CarouselItem key={book.productId} className='md:basis-1/2 lg:basis-1/5'>
-                <div className='flex flex-col items-center gap-2 w-full'>
-                  <div className='w-[170px] h-[270px]'>{book.mainImageUrl && <Image src={book.mainImageUrl} alt='product image' width={170} height={0} className='book-item' />}</div>
+                <Link href={`${appRoutes.productDetail}/${book.productId}`}>
+                  <div className='flex flex-col items-center gap-2 w-full'>
+                    <div className='w-[170px] h-[270px]'>{book.mainImageUrl && <Image src={book.mainImageUrl} alt='product image' width={170} height={0} className='book-item' />}</div>
 
-                  <div className='flex justify-between items-baseline w-[170px]'>
-                    <span className='text-body-16m text-ui-text-title'>{book.productName}</span>
-                    <span className='text-body-12m text-ui-text-description whitespace-nowrap'>{book.categoryName}</span>
+                    <div className='flex justify-between items-baseline w-[170px]'>
+                      <span className='text-body-16m text-ui-text-title'>{book.productName}</span>
+                      <span className='text-body-12m text-ui-text-description whitespace-nowrap'>{book.categoryName}</span>
+                    </div>
                   </div>
-                </div>
+                </Link>
               </CarouselItem>
             ))}
         </CarouselContent>

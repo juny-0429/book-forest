@@ -6,6 +6,8 @@ import Image from 'next/image';
 import { cn } from 'src/lib/utils';
 import SectionTitle from './SectionTitle';
 import { useGetTagProductList } from '../_hooks/react-query/useGetTagProductList';
+import Link from 'next/link';
+import { appRoutes } from 'src/routes/appRoutes';
 
 export default function BestBooksSlider() {
   const [api, setApi] = useState<CarouselApi>();
@@ -41,31 +43,33 @@ export default function BestBooksSlider() {
           {rankedProductList &&
             rankedProductList.map((book) => (
               <CarouselItem key={book.productId} className='md:basis-1/2 lg:basis-1/4'>
-                <div className='flex flex-col justify-end items-center gap-5 w-full h-[430px]'>
-                  <div className='relative'>
-                    {book.mainImageUrl && (
-                      <Image
-                        src={book.mainImageUrl}
-                        width={current === book.rank ? 220 : 180}
-                        height={200}
-                        alt={`${book.productName} book image`}
-                        className='book-item transition-all duration-300 ease-in-out'
-                      />
-                    )}
+                <Link href={`${appRoutes.productDetail}/${book.productId}`}>
+                  <div className='flex flex-col justify-end items-center gap-5 w-full h-[430px]'>
+                    <div className='relative'>
+                      {book.mainImageUrl && (
+                        <Image
+                          src={book.mainImageUrl}
+                          width={current === book.rank ? 220 : 180}
+                          height={200}
+                          alt={`${book.productName} book image`}
+                          className='book-item transition-all duration-300 ease-in-out'
+                        />
+                      )}
 
-                    <div
-                      className={`absolute top-0 right-[10px] flex justify-center items-center text-white
+                      <div
+                        className={`absolute top-0 right-[10px] flex justify-center items-center text-white
                       ${current === book.productId ? 'w-[40px] h-[40px] text-title-24b rounded-bl-[10px] rounded-br-[10px] bg-ui-main' : 'w-[30px] h-[30px] text-title-16b rounded-bl-[8px] rounded-br-[8px] bg-green-300 '}`}
-                    >
-                      {book.rank}
+                      >
+                        {book.rank}
+                      </div>
+                    </div>
+
+                    <div className={cn('flex justify-between items-baseline', current === book.rank ? 'w-[230px]' : 'w-[180px]')}>
+                      <span className='text-body-16b text-ui-text-title'>{book.productName}</span>
+                      <span className='text-body-14m text-ui-text-description whitespace-nowrap'>{book.authorName}</span>
                     </div>
                   </div>
-
-                  <div className={cn('flex justify-between items-baseline', current === book.rank ? 'w-[230px]' : 'w-[180px]')}>
-                    <span className='text-body-16b text-ui-text-title'>{book.productName}</span>
-                    <span className='text-body-14m text-ui-text-description whitespace-nowrap'>{book.authorName}</span>
-                  </div>
-                </div>
+                </Link>
               </CarouselItem>
             ))}
         </CarouselContent>

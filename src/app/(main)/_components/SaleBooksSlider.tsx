@@ -1,10 +1,12 @@
 'use client';
 
 import React from 'react';
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, CarouselApi } from '@/components/Carousel/Carousel';
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from '@/components/Carousel/Carousel';
 import Image from 'next/image';
 import SectionTitle from './SectionTitle';
 import { useGetTagProductList } from '../_hooks/react-query/useGetTagProductList';
+import Link from 'next/link';
+import { appRoutes } from 'src/routes/appRoutes';
 
 export default function SaleBooksSlider() {
   const { data: taggedProductList } = useGetTagProductList('DISCOUNT');
@@ -24,19 +26,19 @@ export default function SaleBooksSlider() {
         <CarouselContent>
           {adjustedProductList.map((book, index) => (
             <CarouselItem key={book ? book.productId : index} className='md:basis-1/2 lg:basis-1/4'>
-              <div className='flex flex-col justify-end items-center gap-5 w-full'>
-                {book ? (
-                  <>
+              {book ? (
+                <Link href={`${appRoutes.productDetail}/${book.productId}`}>
+                  <div className='flex flex-col justify-end items-center gap-5 w-full'>
                     <Image src={book.mainImageUrl} width={200} height={200} alt={`${book.productName} book image`} className='book-item' />
                     <div className='flex flex-col w-[200px]'>
                       <span className='text-body-18m text-ui-text-title'>{book.productName}</span>
                       <span className='text-title-16b text-ui-cta text-end'>{book.discount}% 할인중</span>
                     </div>
-                  </>
-                ) : (
-                  <div />
-                )}
-              </div>
+                  </div>
+                </Link>
+              ) : (
+                <div className='w-[200px] h-[270px]' /> // 비어있는 슬롯
+              )}
             </CarouselItem>
           ))}
         </CarouselContent>

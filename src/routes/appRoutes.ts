@@ -38,6 +38,8 @@ export const appRoutes = {
   bestsellers: '/bestsellers',
   /* PICKS */
   picks: '/picks',
+  /* 상품 상세페이지 */
+  productDetail: '/detail',
 
   board: {
     /* 이벤트 게시판 */
