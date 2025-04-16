@@ -906,7 +906,7 @@ export type Database = {
           author_name: string;
           publisher: string;
           price: number;
-          discount: number;
+          discount: number | null;
           category_name: string;
           main_image_url: string | null;
         }[];
@@ -971,6 +971,25 @@ export type Database = {
           published_date: Date;
           main_images: string[];
           detail_images: string[];
+        }[];
+      };
+
+      get_search_bar_products: {
+        Args: {
+          keyword: string;
+          _page?: number;
+          _limit?: number;
+        };
+        Returns: {
+          product_id: number;
+          product_name: string;
+          product_summary: string;
+          author_name: string;
+          publisher: string;
+          price: number;
+          discount: number;
+          main_image_url: string | null;
+          total_count: number;
         }[];
       };
     };

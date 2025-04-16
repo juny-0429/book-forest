@@ -4,14 +4,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { appRoutes } from 'src/routes/appRoutes';
 import KoLogo from '@/assets/images/logos/ko-logo.png';
-import SearchBar from '../../SearchBar/SearchBar';
 import LucideIcons from 'src/theme/lucideIcon';
 import NavigationBar from '../NavigationBar/NavigationBar';
 import { useAuth } from 'src/provider/authProvider';
 import { useSignOut } from 'src/hooks/userLogout';
+import HeaderSearchBar from './HeaderSearchBar';
 
 export default function Header() {
-  const { user, loading, authority } = useAuth();
+  const { user, loading } = useAuth();
   const { signOut } = useSignOut();
 
   return (
@@ -60,7 +60,7 @@ export default function Header() {
             <Link href='/'>
               <Image src={KoLogo} width={120} alt='logo image' priority />
             </Link>
-            <SearchBar className='w-[400px]' placeholder='검색어를 입력하세요' />
+            <HeaderSearchBar />
           </h1>
 
           <NavigationBar />
