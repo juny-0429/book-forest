@@ -37,30 +37,32 @@ export default function mainBannerListSwiper() {
 
   return (
     <>
-      <div className='relative w-full max-w-[1050px] max-h-[300px] mx-auto rounded-[12px] overflow-hidden -z-30'>
-        <Swiper
-          modules={[Navigation, Autoplay]}
-          spaceBetween={0}
-          slidesPerView={1}
-          loop={true}
-          autoplay={{ delay: 5000, disableOnInteraction: false }}
-          navigation={{
-            nextEl: '.custom-swiper-next',
-            prevEl: '.custom-swiper-prev',
-          }}
-          onSwiper={onSwiper}
-          onSlideChange={(swiper) => setCurrentIndex(swiper.realIndex + 1)}
-          className='w-full h-[400px] [&_.swiper-button-prev]:hidden [&_.swiper-button-next]:hidden'
-        >
-          {mainBannerList &&
-            mainBannerList.map((banner, index) => (
-              <SwiperSlide key={index} className='flex justify-center items-center'>
-                <Link href={banner.banner_link}>
-                  <Image src={banner.banner_image_url} width={1050} height={300} alt={`${banner.banner_name} banner image`} className='w-full h-auto max-w-[1050px] max-h-[300px] object-cover' />
-                </Link>
-              </SwiperSlide>
-            ))}
-        </Swiper>
+      <div className='relative w-full max-w-[1050px] max-h-[300px] mx-auto rounded-[12px] overflow-hidden'>
+        {!isLoading && (
+          <Swiper
+            modules={[Navigation, Autoplay]}
+            spaceBetween={0}
+            slidesPerView={1}
+            loop={true}
+            autoplay={{ delay: 5000, disableOnInteraction: false }}
+            navigation={{
+              nextEl: '.custom-swiper-next',
+              prevEl: '.custom-swiper-prev',
+            }}
+            onSwiper={onSwiper}
+            onSlideChange={(swiper) => setCurrentIndex(swiper.realIndex + 1)}
+            className='w-full h-[400px] [&_.swiper-button-prev]:hidden [&_.swiper-button-next]:hidden'
+          >
+            {mainBannerList &&
+              mainBannerList.map((banner, index) => (
+                <SwiperSlide key={index} className='flex justify-center items-center'>
+                  <Link href={banner.banner_link} className='relative w-full h-[300px] max-w-[1050px] max-h-[300px]'>
+                    <Image src={banner.banner_image_url} width={1050} height={300} alt={`${banner.banner_name} banner image`} priority />
+                  </Link>
+                </SwiperSlide>
+              ))}
+          </Swiper>
+        )}
 
         <div className='absolute bottom-4 right-4 flex items-center gap-1 z-10'>
           {/* ✅ 일시정지/재생 버튼 */}

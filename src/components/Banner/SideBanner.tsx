@@ -16,7 +16,7 @@ export default function SideBanner() {
         </div>
       ) : (
         <Link href={sideBannerList[0].banner_link}>
-          <Image src={sideBannerList[0].banner_image_url} alt='banner image' width={200} height={300} className='absolute inset-0 w-full h-full object-cover' />
+          <Image src={sideBannerList[0].banner_image_url} alt='banner image' width={200} height={300} />
         </Link>
       )}
     </div>
