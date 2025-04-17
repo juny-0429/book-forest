@@ -992,6 +992,25 @@ export type Database = {
           total_count: number;
         }[];
       };
+
+      get_search_products_with_count: {
+        Args: {
+          keyword: string;
+          _limit?: number;
+          _page?: number;
+        };
+        Returns: {
+          total_count: number;
+          product_id: number;
+          product_name: string;
+          product_summary: string;
+          author_name: string;
+          publisher: string;
+          price: number;
+          discount: number;
+          main_image_url: string | null;
+        }[];
+      };
     };
     Enums: {
       [_ in never]: never;

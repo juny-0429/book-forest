@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 import { SearchProductListItemDto } from 'src/app/(main)/_dtos/getSearchProductList.dto';
 import { useGetSearchBarProductList } from 'src/app/(main)/_hooks/react-query/useGetSearchProductList';
@@ -14,6 +15,13 @@ export default function HeaderSearchBar() {
   const [currentPage, setCurrentPage] = useState(1);
   const [keyword, setKeyword] = useState('');
   const [isResultOpen, setIsResultOpen] = useState(false);
+  const router = useRouter();
+
+  const onSearch = () => {
+    if (!keyword.trim()) return;
+    setIsResultOpen(false);
+    router.push(`/search?keyword=${encodeURIComponent(keyword)}`);
+  };
 
   useEffect(() => {
     if (keyword) setIsResultOpen(true);
@@ -25,11 +33,10 @@ export default function HeaderSearchBar() {
   const productList = data?.productList ?? [];
   const totalPages = data?.totalPages ?? 1;
 
-  const handleSearch = () => {};
-
   return (
     <div className='relative'>
-      <SearchBar className='w-[400px]' placeholder='검색어를 입력하세요' value={keyword} onChange={(e) => setKeyword(e.target.value)} onSearch={handleSearch} />
+      <SearchBar className='w-[400px]' placeholder='검색어를 입력하세요' value={keyword} onChange={(e) => setKeyword(e.target.value)} onSearch={onSearch} />
+
       {isResultOpen && keyword && productList.length > 0 && (
         <div className='absolute flex flex-col gap-4 mt-2 p-5 w-[800px] bg-white border border-solid border-gray-500 rounded-[20px] z-50'>
           <button className='absolute top-5 right-5' onClick={() => setIsResultOpen(false)}>
