@@ -12,9 +12,7 @@ export default function TripleBanner() {
       {tripleBannerList &&
         tripleBannerList.map((banner, index) => (
           <Link key={index} href={banner.banner_link}>
-            <div className='w-[430px] h-[150px]'>
-              <Image src={banner.banner_image_url} width={430} height={150} alt={`${banner.banner_name} banner image`} className='object-cover' />
-            </div>
+            <Image src={banner.banner_image_url} width={430} height={150} alt={`${banner.banner_name} banner image`} />
           </Link>
         ))}
     </section>

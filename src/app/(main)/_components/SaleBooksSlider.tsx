@@ -28,8 +28,9 @@ export default function SaleBooksSlider() {
             <CarouselItem key={book ? book.productId : index} className='md:basis-1/2 lg:basis-1/4'>
               {book ? (
                 <Link href={`${appRoutes.productDetail}/${book.productId}`}>
-                  <div className='flex flex-col justify-end items-center gap-5 w-full'>
+                  <div className='flex flex-col justify-between items-center gap-5 w-full h-[420px]'>
                     <Image src={book.mainImageUrl} width={200} height={200} alt={`${book.productName} book image`} className='book-item' />
+
                     <div className='flex flex-col w-[200px]'>
                       <span className='text-body-18m text-ui-text-title'>{book.productName}</span>
                       <span className='text-title-16b text-ui-cta text-end'>{book.discount}% 할인중</span>
