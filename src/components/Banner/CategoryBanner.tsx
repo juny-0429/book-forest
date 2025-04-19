@@ -11,16 +11,12 @@ import { useGetBannerList } from 'src/app/(main)/_hooks/react-query/useGetBanner
 export default function CategoryBanner() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
-  const [count, setCount] = useState(0);
 
-  const { data: categoryBannerList, isLoading } = useGetBannerList('category');
+  const { data: categoryBannerList } = useGetBannerList('category');
 
   useEffect(() => {
-    if (!api) {
-      return;
-    }
+    if (!api) return;
 
-    setCount(api.scrollSnapList().length);
     setCurrent(api.selectedScrollSnap() + 1);
 
     api.on('select', () => {
@@ -57,9 +53,10 @@ export default function CategoryBanner() {
       {/* 배너 페이지네이션 */}
       <div className='absolute bottom-2 flex justify-center items-center w-full'>
         <div className='flex justify-center items-center gap-1 w-fit p-1 rounded-full bg-black/60'>
-          {Array.from({ length: count }, (_, index) => (
-            <button key={index} onClick={() => api?.scrollTo(index)} className={cn('w-3 h-3 rounded-full', current === index ? 'w-6 bg-green-300' : 'bg-gray-300')} />
-          ))}
+          {categoryBannerList &&
+            Array.from({ length: categoryBannerList?.length }, (_, index) => (
+              <button key={index} onClick={() => api?.scrollTo(index)} className={cn('w-3 h-3 rounded-full', current === index ? 'w-6 bg-green-300' : 'bg-gray-300')} />
+            ))}
         </div>
       </div>
     </div>
