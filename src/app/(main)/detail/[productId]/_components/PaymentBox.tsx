@@ -1,18 +1,22 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useCart } from 'src/app/(main)/cart/_hooks/useCart';
 import Button from 'src/components/Button/Button';
 import LineButton from 'src/components/Button/LineButton';
+import { toastMessage } from 'src/hooks/useToast';
 import LucideIcons from 'src/theme/lucideIcon';
 import { calculateDiscountedPrice } from 'src/utils/priceUtils';
 
 interface Props {
+  productId: number;
   price: number;
   discount: number;
 }
 
-export default function PaymentBox({ price, discount }: Props) {
+export default function PaymentBox({ productId, price, discount }: Props) {
   const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useCart();
 
   const decreaseQuantity = () => {
     setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
@@ -47,7 +51,19 @@ export default function PaymentBox({ price, discount }: Props) {
 
           <div className='flex items-center gap-1 w-fit'>
             <LineButton height={48}>찜하기</LineButton>
-            <LineButton height={48}>장바구니</LineButton>
+            <LineButton
+              height={48}
+              onClick={() => {
+                addToCart({ productId: productId, count: quantity });
+                toastMessage({
+                  title: '장바구니 담기 완료',
+                  content: '선택한 상품이 장바구니에 담겼습니다.',
+                  type: 'success',
+                });
+              }}
+            >
+              장바구니
+            </LineButton>
             <Button height={48}>바로구매</Button>
           </div>
         </div>

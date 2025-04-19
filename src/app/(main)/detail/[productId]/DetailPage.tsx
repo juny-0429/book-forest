@@ -53,7 +53,7 @@ export default function DetailPage() {
       {/* 교환/반품/품절 안내 */}
       <ReturnPolicy />
       {/* 결제 창 */}
-      <PaymentBox price={price} discount={discount} />
+      <PaymentBox productId={Number(productId)} price={price} discount={discount} />
     </div>
   );
 }
