@@ -10,8 +10,11 @@ import BookPriceInfo from './_components/BookPriceInfo/BookPriceInfo';
 import { useGetProductDetail } from './_hooks/react-query/useGetProductDetail';
 import BookHeader from './_components/BookHeader';
 import BookDetailImageList from './_components/BookDetail';
+import { useParams } from 'next/navigation';
 
-export default function DetailPage({ productId }: { productId: string }) {
+export default function DetailPage() {
+  const { productId } = useParams();
+
   const { data: productDetail } = useGetProductDetail(Number(productId));
 
   if (!productDetail) return null;

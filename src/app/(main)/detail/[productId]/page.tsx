@@ -7,8 +7,10 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { productId } = await params;
+
   const supabase = await createSupabaseServer();
-  const { data, error } = await supabase.from('product').select('product_name').eq('product_id', Number(params.productId)).single();
+  const { data, error } = await supabase.from('product').select('product_name').eq('product_id', Number(productId)).single();
 
   if (error || !data) {
     return {
@@ -21,6 +23,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function Page({ params }: Props) {
-  return <DetailPage productId={params.productId} />;
+export default function Page() {
+  return <DetailPage />;
 }
