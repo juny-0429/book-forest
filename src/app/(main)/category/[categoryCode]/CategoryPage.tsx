@@ -6,17 +6,21 @@ import CategoryRowList from './_components/CategoryRowList';
 import { useGetCategoryProductList } from './_hooks/react-query/useGetCategoryProductList';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import CategoryBreadcrumb from './_components/CategoryBreadcrumb';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useGetCategoryPath } from './_hooks/react-query/useGetCategoryPath';
 import CategoryToolbar from './_components/CategoryToolbar';
+import { toastMessage } from 'src/hooks/useToast';
+import { useCart } from '../../cart/_hooks/useCart';
 
 export default function CategoryPage() {
+  const [selectedProductIds, setSelectedProductIds] = useState<number[]>([]);
   const { categoryCode } = useParams();
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
   const { ref, inView } = useInView();
+  const { addToCart } = useCart();
 
   const view = searchParams.get('view') === 'list' ? 'list' : 'grid';
 
@@ -29,6 +33,27 @@ export default function CategoryPage() {
     const params = new URLSearchParams(searchParams);
     params.set('view', type);
     router.push(`?${params.toString()}`);
+  };
+
+  const onToggleProduct = (id: number) => {
+    setSelectedProductIds((prev) => (prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]));
+  };
+
+  const onAddToCart = () => {
+    const selectedSet = new Set(selectedProductIds);
+    const selectedProducts = categoryProductList.filter((product) => selectedSet.has(product.productId));
+
+    selectedProducts.forEach((product) => {
+      addToCart({ productId: product.productId, count: 1 });
+    });
+
+    toastMessage({
+      title: '장바구니 담기 완료',
+      content: '선택한 상품이 장바구니에 담겼습니다.',
+      type: 'success',
+    });
+
+    setSelectedProductIds([]);
   };
 
   useEffect(() => {
@@ -57,10 +82,10 @@ export default function CategoryPage() {
       <CategoryBanner />
 
       <div className='flex flex-col gap-4'>
-        <CategoryToolbar view={view} onUpdateViewType={onUpdateViewType} />
+        <CategoryToolbar view={view} onUpdateViewType={onUpdateViewType} onAddToCart={onAddToCart} />
         <hr className='w-full h-[1px] bg-gray-300' />
-        {view === 'grid' && <CategoryGridList categoryProductList={categoryProductList} />}
-        {view === 'list' && <CategoryRowList categoryProductList={categoryProductList} />}
+        {view === 'grid' && <CategoryGridList categoryProductList={categoryProductList} selectedProductIds={selectedProductIds} onToggleProduct={onToggleProduct} />}
+        {view === 'list' && <CategoryRowList categoryProductList={categoryProductList} selectedProductIds={selectedProductIds} onToggleProduct={onToggleProduct} />}
       </div>
 
       {categoryProductList.length !== 0 && !isFetchingNextPage && <div ref={ref} className='h-[1px]' />}

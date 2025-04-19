@@ -19,29 +19,29 @@ const toastIcons = {
 
 const toastVariants = {
   default: 'border-gray-600 bg-white',
-  success: 'border-2 border-state-success bg-white',
-  informative: 'border-2 border-state-informative bg-white',
-  error: 'border-2 border-state-error bg-white',
-  warning: 'border-2 border-state-warning bg-white',
+  success: 'border-l-4 border-state-success bg-green-50',
+  informative: 'border-l-4 border-state-informative bg-blue-50',
+  error: 'border-l-4 border-state-error bg-red-50',
+  warning: 'border-l-4 border-state-warning bg-saffron-50',
 };
 
 export default function ToastMessage() {
   const { toasts } = useToastStore();
 
   return (
-    <div className='fixed bottom-4 right-4 flex flex-col gap-2 z-50'>
+    <div className='fixed bottom-4 right-4 flex flex-col gap-21z-50'>
       {toasts.map((toast) => (
         <div
           key={toast.id}
           className={cn(
-            'flex justify-start items-center gap-4 w-[400px] p-5 rounded-[8px] border border-solid shadow-blur-4-25',
+            'flex justify-start gap-4 w-[400px] px-3 py-4 border-solid shadow-blur-4-25',
             toast.isVisible ? 'animate-slide-top' : 'animate-slide-right opacity-0',
             toastVariants[toast.type]
           )}
         >
           <div>{toast.type === 'default' ? toast.icon : toastIcons[toast.type]}</div>
 
-          <div className='flex flex-col items-start gap-2'>
+          <div className='flex flex-col items-start gap-1'>
             <strong className='text-title-16b text-ui-text-title'>{toast.title}</strong>
             <p className='text-body-16r text-ui-text-body'>{toast.content}</p>
           </div>

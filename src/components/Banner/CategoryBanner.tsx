@@ -17,10 +17,10 @@ export default function CategoryBanner() {
   useEffect(() => {
     if (!api) return;
 
-    setCurrent(api.selectedScrollSnap() + 1);
+    setCurrent(api.selectedScrollSnap());
 
     api.on('select', () => {
-      setCurrent(api.selectedScrollSnap() + 1);
+      setCurrent(api.selectedScrollSnap());
     });
   }, [api]);
 

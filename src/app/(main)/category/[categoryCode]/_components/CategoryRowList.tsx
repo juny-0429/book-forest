@@ -8,12 +8,18 @@ import { CategoryProductListItem } from '../_dtos/getCategoryProductList.dto';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 import { appRoutes } from 'src/routes/appRoutes';
+import { useCart } from 'src/app/(main)/cart/_hooks/useCart';
+import { toastMessage } from 'src/hooks/useToast';
 
 interface Props {
   categoryProductList: CategoryProductListItem[];
+  selectedProductIds: number[];
+  onToggleProduct: (productId: number) => void;
 }
 
-export default function CategoryRowList({ categoryProductList }: Props) {
+export default function CategoryRowList({ categoryProductList, selectedProductIds, onToggleProduct }: Props) {
+  const { addToCart } = useCart();
+
   return (
     <ul>
       {categoryProductList &&
@@ -21,7 +27,7 @@ export default function CategoryRowList({ categoryProductList }: Props) {
           <li key={product.productId}>
             <article className='relative flex justify-between gap-10 h-[260px] pl-[30px] py-[30px]'>
               <div className='absolute top-[30px] left-0'>
-                <CheckBox />
+                <CheckBox checked={selectedProductIds.includes(product.productId)} onChange={() => onToggleProduct(product.productId)} />
               </div>
 
               <div className='flex items-center gap-[30px] h-full'>
@@ -58,7 +64,7 @@ export default function CategoryRowList({ categoryProductList }: Props) {
                   </div>
 
                   {product.productSummary && (
-                    <div className='flex w-full h-[80px] px-[20px] py-[8px] border border-solid border-gray-300 rounded-[5px]'>
+                    <div className='flex w-[700px] h-[80px] px-[20px] py-[8px] border border-solid border-gray-300 rounded-[5px]'>
                       <p className='text-body-14l text-ui-text-title line-clamp-2'>{product.productSummary}</p>
                     </div>
                   )}
@@ -67,7 +73,19 @@ export default function CategoryRowList({ categoryProductList }: Props) {
 
               <div className='flex flex-col items-center gap-2 w-fit'>
                 <LineButton height={40}>찜하기</LineButton>
-                <LineButton height={40}>카트 담기</LineButton>
+                <LineButton
+                  height={40}
+                  onClick={() => {
+                    addToCart({ productId: product.productId, count: 1 });
+                    toastMessage({
+                      title: '장바구니 담기 완료',
+                      content: '상품이 장바구니에 담겼습니다.',
+                      type: 'success',
+                    });
+                  }}
+                >
+                  카트 담기
+                </LineButton>
                 <Button height={40}>바로 구매</Button>
               </div>
             </article>
