@@ -4,14 +4,15 @@ import CategoryBanner from 'src/components/Banner/CategoryBanner';
 import CategoryGridList from './_components/CategoryGridList';
 import CategoryRowList from './_components/CategoryRowList';
 import { useGetCategoryProductList } from './_hooks/react-query/useGetCategoryProductList';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import CategoryBreadcrumb from './_components/CategoryBreadcrumb';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useGetCategoryPath } from './_hooks/react-query/useGetCategoryPath';
 import CategoryToolbar from './_components/CategoryToolbar';
 
-export default function CategoryPage({ categoryCode }: { categoryCode: string }) {
+export default function CategoryPage() {
+  const { categoryCode } = useParams();
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();

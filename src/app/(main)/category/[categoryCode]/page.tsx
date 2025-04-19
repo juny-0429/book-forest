@@ -7,8 +7,11 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { categoryCode } = await params;
+
   const supabase = await createSupabaseServer();
-  const { data, error } = await supabase.from('category').select('category_name').eq('category_code', params.categoryCode).single();
+
+  const { data, error } = await supabase.from('category').select('category_name').eq('category_code', categoryCode).single();
 
   if (error || !data) {
     return {
@@ -21,6 +24,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function Page({ params }: Props) {
-  return <CategoryPage categoryCode={params.categoryCode} />;
+export default function Page() {
+  return <CategoryPage />;
 }
