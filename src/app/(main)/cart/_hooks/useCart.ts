@@ -1,6 +1,6 @@
 export interface CartItemType {
   productId: number;
-  count: number;
+  stock: number;
 }
 
 export const useCart = () => {
@@ -33,7 +33,7 @@ export const useCart = () => {
     const exists = cart.find((i) => i.productId === item.productId);
 
     if (exists) {
-      exists.count += item.count;
+      exists.stock += item.stock;
     } else {
       cart.push(item);
     }

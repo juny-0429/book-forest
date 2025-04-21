@@ -9,15 +9,15 @@ import { appRoutes } from 'src/routes/appRoutes';
 
 interface CartItemProps {
   item: CartListItemDto;
-  count: number;
+  stock: number;
   onCartItemRemove: (productId: number) => void;
-  onCountChange: (productId: number, count: number) => void;
+  onStockChange: (productId: number, count: number) => void;
   checked: boolean;
   onToggle: () => void;
 }
 
-export default function CartItem({ item, count, onCartItemRemove, onCountChange, checked, onToggle }: CartItemProps) {
-  const finalPrice = calculateDiscountedPrice(item.price, item.discount) * count;
+export default function CartItem({ item, stock, onCartItemRemove, onStockChange, checked, onToggle }: CartItemProps) {
+  const finalPrice = calculateDiscountedPrice(item.price, item.discount) * stock;
 
   return (
     <li key={item.productId} className='relative flex border-b border-solid border-gray-300'>
@@ -25,7 +25,7 @@ export default function CartItem({ item, count, onCartItemRemove, onCountChange,
         <LucideIcons.X strokeWidth={1} className='text-gray-600' />
       </button>
 
-      <article className='flex items-start gap-3 w-[500px] h-full px-[50px] py-[10px]'>
+      <article className='flex items-start gap-3 w-[480px] h-full px-[50px] py-[10px]'>
         <CheckBox checked={checked} onChange={onToggle} />
 
         <Link href={`${appRoutes.productDetail}/${item.productId}`}>
@@ -51,12 +51,12 @@ export default function CartItem({ item, count, onCartItemRemove, onCountChange,
       <div className='flex flex-col justify-center items-center gap-4 px-10 border-l border-r border-solid border-gray-300'>
         <p className='text-body-18b'>{finalPrice.toLocaleString()}원</p>
 
-        <div className='flex justify-between items-center gap-2 w-[75px] h-fit p-2 border border-solid border-gray-300 rounded-[5px]'>
-          <button onClick={() => onCountChange(item.productId, Math.max(count - 1, 1))}>
+        <div className='flex justify-between items-center gap-2 w-[90px] h-fit p-2 border border-solid border-gray-300 rounded-[5px]'>
+          <button onClick={() => onStockChange(item.productId, Math.max(stock - 1, 1))}>
             <LucideIcons.Minus size={16} />
           </button>
-          <span className='text-body-16r text-ui-text-title'>{count}</span>
-          <button onClick={() => onCountChange(item.productId, count + 1)}>
+          <span className='text-body-16r text-ui-text-title'>{stock}</span>
+          <button onClick={() => onStockChange(item.productId, stock + 1)}>
             <LucideIcons.Plus size={16} />
           </button>
         </div>
@@ -67,7 +67,7 @@ export default function CartItem({ item, count, onCartItemRemove, onCountChange,
           새벽배송
         </Badge>
 
-        <p className='text-body-16m text-ui-text-title'>배송비 : {item.delivery_price.toLocaleString()}원</p>
+        <p className='text-body-16m text-ui-text-title'>배송비 : {item.deliveryPrice.toLocaleString()}원</p>
       </div>
     </li>
   );

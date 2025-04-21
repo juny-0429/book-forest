@@ -76,7 +76,7 @@ export default function CategoryRowList({ categoryProductList, selectedProductId
                 <LineButton
                   height={40}
                   onClick={() => {
-                    addToCart({ productId: product.productId, count: 1 });
+                    addToCart({ productId: product.productId, stock: 1 });
                     toastMessage({
                       title: '장바구니 담기 완료',
                       content: '상품이 장바구니에 담겼습니다.',

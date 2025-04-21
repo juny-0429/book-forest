@@ -10,18 +10,23 @@ import CartItem from './_components/CartItem';
 import { CartListItemDto } from './_dtos/getCartList.dto';
 import PaymentBox from './_components/PaymentBox';
 import CartNoticeButton from './_components/CartNoticeButton';
+import { useAuth } from 'src/provider/authProvider';
+import { useGetCartListByUserId } from './_hooks/react-query/useGetCartListByUserId';
+import { useCreateCartListByUserId } from './_hooks/react-query/useCreateCartListByUserId';
 
 export default function CartPage() {
-  const { getCart, removeFromCart, saveCart } = useCart();
+  const { getCart, removeFromCart, saveCart, clearCart } = useCart();
   const [cart, setCart] = useState<CartItemType[]>([]);
   const [cartList, setCartList] = useState<CartListItemDto[]>([]);
   const [selectedProductIds, setSelectedProductIds] = useState<number[]>([]);
+  const { user } = useAuth();
+  const { mutate: createCartListByUserId } = useCreateCartListByUserId();
 
-  const { data } = useGetCartList(cart.map((item) => item.productId));
+  const { data } = user ? useGetCartListByUserId(user.id) : useGetCartList(cart.map((item) => ({ productId: item.productId, stock: item.stock })));
 
-  const onCountChange = (productId: number, count: number) => {
+  const onStockChange = (productId: number, stock: number) => {
     setCart((prev) => {
-      const updated = prev.map((item) => (item.productId === productId ? { ...item, count } : item));
+      const updated = prev.map((item) => (item.productId === productId ? { ...item, stock: stock } : item));
       saveCart(updated);
       return updated;
     });
@@ -58,6 +63,28 @@ export default function CartPage() {
   };
 
   useEffect(() => {
+    if (user) {
+      const guestCart = getCart();
+      if (guestCart.length > 0) {
+        createCartListByUserId(
+          {
+            userId: user.id,
+            cart: guestCart,
+          },
+          {
+            onSuccess: () => {
+              clearCart();
+              setCart([]);
+            },
+          }
+        );
+      }
+    } else {
+      setCart(getCart());
+    }
+  }, [user]);
+
+  useEffect(() => {
     setCart(getCart());
   }, []);
 
@@ -91,16 +118,15 @@ export default function CartPage() {
           <ul className='w-full border-t border-solid border-gray-300'>
             {cartList &&
               cartList.map((item) => {
-                const count = cart.find((c) => c.productId === item.productId)?.count ?? 1;
                 return (
                   <CartItem
                     key={item.productId}
                     item={item}
-                    count={count}
+                    stock={item.stock}
                     checked={selectedProductIds.includes(item.productId)}
                     onToggle={() => toggleProductSelection(item.productId)}
                     onCartItemRemove={onCartItemRemove}
-                    onCountChange={onCountChange}
+                    onStockChange={onStockChange}
                   />
                 );
               })}
@@ -109,7 +135,7 @@ export default function CartPage() {
         </div>
 
         {/* 결제창 */}
-        <PaymentBox cart={cart} cartList={cartList} />
+        <PaymentBox cartList={cartList} />
       </div>
     </div>
   );

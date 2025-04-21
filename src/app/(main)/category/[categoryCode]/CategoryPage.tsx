@@ -44,7 +44,7 @@ export default function CategoryPage() {
     const selectedProducts = categoryProductList.filter((product) => selectedSet.has(product.productId));
 
     selectedProducts.forEach((product) => {
-      addToCart({ productId: product.productId, count: 1 });
+      addToCart({ productId: product.productId, stock: 1 });
     });
 
     toastMessage({

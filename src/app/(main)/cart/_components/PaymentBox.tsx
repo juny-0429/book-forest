@@ -5,12 +5,11 @@ import { CartItemType } from '../_hooks/useCart';
 import { CartListItemDto } from '../_dtos/getCartList.dto';
 
 interface PaymentBoxProps {
-  cart: CartItemType[];
   cartList: CartListItemDto[];
 }
 
-export default function PaymentBox({ cart, cartList }: PaymentBoxProps) {
-  const { totalProductPrice, totalDiscount, shippingFee, finalPrice } = useCartSummary(cart, cartList);
+export default function PaymentBox({ cartList }: PaymentBoxProps) {
+  const { totalProductPrice, totalDiscount, shippingFee, finalPrice } = useCartSummary(cartList);
 
   return (
     <aside className='flex flex-col items-center gap-5 w-[400px]'>
@@ -36,7 +35,7 @@ export default function PaymentBox({ cart, cartList }: PaymentBoxProps) {
         </div>
       </div>
 
-      <Button height={48}>{cart.length}개 상품 주문하기</Button>
+      <Button height={48}>{cartList.length}개 상품 주문하기</Button>
     </aside>
   );
 }

@@ -54,7 +54,7 @@ export default function PaymentBox({ productId, price, discount }: Props) {
             <LineButton
               height={48}
               onClick={() => {
-                addToCart({ productId: productId, count: quantity });
+                addToCart({ productId: productId, stock: quantity });
                 toastMessage({
                   title: '장바구니 담기 완료',
                   content: '선택한 상품이 장바구니에 담겼습니다.',

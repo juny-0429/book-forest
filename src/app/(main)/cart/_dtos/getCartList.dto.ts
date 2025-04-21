@@ -3,6 +3,7 @@ export interface CartListItemDto {
   productName: string;
   price: number;
   discount: number;
-  delivery_price: number;
+  deliveryPrice: number;
   mainImageUrl: string;
+  stock: number;
 }
