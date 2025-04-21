@@ -1,4 +1,4 @@
-export interface CartItem {
+export interface CartItemType {
   productId: number;
   count: number;
 }
@@ -13,7 +13,7 @@ export const useCart = () => {
     return !expire || Date.now() > Number(expire);
   };
 
-  const getCart = (): CartItem[] => {
+  const getCart = (): CartItemType[] => {
     if (typeof window === 'undefined') return [];
     if (isExpired()) {
       clearCart();
@@ -23,12 +23,12 @@ export const useCart = () => {
     return raw ? JSON.parse(raw) : [];
   };
 
-  const saveCart = (items: CartItem[]) => {
+  const saveCart = (items: CartItemType[]) => {
     localStorage.setItem(CART_KEY, JSON.stringify(items));
     localStorage.setItem(EXPIRE_KEY, String(Date.now() + EXPIRE_TIME));
   };
 
-  const addToCart = (item: CartItem) => {
+  const addToCart = (item: CartItemType) => {
     const cart = getCart();
     const exists = cart.find((i) => i.productId === item.productId);
 
@@ -56,5 +56,6 @@ export const useCart = () => {
     addToCart,
     removeFromCart,
     clearCart,
+    saveCart,
   };
 };

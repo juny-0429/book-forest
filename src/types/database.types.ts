@@ -1011,6 +1011,20 @@ export type Database = {
           main_image_url: string | null;
         }[];
       };
+
+      get_cart_products: {
+        Args: {
+          product_ids: number[];
+        };
+        Returns: {
+          product_id: number;
+          product_name: string;
+          price: number;
+          discount: number;
+          delivery_price: number;
+          main_image_url: string;
+        }[];
+      };
     };
     Enums: {
       [_ in never]: never;
