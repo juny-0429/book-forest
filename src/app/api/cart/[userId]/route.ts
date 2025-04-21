@@ -55,3 +55,37 @@ export async function POST(request: Request) {
 
   return NextResponse.json({ success: true });
 }
+
+export async function PUT(request: Request, { params }: { params: { userId: string } }) {
+  const supabase = await createSupabaseServer();
+  const userId = (await params).userId;
+  const { productId, stock }: { productId: number; stock: number } = await request.json();
+
+  if (!userId || !productId || typeof stock !== 'number') {
+    return NextResponse.json({ error: '잘못된 요청입니다.' }, { status: 400 });
+  }
+
+  const { error } = await supabase.from('cart').update({ stock }).eq('user_id', userId).eq('product_id', productId);
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json({ success: true });
+}
+
+export async function DELETE(request: Request, { params }: { params: { userId: string } }) {
+  const supabase = await createSupabaseServer();
+  const userId = (await params).userId;
+  const { productIds }: { productIds: number[] } = await request.json();
+
+  if (!userId || !Array.isArray(productIds) || productIds.length === 0) {
+    return NextResponse.json({ error: '삭제할 상품이 없습니다.' }, { status: 400 });
+  }
+
+  const { error } = await supabase.from('cart').delete().eq('user_id', userId).in('product_id', productIds);
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  return NextResponse.json({ success: true });
+}
