@@ -9,12 +9,14 @@ import { useCustomModal } from 'src/hooks/useModal';
 import UserProfileCropContent from './UserProfileCropContent';
 import { useCartCountByUserId } from '../../cart/_hooks/react-query/useGetCartCountByUserId';
 import { useAuth } from 'src/provider/authProvider';
+import { useWishListCountByUserId } from '../wishlist/_hooks/react-query/useGetWishListByUserId';
 
 export default function UserProfileBox() {
   const { openCustomModal } = useCustomModal();
   const { data: userInfo } = useGetUserProfile();
   const { user } = useAuth();
   const { data: cartCount } = useCartCountByUserId(user?.id ?? '');
+  const { data: wishlistCount } = useWishListCountByUserId(user?.id ?? '');
 
   const profileImageSrc = userInfo?.userProfileImageUrl || DefaultProfileImg;
 
@@ -61,7 +63,7 @@ export default function UserProfileBox() {
             <Link href={appRoutes.shop.shoppingHistory.wishlist} className='flex flex-col items-center gap-1'>
               <LucideIcons.Heart size={24} />
               <p className='text-body-16m text-ui-text-title'>찜하기</p>
-              <p className='text-body-18m text-ui-text-body'>3</p>
+              <p className='text-body-18m text-ui-text-body'>{wishlistCount}</p>
             </Link>
           </li>
 

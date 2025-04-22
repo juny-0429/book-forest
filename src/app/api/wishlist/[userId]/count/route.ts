@@ -5,11 +5,9 @@ export async function GET(request: Request, { params }: { params: { userId: stri
   const supabase = await createSupabaseServer();
   const userId = (await params).userId;
 
-  const { count, error } = await supabase.from('cart').select('*', { count: 'exact', head: true }).eq('user_id', userId);
+  const { count, error } = await supabase.from('wishlist').select('*', { count: 'exact', head: true }).eq('user_id', userId);
 
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
   return NextResponse.json({ count });
 }
