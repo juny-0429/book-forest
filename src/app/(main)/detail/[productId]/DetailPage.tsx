@@ -10,8 +10,11 @@ import BookPriceInfo from './_components/BookPriceInfo/BookPriceInfo';
 import { useGetProductDetail } from './_hooks/react-query/useGetProductDetail';
 import BookHeader from './_components/BookHeader';
 import BookDetailImageList from './_components/BookDetail';
+import { useParams } from 'next/navigation';
 
-export default function DetailPage({ productId }: { productId: string }) {
+export default function DetailPage() {
+  const { productId } = useParams();
+
   const { data: productDetail } = useGetProductDetail(Number(productId));
 
   if (!productDetail) return null;
@@ -50,7 +53,7 @@ export default function DetailPage({ productId }: { productId: string }) {
       {/* 교환/반품/품절 안내 */}
       <ReturnPolicy />
       {/* 결제 창 */}
-      <PaymentBox price={price} discount={discount} />
+      <PaymentBox productId={Number(productId)} price={price} discount={discount} />
     </div>
   );
 }

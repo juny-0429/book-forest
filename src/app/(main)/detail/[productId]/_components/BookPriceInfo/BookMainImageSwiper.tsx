@@ -35,7 +35,7 @@ export default function BookMainImageSwiper({ mainImageList }: BookMainImageSwip
             mainImageList.map((image, index) => (
               <CarouselItem key={index}>
                 <div className='w-full'>
-                  <Image src={image} width={400} height={300} alt='책 대표 이미지' className='book-item' />
+                  <Image src={image} width={400} height={300} priority alt='책 대표 이미지' className='book-item' />
                 </div>
               </CarouselItem>
             ))}
@@ -43,15 +43,15 @@ export default function BookMainImageSwiper({ mainImageList }: BookMainImageSwip
       </Carousel>
 
       <div className='flex justify-center items-center w-full mt-2 gap-1'>
-        <button onClick={() => api?.scrollPrev()} className='text-white p-1 rounded bg-black/50 hover:bg-black/80'>
+        <button onClick={() => api?.scrollPrev()}>
           <LucideIcons.ChevronLeft size={20} />
         </button>
 
-        <div className='px-2 py-1 text-body-14r text-white bg-black/50 rounded'>
+        <div className='text-body-16r text-ui-text-title'>
           {String(current).padStart(2, '0')} - {String(count).padStart(2, '0')}
         </div>
 
-        <button onClick={() => api?.scrollNext()} className='text-white p-1 rounded bg-black/50 hover:bg-black/80'>
+        <button onClick={() => api?.scrollNext()}>
           <LucideIcons.ChevronRight size={20} />
         </button>
       </div>

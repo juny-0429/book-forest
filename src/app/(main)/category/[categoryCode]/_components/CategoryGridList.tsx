@@ -7,23 +7,25 @@ import { appRoutes } from 'src/routes/appRoutes';
 
 interface Props {
   categoryProductList: CategoryProductListItem[];
+  selectedProductIds: number[];
+  onToggleProduct: (productId: number) => void;
 }
 
-export default function CategoryGridList({ categoryProductList }: Props) {
+export default function CategoryGridList({ categoryProductList, selectedProductIds, onToggleProduct }: Props) {
   return (
     <ul className='grid grid-cols-5 w-full gap-y-10'>
       {categoryProductList &&
         categoryProductList.map((product) => (
           <li key={product.productId}>
-            <Link href={`${appRoutes.productDetail}/${product.productId}`} className='flex justify-center items-center'>
-              <article className='relative flex flex-col justify-between w-[180px]'>
+            <article className='flex justify-center items-center'>
+              <div className='relative flex flex-col justify-between w-[180px]'>
                 <div className='absolute top-0 left-[-30px]'>
-                  <CheckBox></CheckBox>
+                  <CheckBox checked={selectedProductIds.includes(product.productId)} onChange={() => onToggleProduct(product.productId)} />
                 </div>
                 {product.mainImageUrl && (
-                  <div className='h-[270px]'>
+                  <Link href={`${appRoutes.productDetail}/${product.productId}`} className='h-[270px]'>
                     <Image src={product.mainImageUrl} width={160} height={160} alt='product image' className='book-item' />
-                  </div>
+                  </Link>
                 )}
 
                 <div className='flex justify-between items-start'>
@@ -42,8 +44,8 @@ export default function CategoryGridList({ categoryProductList }: Props) {
                     </div>
                   </div>
                 </div>
-              </article>
-            </Link>
+              </div>
+            </article>
           </li>
         ))}
     </ul>

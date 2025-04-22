@@ -142,24 +142,24 @@ export type Database = {
       };
       cart: {
         Row: {
-          cart_id: number;
-          create_at: string;
+          cart_id?: number;
+          create_at?: string;
           product_id: number;
-          quantity: number;
+          stock: number;
           user_id: string;
         };
         Insert: {
           cart_id?: number;
           create_at?: string;
           product_id: number;
-          quantity: number;
+          stock: number;
           user_id: string;
         };
         Update: {
           cart_id?: number;
           create_at?: string;
           product_id?: number;
-          quantity?: number;
+          stock?: number;
           user_id?: string;
         };
         Relationships: [
@@ -390,7 +390,7 @@ export type Database = {
           order_item_id: number;
           order_price: number | null;
           product_id: number;
-          quantity: number | null;
+          stock: number | null;
         };
         Insert: {
           create_at?: string | null;
@@ -398,7 +398,7 @@ export type Database = {
           order_item_id?: number;
           order_price?: number | null;
           product_id: number;
-          quantity?: number | null;
+          stock?: number | null;
         };
         Update: {
           create_at?: string | null;
@@ -406,7 +406,7 @@ export type Database = {
           order_item_id?: number;
           order_price?: number | null;
           product_id?: number;
-          quantity?: number | null;
+          stock?: number | null;
         };
         Relationships: [
           {
@@ -1008,6 +1008,35 @@ export type Database = {
           publisher: string;
           price: number;
           discount: number;
+          main_image_url: string | null;
+        }[];
+      };
+
+      get_cart_products: {
+        Args: {
+          product_ids: number[];
+        };
+        Returns: {
+          product_id: number;
+          product_name: string;
+          price: number;
+          discount: number;
+          delivery_price: number;
+          main_image_url: string;
+        }[];
+      };
+
+      get_cart_products_by_user_id: {
+        Args: {
+          _user_id: string;
+        };
+        Returns: {
+          product_id: number;
+          product_name: string;
+          price: number;
+          discount: number;
+          delivery_price: number;
+          stock: number;
           main_image_url: string | null;
         }[];
       };

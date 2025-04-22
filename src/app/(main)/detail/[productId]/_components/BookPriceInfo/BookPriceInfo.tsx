@@ -29,11 +29,15 @@ export default function BookPriceInfo({ price, discount, deliveryPrice, mainImag
               ))}
           </ul>
 
-          <div className='flex flex-col gap-8'>
-            <div className='flex items-center gap-2'>
-              <span className='text-body-18b text-ui-cta'>{discount}%</span>
-              <span className='text-title-24b text-ui-text-title'>{calculateDiscountedPrice(price, discount).toLocaleString()}원</span>
-              <span className='text-body-16l text-ui-text-title line-through'>{price.toLocaleString()}원</span>
+          <div className='flex flex-col gap-5'>
+            <div className='flex justify-between items-center'>
+              <span className='text-body-18b text-ui-text-title'>가격</span>
+
+              <div className='flex items-center gap-2'>
+                <span className='text-body-18b text-ui-cta'>{discount}%</span>
+                <span className='text-title-24b text-ui-text-title'>{calculateDiscountedPrice(price, discount).toLocaleString()}원</span>
+                <span className='text-body-16l text-ui-text-title line-through'>{price.toLocaleString()}원</span>
+              </div>
             </div>
 
             <hr className='w-full h-[1px] bg-gray-600' />
@@ -56,7 +60,12 @@ export default function BookPriceInfo({ price, discount, deliveryPrice, mainImag
                 <span className='text-body-18b text-ui-text-title'>배송안내</span>
 
                 <div className='flex justify-center items-center gap-4'>
-                  <span className='text-body-18b text-ui-text-description'>{deliveryPrice.toLocaleString()}원</span>
+                  {deliveryPrice !== 0 ? (
+                    <span className='text-body-18b text-ui-text-description'>{deliveryPrice.toLocaleString()}원</span>
+                  ) : (
+                    <span className='text-body-18b text-ui-text-description'>무료배송</span>
+                  )}
+
                   <Tooltip position='left' content='배송정보를 확인해주세요.'>
                     <LucideIcons.Info className='text-gray-500' />
                   </Tooltip>

@@ -19,7 +19,7 @@ export default function RecommendedBooks() {
           taggedProductList.map((book) => (
             <article key={book.productId} className='flex flex-col gap-[30px]'>
               <Link href={`${appRoutes.productDetail}/${book.productId}`}>
-                <div className='h-[270px]'>
+                <div className='h-[300px]'>
                   <div className='relative group w-[180px]'>
                     {book.mainImageUrl && <Image src={book.mainImageUrl} width={180} height={180} alt='book image' className='book-item' />}
 

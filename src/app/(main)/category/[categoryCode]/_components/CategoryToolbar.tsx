@@ -5,16 +5,17 @@ import LucideIcons from 'src/theme/lucideIcon';
 interface CategoryToolbarProps {
   view: 'grid' | 'list';
   onUpdateViewType: (type: 'grid' | 'list') => void;
+  onAddToCart: () => void;
 }
 
-export default function CategoryToolbar({ view, onUpdateViewType }: CategoryToolbarProps) {
+export default function CategoryToolbar({ view, onUpdateViewType, onAddToCart }: CategoryToolbarProps) {
   return (
     <div className='flex justify-between items-center w-full'>
       <div className='flex justify-center items-center gap-1 w-fit'>
         <LineButton height={40} color='gray' leftIcon={<LucideIcons.Heart size={20} />}>
           찜하기
         </LineButton>
-        <LineButton height={40} color='gray' leftIcon={<LucideIcons.ShoppingCart size={20} />}>
+        <LineButton height={40} color='gray' leftIcon={<LucideIcons.ShoppingCart size={20} />} onClick={onAddToCart}>
           카트담기
         </LineButton>
       </div>
