@@ -21,10 +21,18 @@ export default function CategoryToolbar({ view, onUpdateViewType, onAddToCart }:
       </div>
 
       <div className='flex justify-center items-center gap-3'>
-        <button onClick={() => onUpdateViewType('grid')}>
+        <button
+          onClick={() => {
+            if (view !== 'grid') onUpdateViewType('grid');
+          }}
+        >
           <LucideIcons.Grid2X2 size={30} className={cn(view === 'grid' ? 'text-gray-900' : 'text-gray-600')} />
         </button>
-        <button onClick={() => onUpdateViewType('list')}>
+        <button
+          onClick={() => {
+            if (view !== 'list') onUpdateViewType('list');
+          }}
+        >
           <LucideIcons.Menu size={30} className={cn(view === 'list' ? 'text-gray-900' : 'text-gray-600')} />
         </button>
       </div>

@@ -56,11 +56,15 @@ export default function CategoryRowList({ categoryProductList, selectedProductId
                       <time className='text-body-16m text-ui-text-description'>{dayjs(product.publishedDate).format('YYYY년 MM월 DD일')} 출판</time>
                     </address>
 
-                    <div className='flex items-center gap-2'>
-                      <span className='text-body-16b text-ui-cta'>{product.discount}%</span>
-                      <span className='text-body-18b text-ui-text-title'>{calculateDiscountedPrice(product.price, product.discount).toLocaleString()}원</span>
-                      <span className='text-body-16l text-ui-text-description line-through'>{product.price.toLocaleString()}원</span>
-                    </div>
+                    {product.discount ? (
+                      <div className='flex items-center gap-2'>
+                        <span className='text-body-16b text-ui-cta'>{product.discount}%</span>
+                        <span className='text-body-18b text-ui-text-title'>{calculateDiscountedPrice(product.price, product.discount).toLocaleString()}원</span>
+                        <span className='text-body-16l text-ui-text-description line-through'>{product.price.toLocaleString()}원</span>
+                      </div>
+                    ) : (
+                      <span className='text-body-18b text-ui-text-title'>{product.price.toLocaleString()}원</span>
+                    )}
                   </div>
 
                   {product.productSummary && (

@@ -9,7 +9,7 @@ import { useCustomModal } from 'src/hooks/useModal';
 import UserProfileCropContent from './UserProfileCropContent';
 import { useCartCountByUserId } from '../../cart/_hooks/react-query/useGetCartCountByUserId';
 import { useAuth } from 'src/provider/authProvider';
-import { useWishListCountByUserId } from '../wishlist/_hooks/react-query/useGetWishListByUserId';
+import { useWishListCountByUserId } from '../wishlist/_hooks/react-query/useGetWishListCountByUserId';
 
 export default function UserProfileBox() {
   const { openCustomModal } = useCustomModal();
