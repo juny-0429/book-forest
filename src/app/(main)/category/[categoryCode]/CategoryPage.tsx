@@ -12,6 +12,10 @@ import { useGetCategoryPath } from './_hooks/react-query/useGetCategoryPath';
 import CategoryToolbar from './_components/CategoryToolbar';
 import { toastMessage } from 'src/hooks/useToast';
 import { useCart } from '../../cart/_hooks/useCart';
+import { useAuth } from 'src/provider/authProvider';
+import { useCreateWishlist } from '../../shop/wishlist/_hooks/react-query/useCreateWishlistItem';
+import { useConfirmModal } from 'src/hooks/useModal';
+import { appRoutes } from 'src/routes/appRoutes';
 
 export default function CategoryPage() {
   const [selectedProductIds, setSelectedProductIds] = useState<number[]>([]);
@@ -21,6 +25,9 @@ export default function CategoryPage() {
   const pathname = usePathname();
   const { ref, inView } = useInView();
   const { addToCart } = useCart();
+  const { user } = useAuth();
+  const { mutate: createWishlist } = useCreateWishlist(user?.id as string);
+  const { openConfirmModal } = useConfirmModal();
 
   const view = searchParams.get('view') === 'list' ? 'list' : 'grid';
 
@@ -37,6 +44,35 @@ export default function CategoryPage() {
 
   const onToggleProduct = (id: number) => {
     setSelectedProductIds((prev) => (prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]));
+  };
+
+  const onAddWishlist = (productId?: number) => {
+    if (!user) {
+      openConfirmModal({
+        content: '로그인이 필요한 서비스입니다.',
+        confirmButtonText: '로그인하기',
+        onConfirm: () => {
+          router.push(appRoutes.login);
+        },
+        onCancel: () => {},
+      });
+      return;
+    }
+
+    const productIds = productId ? [productId] : selectedProductIds;
+
+    if (productIds.length === 0) return;
+
+    createWishlist(productIds, {
+      onSuccess: () => {
+        toastMessage({
+          title: '찜하기 완료',
+          content: '선택한 상품이 찜 목록에 추가되었습니다.',
+          type: 'success',
+        });
+        setSelectedProductIds([]);
+      },
+    });
   };
 
   const onAddToCart = () => {
@@ -82,10 +118,22 @@ export default function CategoryPage() {
       <CategoryBanner />
 
       <div className='flex flex-col gap-4'>
-        <CategoryToolbar view={view} onUpdateViewType={onUpdateViewType} onAddToCart={onAddToCart} />
+        <CategoryToolbar
+          view={view}
+          onUpdateViewType={onUpdateViewType}
+          onAddToCart={onAddToCart}
+          onAddWishlist={() => onAddWishlist()}
+        />
         <hr className='w-full h-[1px] bg-gray-300' />
         {view === 'grid' && <CategoryGridList categoryProductList={categoryProductList} selectedProductIds={selectedProductIds} onToggleProduct={onToggleProduct} />}
-        {view === 'list' && <CategoryRowList categoryProductList={categoryProductList} selectedProductIds={selectedProductIds} onToggleProduct={onToggleProduct} />}
+        {view === 'list' && (
+          <CategoryRowList
+            categoryProductList={categoryProductList}
+            selectedProductIds={selectedProductIds}
+            onToggleProduct={onToggleProduct}
+            onAddWishlist={onAddWishlist}
+          />
+        )}
       </div>
 
       {categoryProductList.length !== 0 && !isFetchingNextPage && <div ref={ref} className='h-[1px]' />}

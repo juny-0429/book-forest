@@ -30,21 +30,29 @@ export async function GET(request: Request, { params }: { params: { userId: stri
 export async function POST(request: Request, { params }: { params: { userId: string } }) {
   try {
     const userId = (await params).userId;
-    const { searchParams } = new URL(request.url);
-    const productId = Number(searchParams.get('productId'));
     const supabase = await createSupabaseServer();
+    const body = await request.json();
+    const productIds: number[] = body.productIds;
 
-    if (!productId) return NextResponse.json({ error: '상품 ID가 필요합니다.' }, { status: 400 });
+    if (!Array.isArray(productIds) || productIds.length === 0) {
+      return NextResponse.json({ error: '상품 ID 목록이 필요합니다.' }, { status: 400 });
+    }
 
-    const { error } = await supabase.from('wishlist').insert({
+    const inserts = productIds.map((productId) => ({
       user_id: userId,
       product_id: productId,
+    }));
+
+    const { error } = await supabase.from('wishlist').upsert(inserts, {
+      onConflict: 'user_id,product_id',
     });
 
-    if (error) return NextResponse.json({ error: `찜 추가 중 오류가 발생했습니다: ${error.message}` }, { status: 500 });
+    if (error) {
+      return NextResponse.json({ error: `찜 추가 중 오류가 발생했습니다: ${error.message}` }, { status: 500 });
+    }
 
     return NextResponse.json(true);
-  } catch (err) {
+  } catch (error) {
     return NextResponse.json({ error: '알 수 없는 오류가 발생했습니다.' }, { status: 500 });
   }
 }

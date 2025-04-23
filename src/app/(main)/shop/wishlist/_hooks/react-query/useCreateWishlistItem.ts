@@ -2,30 +2,31 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getWishlistByUserIdQueryOptions } from './useGetWhishlistByUserId';
 import { WishlistItemDto } from '../../_dtos/GetWhislistItem.dto';
 
-export const createWishlistItemApi = async (userId: string, productId: string): Promise<boolean> => {
-  const response = await fetch(`/api/wishlist/${userId}?productId=${productId}`, {
+export const createWishlistApi = async (userId: string, productIds: number[]): Promise<boolean> => {
+  const response = await fetch(`/api/wishlist/${userId}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
+    body: JSON.stringify({ productIds }),
   });
 
   if (!response.ok) {
-    throw new Error('찜 추가에 실패했습니다.');
+    const { error } = await response.json();
+    throw new Error(error ?? '찜 추가에 실패했습니다.');
   }
 
-  return response.json();
+  return true;
 };
 
-export const useCreateWishlistItem = (userId: string, productId: string) => {
+export const useCreateWishlist = (userId: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: () => createWishlistItemApi(userId, productId),
-    onSuccess: (newItem) => {
-      queryClient.setQueryData(getWishlistByUserIdQueryOptions(userId).queryKey, (oldData: WishlistItemDto[] | undefined) => {
-        if (!oldData) return [newItem];
-        return [...oldData, newItem];
+    mutationFn: (productIds: number[]) => createWishlistApi(userId, productIds),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: getWishlistByUserIdQueryOptions(userId).queryKey,
       });
     },
   });

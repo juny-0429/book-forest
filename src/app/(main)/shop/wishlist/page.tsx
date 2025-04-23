@@ -2,7 +2,6 @@
 
 import LineButton from 'src/components/Button/LineButton';
 import CheckBox from 'src/components/CheckBox/CheckBox';
-import Select from 'src/components/Select/Select';
 import LucideIcons from 'src/theme/lucideIcon';
 import WishlistGridList from './_components/WishlistGridList';
 import WishlistRowList from './_components/WishlistRowList';
