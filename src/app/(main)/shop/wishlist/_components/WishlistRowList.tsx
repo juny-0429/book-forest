@@ -9,13 +9,19 @@ import dayjs from 'dayjs';
 import { appRoutes } from 'src/routes/appRoutes';
 import { toastMessage } from 'src/hooks/useToast';
 import { useCart } from 'src/app/(main)/cart/_hooks/useCart';
+import { useRouter } from 'next/navigation';
+import { UseMutateFunction } from '@tanstack/react-query';
 
 interface Props {
   wishlist: WishlistItemDto[];
+  selectedProductIds: number[];
+  deleteWishlist: UseMutateFunction<boolean, unknown, number[], unknown>;
+  onToggleSelect: (productId: number) => void;
 }
 
-export default function WishlistRowList({ wishlist }: Props) {
+export default function WishlistRowList({ wishlist,selectedProductIds, deleteWishlist, onToggleSelect }: Props) {
   const { addToCart } = useCart();
+  const router = useRouter();
 
   return (
     <ul>
@@ -24,7 +30,7 @@ export default function WishlistRowList({ wishlist }: Props) {
           <li key={book.productId}>
             <article className='relative flex justify-between h-[260px] pl-[30px] py-[30px]'>
               <div className='absolute top-[15px] left-0'>
-                <CheckBox />
+                <CheckBox checked={selectedProductIds.includes(book.productId)} onChange={() => onToggleSelect(book.productId)} />
               </div>
 
               <div className='flex items-center gap-[30px] h-full'>
@@ -76,7 +82,23 @@ export default function WishlistRowList({ wishlist }: Props) {
                   카트 담기
                 </Button>
                 <Button height={40}>바로 구매</Button>
-                <LineButton height={40}>삭제</LineButton>
+                <LineButton
+                  height={40}
+                  onClick={() => {
+                    deleteWishlist([book.productId], {
+                      onSuccess: () => {
+                        toastMessage({
+                          title: '찜 삭제 완료',
+                          content: '상품이 찜 목록에서 삭제되었습니다.',
+                          type: 'success',
+                        });
+                        router.refresh();
+                      },
+                    });
+                  }}
+                >
+                  삭제
+                </LineButton>
               </div>
             </article>
           </li>

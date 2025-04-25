@@ -14,6 +14,8 @@ import { useUpdateCartItemStock } from './_hooks/react-query/useUpdateCartItemSt
 import { useDeleteCartItemByUserId } from './_hooks/react-query/useDeleteCartItemListByUserId';
 import { toastMessage } from 'src/hooks/useToast';
 import CartToolbar from './_components/CartToolbar';
+import { useCreateWishlist } from '../shop/wishlist/_hooks/react-query/useCreateWishlistItem';
+import { useAlertModal } from 'src/hooks/useModal';
 
 export default function CartPage() {
   const { getCart, removeFromCart, saveCart, clearCart } = useCart();
@@ -24,6 +26,8 @@ export default function CartPage() {
   const { mutate: createCartListByUserId } = useCreateCartListByUserId();
   const { mutate: updateCartItemStock } = useUpdateCartItemStock();
   const { mutate: deleteCartItemsByUserId } = useDeleteCartItemByUserId();
+  const { mutate: createWishlist } = useCreateWishlist(user?.id ?? '');
+  const { openAlertModal } = useAlertModal();
 
   const { data } = user ? useGetCartListByUserId(user.id) : useGetCartList(cart.map((item) => ({ productId: item.productId, stock: item.stock })));
 
@@ -113,6 +117,39 @@ export default function CartPage() {
     }
   };
 
+  const onAddWishlist = () => {
+    if (!user) {
+      openAlertModal({
+        content: '로그인이 필요한 서비스 입니다.',
+      });
+      return;
+    }
+
+    if (selectedProductIds.length === 0) {
+      openAlertModal({
+        content: '찜할 상품이 없습니다.',
+      });
+      return;
+    }
+
+    createWishlist(selectedProductIds, {
+      onSuccess: () => {
+        toastMessage({
+          title: '찜하기 완료',
+          content: '선택한 상품이 찜 목록에 추가되었습니다.',
+          type: 'success',
+        });
+      },
+      onError: () => {
+        toastMessage({
+          title: '찜하기 실패',
+          content: '찜 목록 추가에 실패했습니다. 다시 시도해 주세요.',
+          type: 'error',
+        });
+      },
+    });
+  };
+
   useEffect(() => {
     if (user) {
       const guestCart = getCart();
@@ -145,7 +182,7 @@ export default function CartPage() {
 
       <div className='flex justify-center gap-10'>
         <div className='flex flex-col items-end gap-5 w-full'>
-          <CartToolbar cartList={cartList} selectedProductIds={selectedProductIds} toggleSelectAll={toggleSelectAll} onSelectedRemove={onSelectedRemove} />
+          <CartToolbar cartList={cartList} selectedProductIds={selectedProductIds} toggleSelectAll={toggleSelectAll} onSelectedRemove={onSelectedRemove} onAddWishlist={onAddWishlist} />
 
           <ul className='w-full border-t border-solid border-gray-300'>
             {cartList &&

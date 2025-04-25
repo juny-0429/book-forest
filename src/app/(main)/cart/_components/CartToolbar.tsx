@@ -9,9 +9,10 @@ interface CartToolbarProps {
   selectedProductIds: number[];
   toggleSelectAll: () => void;
   onSelectedRemove: () => void;
+  onAddWishlist: () => void;
 }
 
-export default function CartToolbar({ cartList, selectedProductIds, toggleSelectAll, onSelectedRemove }: CartToolbarProps) {
+export default function CartToolbar({ cartList, selectedProductIds, toggleSelectAll, onSelectedRemove, onAddWishlist }: CartToolbarProps) {
   return (
     <div className='flex justify-between w-full'>
       <CheckBox checked={cartList.length > 0 && selectedProductIds.length === cartList.length} onChange={toggleSelectAll}>
@@ -19,7 +20,7 @@ export default function CartToolbar({ cartList, selectedProductIds, toggleSelect
       </CheckBox>
 
       <div className='flex justify-center items-center gap-1'>
-        <LineButton height={40} color='gray' leftIcon={<LucideIcons.Heart size={20} />}>
+        <LineButton height={40} color='gray' leftIcon={<LucideIcons.Heart size={20} />} onClick={onAddWishlist}>
           찜하기
         </LineButton>
         <LineButton height={40} color='gray' leftIcon={<LucideIcons.Trash2 size={20} />} onClick={onSelectedRemove}>

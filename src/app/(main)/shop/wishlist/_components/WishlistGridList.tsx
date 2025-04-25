@@ -7,9 +7,11 @@ import { appRoutes } from 'src/routes/appRoutes';
 
 interface Props {
   wishlist: WishlistItemDto[];
+  selectedProductIds: number[];
+  onToggleSelect: (productId: number) => void;
 }
 
-export default function WishlistGridList({ wishlist }: Props) {
+export default function WishlistGridList({ wishlist, selectedProductIds, onToggleSelect }: Props) {
   return (
     <ul className='grid grid-cols-6 gap-x-10 gap-y-[60px]'>
       {wishlist &&
@@ -17,7 +19,7 @@ export default function WishlistGridList({ wishlist }: Props) {
           <li key={book.productId} className='flex justify-end'>
             <article className='relative flex flex-col gap-5 w-fit'>
               <div className='absolute top-0 left-[-30px]'>
-                <CheckBox />
+                <CheckBox checked={selectedProductIds.includes(book.productId)} onChange={() => onToggleSelect(book.productId)} />
               </div>
 
               {book.mainImageUrl && (
@@ -29,10 +31,10 @@ export default function WishlistGridList({ wishlist }: Props) {
               <div className='flex flex-col items-center gap-1'>
                 <h3 className='text-body-16m text-ui-text-title'>{book.productName}</h3>
 
-                <address className='flex justify-center items-center gap-2'>
+                <address className='flex justify-center items-baseline gap-1'>
                   <cite className='text-body-14m text-ui-text-description'>{book.authorName}</cite>
                   <hr className='w-[1px] h-2 bg-gray-600' />
-                  <span className='text-body-14m text-ui-text-description'>{book.publisher}</span>
+                  <span className='text-body-14m text-ui-text-description whitespace-nowrap'>{book.publisher}</span>
                 </address>
 
                 {book.discount && book.discount > 0 ? (

@@ -13,10 +13,12 @@ export const getWishListCountByUserId = async (userId: string): Promise<number> 
 
 const WISHLIST_COUNT = 'WISHLIST_COUNT';
 
+export const wishlistCountByUserIdQueryOptions = (userId: string) => ({
+  queryKey: [WISHLIST_COUNT, userId],
+  queryFn: () => getWishListCountByUserId(userId),
+  enabled: !!userId,
+});
+
 export const useWishListCountByUserId = (userId: string) => {
-  return useQuery({
-    queryKey: [WISHLIST_COUNT, userId],
-    queryFn: () => getWishListCountByUserId(userId),
-    enabled: !!userId,
-  });
+  return useQuery(wishlistCountByUserIdQueryOptions(userId));
 };

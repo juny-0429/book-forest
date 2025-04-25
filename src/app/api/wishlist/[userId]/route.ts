@@ -47,9 +47,28 @@ export async function POST(request: Request, { params }: { params: { userId: str
       onConflict: 'user_id,product_id',
     });
 
-    if (error) {
-      return NextResponse.json({ error: `찜 추가 중 오류가 발생했습니다: ${error.message}` }, { status: 500 });
+    if (error) return NextResponse.json({ error: `찜 추가 중 오류가 발생했습니다: ${error.message}` }, { status: 500 });
+
+    return NextResponse.json(true);
+  } catch (error) {
+    return NextResponse.json({ error: '알 수 없는 오류가 발생했습니다.' }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: Request, { params }: { params: { userId: string } }) {
+  try {
+    const userId = (await params).userId;
+    const supabase = await createSupabaseServer();
+    const body = await request.json();
+    const productIds: number[] = body.productIds;
+
+    if (!Array.isArray(productIds) || productIds.length === 0) {
+      return NextResponse.json({ error: '삭제할 상품 ID 목록이 필요합니다.' }, { status: 400 });
     }
+
+    const { error } = await supabase.from('wishlist').delete().in('product_id', productIds).eq('user_id', userId);
+
+    if (error) return NextResponse.json({ error: `찜 삭제 중 오류가 발생했습니다: ${error.message}` }, { status: 500 });
 
     return NextResponse.json(true);
   } catch (error) {

@@ -2,9 +2,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getWishlistByUserIdQueryOptions } from './useGetWhishlistByUserId';
 import { wishlistCountByUserIdQueryOptions } from './useGetWishListCountByUserId';
 
-export const createWishlistApi = async (userId: string, productIds: number[]): Promise<boolean> => {
+export const deleteWishlistApi = async (userId: string, productIds: number[]): Promise<boolean> => {
   const response = await fetch(`/api/wishlist/${userId}`, {
-    method: 'POST',
+    method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -13,17 +13,17 @@ export const createWishlistApi = async (userId: string, productIds: number[]): P
 
   if (!response.ok) {
     const { error } = await response.json();
-    throw new Error(error ?? '찜 추가에 실패했습니다.');
+    throw new Error(error ?? '찜 삭제에 실패했습니다.');
   }
 
   return true;
 };
 
-export const useCreateWishlist = (userId: string) => {
+export const useDeleteWishlist = (userId: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (productIds: number[]) => createWishlistApi(userId, productIds),
+    mutationFn: (productIds: number[]) => deleteWishlistApi(userId, productIds),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: getWishlistByUserIdQueryOptions(userId).queryKey,
