@@ -7,7 +7,7 @@ interface BookDetailImageListProps {
 
 export default function BookDetailImageList({ detailImageList }: BookDetailImageListProps) {
   return (
-    <div className='flex flex-col items-center w-full pb-8 border-b border-solid border-gray-300'>
+    <div className='flex flex-col items-center w-full h-full pb-8 border-b border-solid border-gray-300'>
       {detailImageList && detailImageList.map((image) => <Image src={image} key={image} width={900} height={400} alt='detail image' />)}
     </div>
   );

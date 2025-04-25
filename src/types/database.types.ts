@@ -926,7 +926,7 @@ export type Database = {
           category_name: string;
           publisher: string;
           price: number;
-          discount: number;
+          discount: number | null;
           published_date: Date;
           main_image_url: string | null;
         }[];
@@ -945,7 +945,7 @@ export type Database = {
           category_name: string;
           publisher: string;
           price: number;
-          discount: number;
+          discount: number | null;
           published_date: Date;
           main_image_url: string | null;
         }[];
@@ -966,7 +966,7 @@ export type Database = {
           category_name: string;
           publisher: string;
           price: number;
-          discount: number;
+          discount: number | null;
           delivery_price: number;
           published_date: Date;
           main_images: string[];
@@ -987,8 +987,8 @@ export type Database = {
           author_name: string;
           publisher: string;
           price: number;
-          discount: number;
-          main_image_url: string | null;
+          discount: number | null;
+          main_image_url: string;
           total_count: number;
         }[];
       };
@@ -1007,8 +1007,8 @@ export type Database = {
           author_name: string;
           publisher: string;
           price: number;
-          discount: number;
-          main_image_url: string | null;
+          discount: number | null;
+          main_image_url: string;
         }[];
       };
 
@@ -1020,7 +1020,7 @@ export type Database = {
           product_id: number;
           product_name: string;
           price: number;
-          discount: number;
+          discount: number | null;
           delivery_price: number;
           main_image_url: string;
         }[];
@@ -1034,10 +1034,27 @@ export type Database = {
           product_id: number;
           product_name: string;
           price: number;
-          discount: number;
+          discount: number | null;
           delivery_price: number;
           stock: number;
-          main_image_url: string | null;
+          main_image_url: string;
+        }[];
+      };
+
+      get_wishlist_products_by_user_id: {
+        Args: {
+          _user_id: string;
+        };
+        Returns: {
+          product_id: number;
+          product_name: string;
+          product_summary: string;
+          author_name: string;
+          publisher: string;
+          price: number;
+          discount: number | null;
+          published_date: Date;
+          main_image_url: string;
         }[];
       };
     };

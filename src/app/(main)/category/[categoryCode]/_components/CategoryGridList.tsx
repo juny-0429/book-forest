@@ -22,6 +22,7 @@ export default function CategoryGridList({ categoryProductList, selectedProductI
                 <div className='absolute top-0 left-[-30px]'>
                   <CheckBox checked={selectedProductIds.includes(product.productId)} onChange={() => onToggleProduct(product.productId)} />
                 </div>
+
                 {product.mainImageUrl && (
                   <Link href={`${appRoutes.productDetail}/${product.productId}`} className='h-[270px]'>
                     <Image src={product.mainImageUrl} width={160} height={160} alt='product image' className='book-item' />
@@ -32,11 +33,11 @@ export default function CategoryGridList({ categoryProductList, selectedProductI
                   <div className='flex flex-col gap-2'>
                     <h3 className='text-body-18b text-ui-text-title'>{product.productName}</h3>
 
-                    <div className='flex items-baseline gap-2'>
-                      <span className='text-body-14r text-ui-text-description'>{product.authorName}</span>
+                    <address className='flex items-baseline gap-2'>
+                      <cite className='text-body-14r text-ui-text-description'>{product.authorName}</cite>
                       <hr className='w-[1px] h-2 bg-gray-600' />
                       <span className='text-body-14r text-ui-text-description whitespace-nowrap'>{product.publisher}</span>
-                    </div>
+                    </address>
 
                     <div className='flex items-center gap-2'>
                       <span className='text-body-16b text-ui-cta'>{product.discount}%</span>

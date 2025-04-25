@@ -25,7 +25,7 @@ export default function CategoryBanner() {
   }, [api]);
 
   return (
-    <div className='relative mx-10'>
+    <div className='relative mx-10 h-[273px]'>
       <Carousel
         opts={{ align: 'start', loop: true }}
         plugins={[
@@ -40,8 +40,8 @@ export default function CategoryBanner() {
           {categoryBannerList &&
             categoryBannerList.map((banner, index) => (
               <CarouselItem key={index}>
-                <div className='w-full rounded-[16px] overflow-hidden'>
-                  <Image src={banner.banner_image_url} width={1000} height={300} alt={`${banner.banner_name} image`} className='w-full h-auto object-cover' />
+                <div className='w-full h-full rounded-[16px] overflow-hidden'>
+                  <Image src={banner.banner_image_url} width={1100} height={300} alt={`${banner.banner_name} image`} />
                 </div>
               </CarouselItem>
             ))}

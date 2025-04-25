@@ -40,7 +40,7 @@ export default function DetailPage() {
   return (
     <div className='flex flex-col gap-16'>
       {/* 상세페이지 정보 */}
-      <BookHeader productName={productName} authorName={authorName} publisher={publisher} publishedDate={publishedDate} />
+      <BookHeader productId={ids} productName={productName} authorName={authorName} publisher={publisher} publishedDate={publishedDate} />
       <BookPriceInfo price={price} discount={discount} deliveryPrice={deliveryPrice} mainImageList={mainImages} badges={badgeNames} />
       {/* 상세페이지 */}
       <BookDetailImageList detailImageList={detailImages} />

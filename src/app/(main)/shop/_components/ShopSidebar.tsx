@@ -38,7 +38,7 @@ export default function ShopSidebar() {
                 })}
               </ul>
             </li>
-        ))}
+          ))}
         </ul>
 
         <button onClick={signOut} className='text-body-16b text-ui-cta'>

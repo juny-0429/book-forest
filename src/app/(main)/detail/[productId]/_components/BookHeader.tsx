@@ -1,17 +1,22 @@
 import dayjs from 'dayjs';
 import { usePathname } from 'next/navigation';
 import React from 'react';
+import { useWishlistItemCheck } from 'src/app/(main)/shop/wishlist/_hooks/react-query/useGetwishlistItemCheck';
+import { useAuth } from 'src/provider/authProvider';
 import LucideIcons from 'src/theme/lucideIcon';
 
 interface BookHeaderProps {
+  productId: number;
   productName: string;
   authorName: string;
   publisher: string;
   publishedDate: Date;
 }
 
-export default function BookHeader({ productName, authorName, publisher, publishedDate }: BookHeaderProps) {
+export default function BookHeader({ productId, productName, authorName, publisher, publishedDate }: BookHeaderProps) {
   const pathname = usePathname();
+  const { user } = useAuth();
+  const { data: isWished } = useWishlistItemCheck(user?.id ?? '', productId);
 
   const onCopyUrl = async () => {
     const fullUrl = `${window.location.origin}${pathname}`;
@@ -37,10 +42,8 @@ export default function BookHeader({ productName, authorName, publisher, publish
           </div>
         </div>
 
-        <div className='flex items-center gap-2'>
-          <button>
-            <LucideIcons.Heart size={30} />
-          </button>
+        <div className='flex items-center gap-4'>
+          {isWished ? <LucideIcons.Heart size={30} className='fill-red-500 text-red-500' /> : <LucideIcons.Heart size={30} />}
           <button onClick={onCopyUrl}>
             <LucideIcons.Share2 size={30} />
           </button>

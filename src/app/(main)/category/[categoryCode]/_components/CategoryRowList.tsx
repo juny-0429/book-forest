@@ -3,7 +3,6 @@ import CheckBox from 'src/components/CheckBox/CheckBox';
 import { calculateDiscountedPrice } from 'src/utils/priceUtils';
 import Button from 'src/components/Button/Button';
 import LineButton from 'src/components/Button/LineButton';
-import LucideIcons from 'src/theme/lucideIcon';
 import { CategoryProductListItem } from '../_dtos/getCategoryProductList.dto';
 import dayjs from 'dayjs';
 import Link from 'next/link';
@@ -15,9 +14,10 @@ interface Props {
   categoryProductList: CategoryProductListItem[];
   selectedProductIds: number[];
   onToggleProduct: (productId: number) => void;
+  onAddWishlist: (productId: number) => void;
 }
 
-export default function CategoryRowList({ categoryProductList, selectedProductIds, onToggleProduct }: Props) {
+export default function CategoryRowList({ categoryProductList, selectedProductIds, onToggleProduct, onAddWishlist }: Props) {
   const { addToCart } = useCart();
 
   return (
@@ -39,14 +39,9 @@ export default function CategoryRowList({ categoryProductList, selectedProductId
 
                 <div className='flex flex-col justify-between h-full'>
                   <div className='flex flex-col gap-2'>
-                    <div className='flex items-center gap-3'>
-                      <Link href={`${appRoutes.productDetail}/${product.productId}`} className='hover:underline'>
-                        <h3 className='text-title-24r text-ui-text-title'>{product.productName}</h3>
-                      </Link>
-                      <button>
-                        <LucideIcons.Heart size={26} className='text-gray-500' />
-                      </button>
-                    </div>
+                    <Link href={`${appRoutes.productDetail}/${product.productId}`} className='hover:underline'>
+                      <h3 className='text-title-24r text-ui-text-title'>{product.productName}</h3>
+                    </Link>
 
                     <address className='flex items-center gap-2'>
                       <cite className='text-body-16m text-ui-text-description'>{product.authorName}</cite>
@@ -56,11 +51,15 @@ export default function CategoryRowList({ categoryProductList, selectedProductId
                       <time className='text-body-16m text-ui-text-description'>{dayjs(product.publishedDate).format('YYYY년 MM월 DD일')} 출판</time>
                     </address>
 
-                    <div className='flex items-center gap-2'>
-                      <span className='text-body-16b text-ui-cta'>{product.discount}%</span>
-                      <span className='text-body-18b text-ui-text-title'>{calculateDiscountedPrice(product.price, product.discount).toLocaleString()}원</span>
-                      <span className='text-body-16l text-ui-text-description line-through'>{product.price.toLocaleString()}원</span>
-                    </div>
+                    {product.discount ? (
+                      <div className='flex items-center gap-2'>
+                        <span className='text-body-16b text-ui-cta'>{product.discount}%</span>
+                        <span className='text-body-18b text-ui-text-title'>{calculateDiscountedPrice(product.price, product.discount).toLocaleString()}원</span>
+                        <span className='text-body-16l text-ui-text-description line-through'>{product.price.toLocaleString()}원</span>
+                      </div>
+                    ) : (
+                      <span className='text-body-18b text-ui-text-title'>{product.price.toLocaleString()}원</span>
+                    )}
                   </div>
 
                   {product.productSummary && (
@@ -72,7 +71,9 @@ export default function CategoryRowList({ categoryProductList, selectedProductId
               </div>
 
               <div className='flex flex-col items-center gap-2 w-fit'>
-                <LineButton height={40}>찜하기</LineButton>
+                <LineButton height={40} onClick={() => onAddWishlist(product.productId)}>
+                  찜하기
+                </LineButton>
                 <LineButton
                   height={40}
                   onClick={() => {
