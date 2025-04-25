@@ -10,13 +10,13 @@ import { appRoutes } from 'src/routes/appRoutes';
 interface CartItemProps {
   item: CartListItemDto;
   stock: number;
-  onCartItemRemove: (productId: number) => void;
-  onStockChange: (productId: number, count: number) => void;
   checked: boolean;
+  onCartItemRemove: (productId: number) => void;
+  updateCartStock: (productId: number, count: number) => void;
   onToggle: () => void;
 }
 
-export default function CartItem({ item, stock, onCartItemRemove, onStockChange, checked, onToggle }: CartItemProps) {
+export default function CartItem({ item, stock, checked, onCartItemRemove, updateCartStock, onToggle }: CartItemProps) {
   const finalPrice = calculateDiscountedPrice(item.price, item.discount) * stock;
 
   return (
@@ -52,11 +52,11 @@ export default function CartItem({ item, stock, onCartItemRemove, onStockChange,
         <p className='text-body-18b'>{finalPrice.toLocaleString()}원</p>
 
         <div className='flex justify-between items-center gap-2 w-[90px] h-fit p-2 border border-solid border-gray-300 rounded-[5px]'>
-          <button onClick={() => onStockChange(item.productId, Math.max(stock - 1, 1))}>
+          <button onClick={() => updateCartStock(item.productId, Math.max(stock - 1, 1))}>
             <LucideIcons.Minus size={16} />
           </button>
           <span className='text-body-16r text-ui-text-title'>{stock}</span>
-          <button onClick={() => onStockChange(item.productId, stock + 1)}>
+          <button onClick={() => updateCartStock(item.productId, stock + 1)}>
             <LucideIcons.Plus size={16} />
           </button>
         </div>

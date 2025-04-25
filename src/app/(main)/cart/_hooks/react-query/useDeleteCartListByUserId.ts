@@ -4,7 +4,7 @@ import { CartListItemDto } from '../../_dtos/getCartList.dto';
 import { DeleteCartItemDto } from '../../_dtos/deleteCartItem.dto';
 
 
-const deleteCartItemListByUserId = async ({ userId, productIds }: DeleteCartItemDto) => {
+const deleteCartListByUserId = async ({ userId, productIds }: DeleteCartItemDto) => {
   const response = await fetch(`/api/cart/${userId}`, {
     method: 'DELETE',
     headers: {
@@ -21,11 +21,11 @@ const deleteCartItemListByUserId = async ({ userId, productIds }: DeleteCartItem
   return response.json();
 };
 
-export const useDeleteCartItemByUserId = () => {
+export const useDeleteCartListByUserId = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: deleteCartItemListByUserId,
+    mutationFn: deleteCartListByUserId,
     onSuccess: (_, variables: DeleteCartItemDto) => {
       queryClient.setQueryData<CartListItemDto[]>(getCartListByUserIdQueryOptions(variables.userId).queryKey, (oldData) => {
         if (!oldData) return [];

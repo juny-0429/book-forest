@@ -9,125 +9,36 @@ import PaymentBox from './_components/PaymentBox';
 import CartNoticeButton from './_components/CartNoticeButton';
 import { useAuth } from 'src/provider/authProvider';
 import { useGetCartListByUserId } from './_hooks/react-query/useGetCartListByUserId';
-import { useCreateCartListByUserId } from './_hooks/react-query/useCreateCartListByUserId';
-import { useUpdateCartItemStock } from './_hooks/react-query/useUpdateCartItemStock';
-import { useDeleteCartItemByUserId } from './_hooks/react-query/useDeleteCartItemListByUserId';
 import { toastMessage } from 'src/hooks/useToast';
 import CartToolbar from './_components/CartToolbar';
 import { useCreateWishlist } from '../shop/wishlist/_hooks/react-query/useCreateWishlistItem';
 import { useAlertModal } from 'src/hooks/useModal';
 
 export default function CartPage() {
-  const { getCart, removeFromCart, saveCart, clearCart } = useCart();
+  const { getCart, addToCart, removeFromCart, updateCartStock, clearCart } = useCart();
   const [cart, setCart] = useState<CartItemType[]>([]);
   const [cartList, setCartList] = useState<CartListItemDto[]>([]);
   const [selectedProductIds, setSelectedProductIds] = useState<number[]>([]);
   const { user } = useAuth();
-  const { mutate: createCartListByUserId } = useCreateCartListByUserId();
-  const { mutate: updateCartItemStock } = useUpdateCartItemStock();
-  const { mutate: deleteCartItemsByUserId } = useDeleteCartItemByUserId();
   const { mutate: createWishlist } = useCreateWishlist(user?.id ?? '');
   const { openAlertModal } = useAlertModal();
 
   const { data } = user ? useGetCartListByUserId(user.id) : useGetCartList(cart.map((item) => ({ productId: item.productId, stock: item.stock })));
 
-  // 장바구니 항목 수량 변경 시 호출
-  const onStockChange = (productId: number, stock: number) => {
-    if (user) {
-      updateCartItemStock({ userId: user.id, productId, stock });
-    } else {
-      setCart((prev) => {
-        const updated = prev.map((item) => (item.productId === productId ? { ...item, stock } : item));
-        saveCart(updated);
-        return updated;
-      });
-    }
-  };
-
-  // 장바구니에서 특정 상품을 제거
-  const onCartItemRemove = (productId: number) => {
-    if (user) {
-      deleteCartItemsByUserId(
-        {
-          userId: user.id,
-          productIds: [productId],
-        },
-        {
-          onSuccess: () => {
-            toastMessage({
-              title: '장바구니 상품 삭제',
-              content: '상품이 장바구니에서 삭제되었습니다.',
-              type: 'success',
-            });
-          },
-        }
-      );
-    } else {
-      const updatedCart = cart.filter((item) => item.productId !== productId);
-      const updatedCartList = cartList.filter((item) => item.productId !== productId);
-      setCart(updatedCart);
-      setCartList(updatedCartList);
-      saveCart(updatedCart);
-      removeFromCart(productId);
-    }
-  };
-
-  // 개별 상품 선택/선택 해제
   const toggleProductSelection = (productId: number) => {
     setSelectedProductIds((prev) => (prev.includes(productId) ? prev.filter((id) => id !== productId) : [...prev, productId]));
   };
 
-  // 전체 선택
   const toggleSelectAll = () => {
     const allIds = cartList.map((item) => item.productId);
     const isAllSelected = allIds.every((id) => selectedProductIds.includes(id));
     setSelectedProductIds(isAllSelected ? [] : allIds);
   };
 
-  // 선택 항목 삭제
-  const onSelectedRemove = () => {
-    if (user) {
-      deleteCartItemsByUserId(
-        {
-          userId: user.id,
-          productIds: selectedProductIds,
-        },
-        {
-          onSuccess: () => {
-            toastMessage({
-              title: '장바구니 상품 삭제',
-              content: '상품이 장바구니에서 삭제되었습니다.',
-              type: 'success',
-            });
-          },
-        }
-      );
-    } else {
-      const updatedCart = cart.filter((item) => !selectedProductIds.includes(item.productId));
-      const updatedCartList = cartList.filter((item) => !selectedProductIds.includes(item.productId));
-      setCart(updatedCart);
-      setCartList(updatedCartList);
-      saveCart(updatedCart);
-      setSelectedProductIds([]);
-      toastMessage({
-        title: '장바구니 상품 삭제',
-        content: '상품이 장바구니에서 삭제되었습니다.',
-        type: 'success',
-      });
-    }
-  };
-
   const onAddWishlist = () => {
     if (!user) {
       openAlertModal({
         content: '로그인이 필요한 서비스 입니다.',
-      });
-      return;
-    }
-
-    if (selectedProductIds.length === 0) {
-      openAlertModal({
-        content: '찜할 상품이 없습니다.',
       });
       return;
     }
@@ -140,13 +51,6 @@ export default function CartPage() {
           type: 'success',
         });
       },
-      onError: () => {
-        toastMessage({
-          title: '찜하기 실패',
-          content: '찜 목록 추가에 실패했습니다. 다시 시도해 주세요.',
-          type: 'error',
-        });
-      },
     });
   };
 
@@ -154,18 +58,9 @@ export default function CartPage() {
     if (user) {
       const guestCart = getCart();
       if (guestCart.length > 0) {
-        createCartListByUserId(
-          {
-            userId: user.id,
-            cart: guestCart,
-          },
-          {
-            onSuccess: () => {
-              clearCart();
-              setCart([]);
-            },
-          }
-        );
+        addToCart(guestCart);
+        clearCart();
+        setCart([]);
       }
     } else {
       setCart(getCart());
@@ -182,7 +77,17 @@ export default function CartPage() {
 
       <div className='flex justify-center gap-10'>
         <div className='flex flex-col items-end gap-5 w-full'>
-          <CartToolbar cartList={cartList} selectedProductIds={selectedProductIds} toggleSelectAll={toggleSelectAll} onSelectedRemove={onSelectedRemove} onAddWishlist={onAddWishlist} />
+          <CartToolbar
+            cartList={cartList}
+            selectedProductIds={selectedProductIds}
+            toggleSelectAll={toggleSelectAll}
+            onSelectedRemove={() => {
+              if (selectedProductIds.length === 0) return;
+              removeFromCart(selectedProductIds);
+              setSelectedProductIds([]);
+            }}
+            onAddWishlist={onAddWishlist}
+          />
 
           <ul className='w-full border-t border-solid border-gray-300'>
             {cartList &&
@@ -194,8 +99,8 @@ export default function CartPage() {
                     stock={item.stock}
                     checked={selectedProductIds.includes(item.productId)}
                     onToggle={() => toggleProductSelection(item.productId)}
-                    onCartItemRemove={onCartItemRemove}
-                    onStockChange={onStockChange}
+                    onCartItemRemove={() => removeFromCart(item.productId)}
+                    updateCartStock={updateCartStock}
                   />
                 );
               })}
