@@ -2,9 +2,11 @@
 
 import React, { useState } from 'react';
 import { useCart } from 'src/app/(main)/cart/_hooks/useCart';
+import { useCreateWishlist } from 'src/app/(main)/shop/wishlist/_hooks/react-query/useCreateWishlistItem';
 import Button from 'src/components/Button/Button';
 import LineButton from 'src/components/Button/LineButton';
 import { toastMessage } from 'src/hooks/useToast';
+import { useAuth } from 'src/provider/authProvider';
 import LucideIcons from 'src/theme/lucideIcon';
 import { calculateDiscountedPrice } from 'src/utils/priceUtils';
 
@@ -17,6 +19,8 @@ interface Props {
 export default function PaymentBox({ productId, price, discount }: Props) {
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
+  const { user } = useAuth();
+  const { mutate: createWishlist } = useCreateWishlist(user?.id ?? '');
 
   const decreaseQuantity = () => {
     setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
@@ -24,6 +28,25 @@ export default function PaymentBox({ productId, price, discount }: Props) {
 
   const increaseQuantity = () => {
     setQuantity((prev) => prev + 1);
+  };
+
+  const onAddToWishlist = () => {
+    createWishlist([productId], {
+      onSuccess: () => {
+        toastMessage({
+          title: '찜하기 완료',
+          content: '상품이 찜 목록에 추가되었습니다.',
+          type: 'success',
+        });
+      },
+      onError: () => {
+        toastMessage({
+          title: '찜하기 실패',
+          content: '찜 목록 추가에 실패했습니다. 다시 시도해 주세요.',
+          type: 'error',
+        });
+      },
+    });
   };
 
   const discountedPrice = calculateDiscountedPrice(price, discount);
@@ -50,7 +73,9 @@ export default function PaymentBox({ productId, price, discount }: Props) {
           </div>
 
           <div className='flex items-center gap-1 w-fit'>
-            <LineButton height={48}>찜하기</LineButton>
+            <LineButton height={48} onClick={onAddToWishlist}>
+              찜하기
+            </LineButton>
             <LineButton
               height={48}
               onClick={() => {

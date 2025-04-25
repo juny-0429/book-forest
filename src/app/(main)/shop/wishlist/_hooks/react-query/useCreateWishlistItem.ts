@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getWishlistByUserIdQueryOptions } from './useGetWhishlistByUserId';
 import { wishlistCountByUserIdQueryOptions } from './useGetWishListCountByUserId';
+import { wishlistItemCheckQueryOptions } from './useGetwishlistItemCheck';
 
 export const createWishlistApi = async (userId: string, productIds: number[]): Promise<boolean> => {
   const response = await fetch(`/api/wishlist/${userId}`, {
@@ -24,7 +25,7 @@ export const useCreateWishlist = (userId: string) => {
 
   return useMutation({
     mutationFn: (productIds: number[]) => createWishlistApi(userId, productIds),
-    onSuccess: () => {
+    onSuccess: (data, variables) => {
       queryClient.invalidateQueries({
         queryKey: getWishlistByUserIdQueryOptions(userId).queryKey,
       });
@@ -32,6 +33,12 @@ export const useCreateWishlist = (userId: string) => {
       queryClient.invalidateQueries({
         queryKey: wishlistCountByUserIdQueryOptions(userId).queryKey,
       });
+
+      if (variables.length === 1) {
+        queryClient.invalidateQueries({
+          queryKey: wishlistItemCheckQueryOptions(userId, variables[0]).queryKey,
+        });
+      }
     },
   });
 };
