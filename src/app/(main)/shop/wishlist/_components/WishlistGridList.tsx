@@ -13,7 +13,7 @@ interface Props {
 
 export default function WishlistGridList({ wishlist, selectedProductIds, onToggleSelect }: Props) {
   return (
-    <ul className='grid grid-cols-6 gap-x-10 gap-y-[60px]'>
+    <ul className='grid grid-cols-6 gap-x-10 gap-y-[60px] ml-[30px]'>
       {wishlist &&
         wishlist.map((book) => (
           <li key={book.productId} className='flex justify-end'>
