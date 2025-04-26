@@ -10,13 +10,13 @@ import { appRoutes } from 'src/routes/appRoutes';
 interface CartItemProps {
   item: CartListItemDto;
   stock: number;
+  checked: boolean;
   onCartItemRemove: (productId: number) => void;
   onStockChange: (productId: number, count: number) => void;
-  checked: boolean;
   onToggle: () => void;
 }
 
-export default function CartItem({ item, stock, onCartItemRemove, onStockChange, checked, onToggle }: CartItemProps) {
+export default function CartItem({ item, stock, checked, onCartItemRemove, onStockChange, onToggle }: CartItemProps) {
   const finalPrice = calculateDiscountedPrice(item.price, item.discount) * stock;
 
   return (

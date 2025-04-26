@@ -76,19 +76,14 @@ export default function CategoryPage() {
   };
 
   const onAddToCart = () => {
-    const selectedSet = new Set(selectedProductIds);
-    const selectedProducts = categoryProductList.filter((product) => selectedSet.has(product.productId));
+    if (selectedProductIds.length === 0) return;
 
-    selectedProducts.forEach((product) => {
-      addToCart({ productId: product.productId, stock: 1 });
-    });
+    const cartItems = selectedProductIds.map((id) => ({
+      productId: id,
+      stock: 1,
+    }));
 
-    toastMessage({
-      title: '장바구니 담기 완료',
-      content: '선택한 상품이 장바구니에 담겼습니다.',
-      type: 'success',
-    });
-
+    addToCart(cartItems);
     setSelectedProductIds([]);
   };
 
@@ -118,22 +113,10 @@ export default function CategoryPage() {
       <CategoryBanner />
 
       <div className='flex flex-col gap-4'>
-        <CategoryToolbar
-          view={view}
-          onUpdateViewType={onUpdateViewType}
-          onAddToCart={onAddToCart}
-          onAddWishlist={() => onAddWishlist()}
-        />
+        <CategoryToolbar view={view} onUpdateViewType={onUpdateViewType} onAddToCart={onAddToCart} onAddWishlist={() => onAddWishlist()} />
         <hr className='w-full h-[1px] bg-gray-300' />
         {view === 'grid' && <CategoryGridList categoryProductList={categoryProductList} selectedProductIds={selectedProductIds} onToggleProduct={onToggleProduct} />}
-        {view === 'list' && (
-          <CategoryRowList
-            categoryProductList={categoryProductList}
-            selectedProductIds={selectedProductIds}
-            onToggleProduct={onToggleProduct}
-            onAddWishlist={onAddWishlist}
-          />
-        )}
+        {view === 'list' && <CategoryRowList categoryProductList={categoryProductList} selectedProductIds={selectedProductIds} onToggleProduct={onToggleProduct} onAddWishlist={onAddWishlist} />}
       </div>
 
       {categoryProductList.length !== 0 && !isFetchingNextPage && <div ref={ref} className='h-[1px]' />}

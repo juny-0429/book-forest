@@ -8,13 +8,14 @@ import { cn } from 'src/lib/utils';
 interface WishlistToolbarProps {
   wishlist: WishlistItemDto[];
   isAllSelected: boolean;
+  view: 'grid' | 'list';
   toggleSelectAll: () => void;
   onDeleteSelected: () => void;
-  view: 'grid' | 'list';
   onUpdateViewType: (type: 'grid' | 'list') => void;
+  onAddToCart: () => void;
 }
 
-export default function WishlistToolbar({ wishlist, isAllSelected, toggleSelectAll, onDeleteSelected, view, onUpdateViewType }: WishlistToolbarProps) {
+export default function WishlistToolbar({ wishlist, isAllSelected, view, toggleSelectAll, onDeleteSelected, onUpdateViewType, onAddToCart }: WishlistToolbarProps) {
   return (
     <div className='flex flex-col gap-3'>
       <div className='flex justify-between items-center'>
@@ -23,7 +24,7 @@ export default function WishlistToolbar({ wishlist, isAllSelected, toggleSelectA
         </CheckBox>
 
         <div className='flex justify-center items-center gap-1 w-fit'>
-          <LineButton height={40} color='gray'>
+          <LineButton height={40} color='gray' onClick={onAddToCart}>
             <LucideIcons.ShoppingCart size={20} className='text-gray-900' />
             카트담기
           </LineButton>

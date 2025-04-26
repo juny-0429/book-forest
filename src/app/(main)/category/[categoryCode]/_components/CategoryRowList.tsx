@@ -8,7 +8,6 @@ import dayjs from 'dayjs';
 import Link from 'next/link';
 import { appRoutes } from 'src/routes/appRoutes';
 import { useCart } from 'src/app/(main)/cart/_hooks/useCart';
-import { toastMessage } from 'src/hooks/useToast';
 
 interface Props {
   categoryProductList: CategoryProductListItem[];
@@ -74,17 +73,7 @@ export default function CategoryRowList({ categoryProductList, selectedProductId
                 <LineButton height={40} onClick={() => onAddWishlist(product.productId)}>
                   찜하기
                 </LineButton>
-                <LineButton
-                  height={40}
-                  onClick={() => {
-                    addToCart({ productId: product.productId, stock: 1 });
-                    toastMessage({
-                      title: '장바구니 담기 완료',
-                      content: '상품이 장바구니에 담겼습니다.',
-                      type: 'success',
-                    });
-                  }}
-                >
+                <LineButton height={40} onClick={() => addToCart([{ productId: product.productId, stock: 1 }])}>
                   카트 담기
                 </LineButton>
                 <Button height={40}>바로 구매</Button>

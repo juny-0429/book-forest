@@ -5,6 +5,7 @@ import { useCart } from 'src/app/(main)/cart/_hooks/useCart';
 import { useCreateWishlist } from 'src/app/(main)/shop/wishlist/_hooks/react-query/useCreateWishlistItem';
 import Button from 'src/components/Button/Button';
 import LineButton from 'src/components/Button/LineButton';
+import { useAlertModal } from 'src/hooks/useModal';
 import { toastMessage } from 'src/hooks/useToast';
 import { useAuth } from 'src/provider/authProvider';
 import LucideIcons from 'src/theme/lucideIcon';
@@ -20,6 +21,7 @@ export default function PaymentBox({ productId, price, discount }: Props) {
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
   const { user } = useAuth();
+  const { openAlertModal } = useAlertModal();
   const { mutate: createWishlist } = useCreateWishlist(user?.id ?? '');
 
   const decreaseQuantity = () => {
@@ -31,6 +33,13 @@ export default function PaymentBox({ productId, price, discount }: Props) {
   };
 
   const onAddToWishlist = () => {
+    if (!user) {
+      openAlertModal({
+        content: '로그인이 필요한 서비스 입니다.',
+      });
+      return;
+    }
+
     createWishlist([productId], {
       onSuccess: () => {
         toastMessage({
@@ -79,12 +88,7 @@ export default function PaymentBox({ productId, price, discount }: Props) {
             <LineButton
               height={48}
               onClick={() => {
-                addToCart({ productId: productId, stock: quantity });
-                toastMessage({
-                  title: '장바구니 담기 완료',
-                  content: '선택한 상품이 장바구니에 담겼습니다.',
-                  type: 'success',
-                });
+                addToCart([{ productId: productId, stock: quantity }]);
               }}
             >
               장바구니
