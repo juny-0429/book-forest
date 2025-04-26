@@ -35,6 +35,23 @@ export default function CartPage() {
     setSelectedProductIds(isAllSelected ? [] : allIds);
   };
 
+  const onStockChange = (productId: number, stock: number) => {
+    updateCartStock(productId, stock);
+
+    setCartList((prev) => prev.map((item) => (item.productId === productId ? { ...item, stock } : item)));
+  };
+
+  const onRemoveFromCart = (productIdOrIds: number | number[]) => {
+    removeFromCart(productIdOrIds);
+
+    if (Array.isArray(productIdOrIds)) {
+      setCartList((prev) => prev.filter((v) => !productIdOrIds.includes(v.productId)));
+      setSelectedProductIds([]);
+    } else {
+      setCartList((prev) => prev.filter((v) => v.productId !== productIdOrIds));
+    }
+  };
+
   const onAddWishlist = () => {
     if (!user) {
       openAlertModal({
@@ -83,8 +100,7 @@ export default function CartPage() {
             toggleSelectAll={toggleSelectAll}
             onSelectedRemove={() => {
               if (selectedProductIds.length === 0) return;
-              removeFromCart(selectedProductIds);
-              setSelectedProductIds([]);
+              onRemoveFromCart(selectedProductIds);
             }}
             onAddWishlist={onAddWishlist}
           />
@@ -99,8 +115,8 @@ export default function CartPage() {
                     stock={item.stock}
                     checked={selectedProductIds.includes(item.productId)}
                     onToggle={() => toggleProductSelection(item.productId)}
-                    onCartItemRemove={() => removeFromCart(item.productId)}
-                    updateCartStock={updateCartStock}
+                    onCartItemRemove={() => onRemoveFromCart(item.productId)}
+                    onStockChange={onStockChange}
                   />
                 );
               })}

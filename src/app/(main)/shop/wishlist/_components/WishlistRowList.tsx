@@ -19,7 +19,7 @@ interface Props {
   onToggleSelect: (productId: number) => void;
 }
 
-export default function WishlistRowList({ wishlist,selectedProductIds, deleteWishlist, onToggleSelect }: Props) {
+export default function WishlistRowList({ wishlist, selectedProductIds, deleteWishlist, onToggleSelect }: Props) {
   const { addToCart } = useCart();
   const router = useRouter();
 
@@ -71,12 +71,7 @@ export default function WishlistRowList({ wishlist,selectedProductIds, deleteWis
                 <Button
                   height={40}
                   onClick={() => {
-                    addToCart({ productId: book.productId, stock: 1 });
-                    toastMessage({
-                      title: '장바구니 담기 완료',
-                      content: '상품이 장바구니에 담겼습니다.',
-                      type: 'success',
-                    });
+                    addToCart([{ productId: book.productId, stock: 1 }]);
                   }}
                 >
                   카트 담기

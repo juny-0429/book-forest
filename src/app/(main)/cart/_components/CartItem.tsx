@@ -12,11 +12,11 @@ interface CartItemProps {
   stock: number;
   checked: boolean;
   onCartItemRemove: (productId: number) => void;
-  updateCartStock: (productId: number, count: number) => void;
+  onStockChange: (productId: number, count: number) => void;
   onToggle: () => void;
 }
 
-export default function CartItem({ item, stock, checked, onCartItemRemove, updateCartStock, onToggle }: CartItemProps) {
+export default function CartItem({ item, stock, checked, onCartItemRemove, onStockChange, onToggle }: CartItemProps) {
   const finalPrice = calculateDiscountedPrice(item.price, item.discount) * stock;
 
   return (
@@ -52,11 +52,11 @@ export default function CartItem({ item, stock, checked, onCartItemRemove, updat
         <p className='text-body-18b'>{finalPrice.toLocaleString()}원</p>
 
         <div className='flex justify-between items-center gap-2 w-[90px] h-fit p-2 border border-solid border-gray-300 rounded-[5px]'>
-          <button onClick={() => updateCartStock(item.productId, Math.max(stock - 1, 1))}>
+          <button onClick={() => onStockChange(item.productId, Math.max(stock - 1, 1))}>
             <LucideIcons.Minus size={16} />
           </button>
           <span className='text-body-16r text-ui-text-title'>{stock}</span>
-          <button onClick={() => updateCartStock(item.productId, stock + 1)}>
+          <button onClick={() => onStockChange(item.productId, stock + 1)}>
             <LucideIcons.Plus size={16} />
           </button>
         </div>

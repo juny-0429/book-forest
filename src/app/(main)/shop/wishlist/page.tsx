@@ -9,6 +9,7 @@ import { useDeleteWishlist } from './_hooks/react-query/useDeleteWishlistItem';
 import { useState } from 'react';
 import { toastMessage } from 'src/hooks/useToast';
 import WishlistToolbar from './_components/WishlistToolbar';
+import { useCart } from '../../cart/_hooks/useCart';
 
 export default function wishlist() {
   const searchParams = useSearchParams();
@@ -20,6 +21,7 @@ export default function wishlist() {
   const { data } = useWishlistByUserId(userId);
   const wishlist = data ?? [];
   const { mutate: deleteWishlist } = useDeleteWishlist(userId);
+  const { addToCart } = useCart();
 
   const onUpdateViewType = (type: 'grid' | 'list') => {
     const params = new URLSearchParams(searchParams);
@@ -57,13 +59,32 @@ export default function wishlist() {
     });
   };
 
+  const onAddToCart = () => {
+    if (selectedProductIds.length === 0) return;
+
+    const cartItems = selectedProductIds.map((id) => ({
+      productId: id,
+      stock: 1,
+    }));
+
+    addToCart(cartItems);
+    setSelectedProductIds([]);
+  };
+
   return (
     <div className='flex flex-col gap-10 w-full'>
       <h2 className='text-title-24b text-ui-text-title'>찜하기 목록</h2>
 
       <div className='flex flex-col gap-3'>
-        <WishlistToolbar wishlist={wishlist} isAllSelected={isAllSelected} toggleSelectAll={toggleSelectAll} onDeleteSelected={onDeleteSelected} view={view} onUpdateViewType={onUpdateViewType} />
-
+        <WishlistToolbar
+          wishlist={wishlist}
+          isAllSelected={isAllSelected}
+          toggleSelectAll={toggleSelectAll}
+          onDeleteSelected={onDeleteSelected}
+          view={view}
+          onUpdateViewType={onUpdateViewType}
+          onAddToCart={onAddToCart}
+        />
         {view === 'grid' && wishlist && <WishlistGridList wishlist={wishlist} selectedProductIds={selectedProductIds} onToggleSelect={onToggleSelect} />}
         {view === 'list' && wishlist && <WishlistRowList wishlist={wishlist} selectedProductIds={selectedProductIds} deleteWishlist={deleteWishlist} onToggleSelect={onToggleSelect} />}
       </div>
