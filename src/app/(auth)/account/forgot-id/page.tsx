@@ -9,7 +9,7 @@ import ErrorMessage from 'src/components/ErrorMessage/ErrorMessage';
 
 export default function ForgotIdPage() {
   return (
-    <div className='flex justify-center items-center w-full h-screen'>
+    <div className='flex justify-center items-center w-full h-full'>
       <Link href={appRoutes.home}>
         <Image src={KoLogo} width={150} alt='logo image' className='fixed top-10 left-10' />
       </Link>
@@ -42,8 +42,6 @@ export default function ForgotIdPage() {
           아이디 찾기
         </Button>
       </div>
-
-      <p className='fixed bottom-5 text-caption-12b text-ui-text-caption'>© Book Forest, All Rights Reserved.</p>
     </div>
   );
 }
