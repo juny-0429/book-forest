@@ -8,7 +8,7 @@ export const appRoutes = {
     /* 아이디 찾기 */
     forgotId: '/account/forgot-id',
     /* 아이디 찾기 결과 */
-    findId: '/account/forgot-id/result',
+    forgotIdResult: '/account/forgot-id/result',
     /* 비밀번호 찾기 */
     forgotPassword: '/account/forgot-password',
 
