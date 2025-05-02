@@ -11,7 +11,6 @@ export async function POST(request: Request) {
 
     const supabase = await createSupabaseServer();
 
-    // auth.users 테이블에 저장
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -25,17 +24,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: '사용자 ID가 생성되지 않았습니다.' }, { status: 400 });
     }
 
-    // 회원 정보 테이블에 저장
-    const userData: Database['public']['Tables']['user']['Insert'] = {
+    await supabase.from('user').insert({
       user_id: user.id,
       account_id: id,
       user_name,
       user_phone,
+      user_email: email,
       agree_marketing: agreeMarketing ?? false,
       agree_event_notification: agreeEvent ?? false,
-    };
-
-    await supabase.from('user').insert(userData);
+    });
 
     const { error: authorityError } = await supabase.from('authority_log').insert([
       {
