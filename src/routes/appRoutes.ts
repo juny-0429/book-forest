@@ -11,10 +11,10 @@ export const appRoutes = {
     forgotIdResult: '/account/forgot-id/result',
     /* 비밀번호 재설정 */
     resetPassword: '/account/reset-password',
+    /* 비밀번호 찾기(회원 검증) */
+    resetPasswordVerify: '/account/auth/reset-password/verify',
 
     auth: {
-      /* 비밀번호 재설정 */
-      resetPassword: '/account/auth/reset-password',
       /* 회원정보 수정 */
       profile: '/account/auth/profile',
       /* 마케팅 수신 설정 */
