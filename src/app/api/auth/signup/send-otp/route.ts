@@ -16,7 +16,9 @@ export async function POST(request: Request) {
     const expiresAtString = expiresAt.toISOString();
 
     // Supabase DB에 OTP 저장 (upsert 사용)
-    const { error: dbError } = await supabase.from('otp_verification').upsert([{ email, otp_code: otpCode, expires_at: expiresAtString }]);
+    const { error: dbError } = await supabase.from('otp_verification').upsert([{ email, otp_code: otpCode, expires_at: expiresAtString }], {
+      onConflict: 'email',
+    });
 
     if (dbError) {
       console.error('❌ OTP 저장 실패:', dbError);

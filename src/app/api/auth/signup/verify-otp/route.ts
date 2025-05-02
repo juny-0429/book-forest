@@ -27,15 +27,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: '잘못된 인증번호입니다.' }, { status: 400 });
     }
 
-    console.log('OTP 인증 성공:', email);
-
     // 이메일 인증 완료 상태 저장
     await supabase.from('otp_verification').delete().eq('email', email);
     // await supabase.from('user').update({ verified: true }).eq('email', email);
 
-    return NextResponse.json({ message: '이메일 인증 완료!', verified: true });
+    return NextResponse.json({ verified: true });
   } catch (error) {
-    console.error('OTP 검증 오류:', error);
     return NextResponse.json({ error: '서버 오류 발생' }, { status: 500 });
   }
 }

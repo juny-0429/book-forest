@@ -7,10 +7,10 @@ export const appRoutes = {
   account: {
     /* 아이디 찾기 */
     forgotId: '/account/forgot-id',
-    /* 비밀번호 찾기 */
-    forgotPassword: '/account/forgot-password',
     /* 아이디 찾기 결과 */
-    findId: '/account/find-id',
+    forgotIdResult: '/account/forgot-id/result',
+    /* 비밀번호 재설정 */
+    resetPassword: '/account/reset-password',
 
     auth: {
       /* 비밀번호 재설정 */
