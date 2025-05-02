@@ -13,7 +13,7 @@ export default function LoginMenu() {
         <hr className='w-[1px] h-[10px] bg-gray-600' />
 
         <li className='text-body-14m text-ui-text-title'>
-          <Link href={appRoutes.account.forgotPassword}>비밀번호 찾기</Link>
+          <Link href={appRoutes.account.resetPassword}>비밀번호 찾기</Link>
         </li>
 
         <hr className='w-[1px] h-[10px] bg-gray-600' />
