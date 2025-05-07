@@ -7,8 +7,7 @@ import Button from 'src/components/Button/Button';
 import ErrorMessage from 'src/components/ErrorMessage/ErrorMessage';
 import { FieldErrors, UseFormRegister, UseFormWatch } from 'react-hook-form';
 import { SignupSchema } from '../_schemas/signup.schema';
-import { accountIdSchema } from '../_schemas/accountId.schema';
-import { useCheckAccountId } from '../../login/_hooks/react-query/useCheckAccountId';
+import { useAccountIdValidation } from '../_hooks/useAccountIdValidation';
 
 interface UserInformationFormProps {
   register: UseFormRegister<SignupSchema>;
@@ -17,37 +16,13 @@ interface UserInformationFormProps {
 }
 
 export default function UserInformationForm({ register, errors, watch }: UserInformationFormProps) {
-  const [isUserIdAvailable, setIsUserIdAvailable] = useState<boolean | null>(null); // 아이디 사용 가능 여부
-  const [validationError, setValidationError] = useState<string | null>(null);
   const [isEmailSent, setIsEmailSent] = useState(false); // 이메일 인증번호 전송 여부
   const [isEmailVerified, setIsEmailVerified] = useState(false); // 이메일 인증 여부
   const [otp, setOtp] = useState(''); // 이메일 인증번호
+  const { onCheckAccountId, isUserIdAvailable, validationError } = useAccountIdValidation();
 
   const id = watch('id');
   const email = watch('email');
-
-  const { mutateAsync: checkAccountId } = useCheckAccountId();
-
-  const validateUserId = (id: string) => {
-    const result = accountIdSchema.safeParse(id);
-    if (!result.success) {
-      setValidationError('영문자와 숫자만 사용 가능하며 4자 이상 12자 이하로 입력해주세요.');
-      return false;
-    }
-    setValidationError(null);
-    return true;
-  };
-
-  // 아이디 중복 체크
-  const onCheckAccountId = async () => {
-    if (!validateUserId(id)) return;
-
-    await checkAccountId(id, {
-      onSuccess: (data) => {
-        setIsUserIdAvailable(data.available);
-      },
-    });
-  };
 
   // 이메일 인증 코드 전송
   const onSendOtp = async () => {
@@ -109,7 +84,7 @@ export default function UserInformationForm({ register, errors, watch }: UserInf
 
           <div className='flex items-center gap-1 w-full'>
             <TextInput {...register('id')} autoComplete='username' placeholder='아이디' />
-            <Button type='button' height={48} onClick={onCheckAccountId} className='w-fit'>
+            <Button type='button' height={48} className='w-fit' onClick={() => onCheckAccountId(id)}>
               중복확인
             </Button>
           </div>
