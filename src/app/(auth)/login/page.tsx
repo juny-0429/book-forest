@@ -6,7 +6,7 @@ import LoginHero from './_components/LoginHero';
 
 export default function LoginPage() {
   return (
-    <div className='flex flex-col justify-center items-center gap-10 w-full h-screen'>
+    <div className='flex flex-col justify-center items-center gap-10 w-full h-full'>
       <LoginHero />
       <LoginForm />
       <LoginMenu />
