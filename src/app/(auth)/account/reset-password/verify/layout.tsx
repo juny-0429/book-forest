@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function VerifyLayout({ children }: { children: React.ReactNode }) {
-  return <div className='w-full'>{children}</div>;
+  return <div className='w-full h-full'>{children}</div>;
 }

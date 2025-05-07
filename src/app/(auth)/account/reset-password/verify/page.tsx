@@ -16,10 +16,10 @@ import { useSendOtpForFindId } from '../../forgot-id/_hooks/react-query/SendOtpF
 import { useVerifyOtpForFindId } from '../../forgot-id/_hooks/react-query/VerifyOtpForFindIdArgs';
 import { useAlertModal } from 'src/hooks/useModal';
 import { useSendResetPasswordLink } from './_hooks/react-query/useSendResetPasswordLink';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 export default function ForgotPasswordPage() {
-  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [isEmailSent, setIsEmailSent] = useState(false); // 인증번호 전송 여부
   const [isEmailVerified, setIsEmailVerified] = useState(false); // 인증번호 성공 여부
   const [otp, setOtp] = useState('');
@@ -45,7 +45,7 @@ export default function ForgotPasswordPage() {
       {
         onSuccess: (match) => {
           if (!match) {
-            setEmailErrorMessage('입력하신 정보와 일치하는 회원을 찾을 수 없습니다.');
+            setErrorMessage('입력하신 정보와 일치하는 회원을 찾을 수 없습니다.');
             return;
           }
           sendOtpForFindId(
@@ -53,9 +53,6 @@ export default function ForgotPasswordPage() {
             {
               onSuccess: () => {
                 setIsEmailSent(true);
-              },
-              onError: (error) => {
-                setEmailErrorMessage((error as Error).message);
               },
             }
           );
@@ -73,7 +70,7 @@ export default function ForgotPasswordPage() {
         onSuccess: () => {
           setIsEmailVerified(true);
         },
-        onError: (error) => {
+        onError: () => {
           openAlertModal({
             content: '인증에 실패하였습니다.',
           });
@@ -86,7 +83,6 @@ export default function ForgotPasswordPage() {
     sendResetPasswordLink(userEmail, {
       onSuccess: () => {
         openAlertModal({ content: '비밀번호 재설정 링크가 이메일로 전송되었습니다.' });
-
         setTimeout(() => {
           router.push('/login');
         }, 1500);
@@ -100,7 +96,7 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className='flex justify-center items-center w-full h-screen'>
+    <div className='flex justify-center items-center w-full h-full'>
       <Link href={appRoutes.home}>
         <Image src={KoLogo} width={150} alt='logo image' className='fixed top-10 left-10' />
       </Link>
@@ -111,19 +107,16 @@ export default function ForgotPasswordPage() {
         <form className='flex flex-col gap-[30px] w-full'>
           <label>
             <span className='text-body-18b text-ui-text-title'>이름</span>
-
             <TextInput type='text' {...register('userName')} placeholder='이름' className='mt-2' />
           </label>
 
           <label>
             <span className='text-body-18b text-ui-text-title'>아이디</span>
-
             <TextInput type='text' {...register('accountId')} placeholder='아이디' className='mt-2' />
           </label>
 
           <fieldset className='flex flex-col gap-2'>
             <legend className='text-body-18b text-ui-text-title'>이메일 인증</legend>
-
             <div className='flex justify-center items-center gap-1 mt-2'>
               <TextInput type='email' placeholder='이메일' {...register('userEmail')} disabled={isEmailSent} />
               <Button type='button' height={48} onClick={onRequestVerification} disabled={!userName || !userEmail || isEmailSent} className='w-fit'>
@@ -140,7 +133,7 @@ export default function ForgotPasswordPage() {
               </div>
             )}
 
-            {emailErrorMessage && <ErrorMessage>{emailErrorMessage}</ErrorMessage>}
+            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
           </fieldset>
         </form>
 
@@ -148,8 +141,6 @@ export default function ForgotPasswordPage() {
           비밀번호 재설정
         </Button>
       </div>
-
-      <p className='fixed bottom-5 text-caption-12b text-ui-text-caption'>© Book Forest, All Rights Reserved.</p>
     </div>
   );
 }
