@@ -16,7 +16,7 @@ import { useSendOtpForFindId } from '../../forgot-id/_hooks/react-query/SendOtpF
 import { useVerifyOtpForFindId } from '../../forgot-id/_hooks/react-query/VerifyOtpForFindIdArgs';
 import { useAlertModal } from 'src/hooks/useModal';
 import { useSendResetPasswordLink } from './_hooks/react-query/useSendResetPasswordLink';
-import { supabaseBrowser } from 'src/lib/supabaseBrowser';
+import { useRouter } from 'next/router';
 
 export default function ForgotPasswordPage() {
   const [emailErrorMessage, setEmailErrorMessage] = useState('');
@@ -24,12 +24,9 @@ export default function ForgotPasswordPage() {
   const [isEmailVerified, setIsEmailVerified] = useState(false); // 인증번호 성공 여부
   const [otp, setOtp] = useState('');
   const { openAlertModal } = useAlertModal();
+  const router = useRouter();
 
-  const {
-    register,
-    formState: { errors },
-    control,
-  } = useForm<ForgotPasswordVerifySchema>({
+  const { register, control } = useForm<ForgotPasswordVerifySchema>({
     resolver: zodResolver(forgotPasswordVerifySchema),
   });
 
@@ -89,31 +86,17 @@ export default function ForgotPasswordPage() {
     sendResetPasswordLink(userEmail, {
       onSuccess: () => {
         openAlertModal({ content: '비밀번호 재설정 링크가 이메일로 전송되었습니다.' });
+
+        setTimeout(() => {
+          router.push('/login');
+        }, 1500);
       },
-      onError: (error) => {
+      onError: () => {
         openAlertModal({
           content: '메일 전송 중 오류가 발생했습니다.',
         });
       },
     });
-  };
-
-  const onTestSendEmail = async () => {
-    try {
-      const { error } = await supabaseBrowser.auth.resetPasswordForEmail('duqrlqkrwnl@naver.com', {
-        redirectTo: `http://localhost:3000/account/reset-password`,
-      });
-
-      if (error) {
-        console.error('SMTP 테스트 실패:', error.message);
-        alert(`메일 전송 실패: ${error.message}`);
-      } else {
-        alert('SMTP 테스트 메일 전송 성공!');
-      }
-    } catch (err) {
-      console.error('예외 발생:', err);
-      alert('예기치 않은 오류가 발생했습니다.');
-    }
   };
 
   return (
@@ -164,8 +147,6 @@ export default function ForgotPasswordPage() {
         <Button type='button' height={48} disabled={!isEmailVerified} onClick={onRequestResetPasswordLink}>
           비밀번호 재설정
         </Button>
-
-        <button onClick={onTestSendEmail}>테스트 버튼</button>
       </div>
 
       <p className='fixed bottom-5 text-caption-12b text-ui-text-caption'>© Book Forest, All Rights Reserved.</p>

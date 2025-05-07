@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -6,11 +8,40 @@ import KoLogo from '@/assets/images/logos/ko-logo.png';
 import LucideIcons from 'src/theme/lucideIcon';
 import Button from 'src/components/Button/Button';
 import SignupPasswordInput from '../../signup/_components/SignupPasswordInput';
-import TextInput from 'src/components/TextInput/TextInput';
-import ErrorMessage from 'src/components/ErrorMessage/ErrorMessage';
+import { useResetPassword } from './_hooks/react-query/useResetPassword';
+import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
+import { resetPasswordSchema, ResetPasswordSchema } from './_schemas/resetPassword.schema';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-// todo: 기존과 동일한 비밀번호를 사용할수 없습니다. 모달창 추가
 export default function ResetPasswordPage() {
+  const router = useRouter();
+  const { mutate: resetPassword } = useResetPassword();
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<ResetPasswordSchema>({
+    resolver: zodResolver(resetPasswordSchema),
+    mode: 'onChange',
+  });
+
+  const password = watch('password');
+
+  const onSubmit = ({ password, confirmPassword }: ResetPasswordSchema) => {
+    resetPassword(password, {
+      onSuccess: () => {
+        alert('비밀번호가 성공적으로 변경되었습니다.');
+        router.push(appRoutes.login);
+      },
+      onError: (error) => {
+        alert((error as Error).message);
+      },
+    });
+  };
+
   return (
     <div className='flex justify-center items-center w-full h-screen'>
       <Link href={appRoutes.home}>
@@ -23,17 +54,8 @@ export default function ResetPasswordPage() {
         <div className='flex flex-col items-center gap-[40px]'>
           <LucideIcons.User size={100} strokeWidth={1} className='p-4 text-white bg-ui-main rounded-full shadow-blur-6-50' />
 
-          <form className='flex flex-col gap-10'>
-            <label>
-              <span className='text-body-18b text-ui-text-title'>새로운 비밀번호</span>
-              <SignupPasswordInput />
-            </label>
-
-            <label>
-              <span className='text-body-18b text-ui-text-title'>새로운 비밀번호 확인</span>
-              <TextInput type='password' className='mt-2' />
-              <ErrorMessage>비밀번호가 일치하지 않습니다.</ErrorMessage>
-            </label>
+          <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-10'>
+            <SignupPasswordInput register={register} errors={errors} watchPassword={password} />
 
             <Button type='submit' height={48} className='mt-10'>
               비밀번호 변경

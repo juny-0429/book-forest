@@ -1,32 +1,40 @@
 'use client';
 
 import { useState } from 'react';
-import TextInput, { TextInputProps } from '@/components/TextInput/TextInput';
+import TextInput from '@/components/TextInput/TextInput';
 import LucideIcons from 'src/theme/lucideIcon';
 import { Progress } from 'src/components/Progress/Progress';
 import { cn } from 'src/lib/utils';
 import { usePasswordStrength } from '../_hooks/usePasswordStrength';
-import { FieldErrors, UseFormRegister, UseFormRegisterReturn } from 'react-hook-form';
-import { SignupSchema } from '../_schemas/signup.schema';
+import { FieldErrors, UseFormRegister, UseFormRegisterReturn, FieldValues, Path } from 'react-hook-form';
 
-interface SignupPasswordInputProps {
-  register: UseFormRegister<SignupSchema>;
-  confirmRegister?: UseFormRegisterReturn;
-  errors?: FieldErrors;
+interface PasswordFormFields {
+  password: string;
+  confirmPassword: string;
 }
 
-export default function SignupPasswordInput({ register, errors }: SignupPasswordInputProps) {
+interface SignupPasswordInputProps<T extends FieldValues = PasswordFormFields> {
+  register: UseFormRegister<T>;
+  confirmRegister?: UseFormRegisterReturn;
+  errors?: FieldErrors<T>;
+  watchPassword?: string;
+}
+
+export default function SignupPasswordInput<T extends FieldValues = PasswordFormFields>({
+  register,
+  errors,
+  watchPassword = '',
+}: SignupPasswordInputProps<T>) {
   const [isVisible, setIsVisible] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
-  const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [confirmError, setConfirmError] = useState<string | null>(null);
 
-  const { rules, progressValue, strength } = usePasswordStrength(password);
+  const { rules, progressValue, strength } = usePasswordStrength(watchPassword);
 
   const onConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setConfirmPassword(e.target.value);
-    if (e.target.value !== password) {
+    if (e.target.value !== watchPassword) {
       setConfirmError('비밀번호가 일치하지 않습니다.');
     } else {
       setConfirmError(null);
@@ -41,11 +49,9 @@ export default function SignupPasswordInput({ register, errors }: SignupPassword
       <div className='w-full space-y-3'>
         <TextInput
           type={isVisible ? 'text' : 'password'}
-          value={password}
-          {...register('password')}
+          {...register('password' as Path<T>)}
           autoComplete='new-password'
           name='password'
-          onChange={(e) => setPassword(e.target.value)}
           rightIcon={
             <button type='button' onClick={() => setIsVisible((prev) => !prev)}>
               {isVisible ? <LucideIcons.Eye /> : <LucideIcons.EyeOff />}
@@ -73,7 +79,7 @@ export default function SignupPasswordInput({ register, errors }: SignupPassword
       <TextInput
         type={isConfirmVisible ? 'text' : 'password'}
         value={confirmPassword}
-        {...register('confirmPassword')}
+        {...register('confirmPassword' as Path<T>)}
         autoComplete='new-password'
         name='confirmPassword'
         onChange={onConfirmPasswordChange}

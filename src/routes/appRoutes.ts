@@ -12,7 +12,7 @@ export const appRoutes = {
     /* 비밀번호 재설정 */
     resetPassword: '/account/reset-password',
     /* 비밀번호 찾기(회원 검증) */
-    resetPasswordVerify: '/account/auth/reset-password/verify',
+    resetPasswordVerify: '/account/reset-password/verify',
 
     auth: {
       /* 회원정보 수정 */

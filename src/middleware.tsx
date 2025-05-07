@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Database } from './types/database.types';
 
 const loggedInRoutes = [/^\/admin(\/.*)?$/, /^\/shop(\/.*)?$/, /^\/account\/auth(\/.*)?$/, '/board/write', '/payment'];
-const loggedOutRoutes = ['/signup', '/login', '/account/forgot-id', '/account/forgot-password', '/account/find-id'];
+const loggedOutRoutes = ['/signup', '/login', '/account/forgot-id', '/account/forgot-id/result', '/account/reset-password', '/account/auth/reset-password/verify', '/account/find-id'];
 
 export const middleware = async (request: NextRequest) => {
   const supabase = createServerClient<Database>(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, {
