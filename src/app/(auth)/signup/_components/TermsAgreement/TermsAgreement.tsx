@@ -1,13 +1,11 @@
 'use client';
 
-import React from 'react';
 import Link from 'next/link';
 import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import Button from 'src/components/Button/Button';
 import CheckBox from 'src/components/CheckBox/CheckBox';
 import { appRoutes } from 'src/routes/appRoutes';
 import { SignupSchema } from '../../_schemas/signup.schema';
-import SnsLoginButtons from '../SnsLoginButtons';
 import AgreementCheckBox from './AgreementCheckBox';
 
 interface TermsAgreementProps {
@@ -38,9 +36,6 @@ export default function TermsAgreement({ setStep, register, watch, setValue, err
 
   return (
     <section className='flex flex-col items-center gap-[46px]'>
-      <h1 className='text-title-24b text-ui-text-title'>회원가입</h1>
-      <SnsLoginButtons />
-
       <div>
         <h2 className='text-title-16b text-ui-text-title'>약관 동의</h2>
 
