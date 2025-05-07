@@ -6,7 +6,8 @@ import SignupPasswordInput from './SignupPasswordInput';
 import Button from 'src/components/Button/Button';
 import ErrorMessage from 'src/components/ErrorMessage/ErrorMessage';
 import { FieldErrors, UseFormRegister, UseFormWatch } from 'react-hook-form';
-import { SignupSchema } from '../_schemas/signup.schema';
+import { signupSchema, SignupSchema } from '../_schemas/signup.schema';
+import { accountIdSchema } from '../_schemas/accountId.schema';
 
 interface UserInformationFormProps {
   register: UseFormRegister<SignupSchema>;
@@ -27,6 +28,14 @@ export default function UserInformationForm({ register, errors, watch }: UserInf
   // 아이디 중복 체크
   const onCheckUserId = async () => {
     if (!id) return alert('아이디를 입력해주세요.');
+
+    const result = accountIdSchema.safeParse(id);
+
+    if (!result.success) {
+      setIsUserIdChecked(true);
+      setIsUserIdAvailable(false);
+      return;
+    }
 
     try {
       const response = await fetch(`/api/auth/signup/check-userid?id=${id}`);
@@ -96,25 +105,27 @@ export default function UserInformationForm({ register, errors, watch }: UserInf
 
   return (
     <section>
-      <div className='flex flex-col gap-[40px]'>
+      <div className='flex flex-col gap-8'>
         {/* 아이디 */}
         <label className='flex flex-col gap-2 w-full'>
           <span className='text-body-18b text-ui-text-title'>아이디</span>
           <p className='text-body-12m text-ui-text-description'>4자~12자리의 영문자, 숫자 / @,#$ 등 특수문자는 제외</p>
 
-          <div>
-            <div className='flex items-center gap-1 w-full'>
-              <TextInput {...register('id')} autoComplete='username' placeholder='아이디' />
-              <Button type='button' height={48} onClick={onCheckUserId} className='w-fit'>
-                중복확인
-              </Button>
-            </div>
-            {errors.id && <ErrorMessage>{errors.id.message}</ErrorMessage>}
+          <div className='flex items-center gap-1 w-full'>
+            <TextInput {...register('id')} autoComplete='username' placeholder='아이디' />
+            <Button type='button' height={48} onClick={onCheckUserId} className='w-fit'>
+              중복확인
+            </Button>
           </div>
 
-          {isUserIdChecked && (
-            <p className={`text-body-12m ${isUserIdAvailable ? 'text-state-success' : 'text-state-error'}`}>{isUserIdAvailable ? '사용 가능한 아이디입니다.' : '이미 사용 중인 아이디입니다.'}</p>
-          )}
+          <div className='relative w-full'>
+            {isUserIdChecked && isUserIdAvailable && (
+              <p className={`text-body-12m before:content-['•'] before:mr-1 before:inline-block ${isUserIdAvailable ? 'text-state-success' : 'text-state-error'}`}>
+                {isUserIdAvailable ? '사용 가능한 아이디입니다.' : '이미 사용 중인 아이디입니다.'}
+              </p>
+            )}
+            {isUserIdChecked && !isUserIdAvailable && <ErrorMessage>영문자와 숫자만 사용 가능하며 4자 이상 12자 이하로 입력해주세요.</ErrorMessage>}
+          </div>
         </label>
 
         {/* 비밀번호 */}

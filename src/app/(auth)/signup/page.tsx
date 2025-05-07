@@ -23,7 +23,7 @@ export default function SignUpPage() {
     mode: 'onSubmit',
   });
 
-  const { mutateAsync: signupAsync, isError, error } = useSignup();
+  const { mutateAsync: signupAsync } = useSignup();
 
   const onSubmit = async (data: SignupSchema) => {
     await signupAsync(data);
