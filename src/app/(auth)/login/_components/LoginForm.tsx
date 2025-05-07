@@ -21,14 +21,10 @@ export default function LoginForm() {
     resolver: zodResolver(loginSchema),
   });
 
-  const { mutateAsync, isError, error } = useLogin();
+  const { mutateAsync: loginAsync, isError, error } = useLogin();
 
   const onSubmit = async (data: LoginSchema) => {
-    try {
-      const result = await mutateAsync({ email: data.email, password: data.password });
-    } catch (error) {
-      console.error('로그인 실패', error);
-    }
+    await loginAsync({ email: data.email, password: data.password });
   };
 
   return (
