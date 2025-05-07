@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { supabaseBrowser } from 'src/lib/supabaseBrowser';
 import { appRoutes } from 'src/routes/appRoutes';
@@ -16,12 +16,12 @@ const loginApi = async (data: LoginData) => {
     password: data.password,
   });
 
-  if (error) throw new Error('로그인 요청에 실패하였습니다');
+  if (error) throw new Error(error.message);
+
   return authData;
 };
 
 export function useLogin() {
-  const queryClient = useQueryClient();
   const router = useRouter();
 
   return useMutation({
