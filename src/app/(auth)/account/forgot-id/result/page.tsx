@@ -76,7 +76,7 @@ export default function FindIdPage() {
               </Button>
             </Link>
 
-            <Link href={appRoutes.account.resetPassword}>
+            <Link href={appRoutes.account.resetPasswordVerify}>
               <LineButton height={48} className='w-[150px]'>
                 비밀번호 재설정
               </LineButton>
