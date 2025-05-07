@@ -6,8 +6,9 @@ import SignupPasswordInput from './SignupPasswordInput';
 import Button from 'src/components/Button/Button';
 import ErrorMessage from 'src/components/ErrorMessage/ErrorMessage';
 import { FieldErrors, UseFormRegister, UseFormWatch } from 'react-hook-form';
-import { signupSchema, SignupSchema } from '../_schemas/signup.schema';
+import { SignupSchema } from '../_schemas/signup.schema';
 import { accountIdSchema } from '../_schemas/accountId.schema';
+import { useCheckAccountId } from '../../login/_hooks/react-query/useCheckAccountId';
 
 interface UserInformationFormProps {
   register: UseFormRegister<SignupSchema>;
@@ -16,8 +17,8 @@ interface UserInformationFormProps {
 }
 
 export default function UserInformationForm({ register, errors, watch }: UserInformationFormProps) {
-  const [isUserIdChecked, setIsUserIdChecked] = useState(false); // 아이디 중복 여부
   const [isUserIdAvailable, setIsUserIdAvailable] = useState<boolean | null>(null); // 아이디 사용 가능 여부
+  const [validationError, setValidationError] = useState<string | null>(null);
   const [isEmailSent, setIsEmailSent] = useState(false); // 이메일 인증번호 전송 여부
   const [isEmailVerified, setIsEmailVerified] = useState(false); // 이메일 인증 여부
   const [otp, setOtp] = useState(''); // 이메일 인증번호
@@ -25,32 +26,27 @@ export default function UserInformationForm({ register, errors, watch }: UserInf
   const id = watch('id');
   const email = watch('email');
 
-  // 아이디 중복 체크
-  const onCheckUserId = async () => {
-    if (!id) return alert('아이디를 입력해주세요.');
+  const { mutateAsync: checkAccountId } = useCheckAccountId();
 
+  const validateUserId = (id: string) => {
     const result = accountIdSchema.safeParse(id);
-
     if (!result.success) {
-      setIsUserIdChecked(true);
-      setIsUserIdAvailable(false);
-      return;
+      setValidationError('영문자와 숫자만 사용 가능하며 4자 이상 12자 이하로 입력해주세요.');
+      return false;
     }
+    setValidationError(null);
+    return true;
+  };
 
-    try {
-      const response = await fetch(`/api/auth/signup/check-userid?id=${id}`);
-      const data = await response.json();
+  // 아이디 중복 체크
+  const onCheckAccountId = async () => {
+    if (!validateUserId(id)) return;
 
-      if (response.ok) {
-        setIsUserIdChecked(true);
+    await checkAccountId(id, {
+      onSuccess: (data) => {
         setIsUserIdAvailable(data.available);
-      } else {
-        alert(`오류 발생: ${data.error}`);
-      }
-    } catch (error) {
-      console.error('아이디 중복 확인 오류:', error);
-      alert('아이디 중복 확인 중 오류가 발생했습니다.');
-    }
+      },
+    });
   };
 
   // 이메일 인증 코드 전송
@@ -113,18 +109,15 @@ export default function UserInformationForm({ register, errors, watch }: UserInf
 
           <div className='flex items-center gap-1 w-full'>
             <TextInput {...register('id')} autoComplete='username' placeholder='아이디' />
-            <Button type='button' height={48} onClick={onCheckUserId} className='w-fit'>
+            <Button type='button' height={48} onClick={onCheckAccountId} className='w-fit'>
               중복확인
             </Button>
           </div>
 
           <div className='relative w-full'>
-            {isUserIdChecked && isUserIdAvailable && (
-              <p className={`text-body-12m before:content-['•'] before:mr-1 before:inline-block ${isUserIdAvailable ? 'text-state-success' : 'text-state-error'}`}>
-                {isUserIdAvailable ? '사용 가능한 아이디입니다.' : '이미 사용 중인 아이디입니다.'}
-              </p>
-            )}
-            {isUserIdChecked && !isUserIdAvailable && <ErrorMessage>영문자와 숫자만 사용 가능하며 4자 이상 12자 이하로 입력해주세요.</ErrorMessage>}
+            {validationError && <ErrorMessage>{validationError}</ErrorMessage>}
+            {isUserIdAvailable === true && <p className="text-body-12m before:content-['•'] before:mr-1 before:inline-block text-green-500">사용 가능한 아이디입니다.</p>}
+            {isUserIdAvailable === false && <p className="text-body-12m before:content-['•'] before:mr-1 before:inline-block text-red-500">이미 사용 중인 아이디입니다.</p>}
           </div>
         </label>
 
