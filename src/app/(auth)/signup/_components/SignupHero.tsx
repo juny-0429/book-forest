@@ -10,7 +10,7 @@ export default function SignupHero() {
       <Link href={appRoutes.home}>
         <Image src={KoLogo} width={150} alt='logo image' className='fixed top-10 left-10' />
       </Link>
-      <div className='flex flex-col items-center gpa-[46px]'>
+      <div className='flex flex-col items-center gap-10'>
         <h1 className='text-title-24b text-ui-text-title'>회원가입</h1>
         <SnsLoginButtons />
       </div>
