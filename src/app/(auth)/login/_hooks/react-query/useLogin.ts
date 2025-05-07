@@ -1,4 +1,5 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { supabaseBrowser } from 'src/lib/supabaseBrowser';
 import { appRoutes } from 'src/routes/appRoutes';
 
@@ -15,25 +16,20 @@ const loginApi = async (data: LoginData) => {
     password: data.password,
   });
 
-  if (error) {
-    throw new Error(error.message);
-  }
+  if (error) throw new Error(error.message);
 
   return authData;
 };
 
 export function useLogin() {
-  const queryClient = useQueryClient();
+  const router = useRouter();
 
   return useMutation({
     mutationFn: loginApi,
     onSuccess: (data) => {
       if (data?.session) {
-        window.location.href = appRoutes.home;
+        router.push(appRoutes.home);
       }
-    },
-    onError: (error) => {
-      console.error(error.message || '알 수 없는 오류가 발생했습니다.');
     },
   });
 }

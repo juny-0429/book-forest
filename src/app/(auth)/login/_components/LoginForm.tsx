@@ -21,19 +21,14 @@ export default function LoginForm() {
     resolver: zodResolver(loginSchema),
   });
 
-  const { mutateAsync, isError, error } = useLogin();
+  const { mutateAsync: loginAsync, isError, error } = useLogin();
 
   const onSubmit = async (data: LoginSchema) => {
-    try {
-      const result = await mutateAsync({ email: data.email, password: data.password });
-      console.log('로그인 성공', result);
-    } catch (error) {
-      console.error('로그인 실패', error);
-    }
+    await loginAsync({ email: data.email, password: data.password });
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col items-center w-[350px]'>
+    <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col items-center w-[350px]' noValidate>
       <TextInput type='email' {...register('email')} autoComplete='username' placeholder='이메일을 입력하세요' />
       <TextInput
         type={isPasswordShow ? 'text' : 'password'}
@@ -47,7 +42,17 @@ export default function LoginForm() {
         }
         className='mt-[10px]'
       />
-      {errors.password && <ErrorMessage>입력한 정보가 일치하지 않습니다.</ErrorMessage>}
+      <div className='relative w-full'>
+        {errors.email && errors.password ? (
+          <ErrorMessage>이메일과 비밀번호 모두 입력해주세요</ErrorMessage>
+        ) : (
+          <>
+            {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
+            {errors.password && <ErrorMessage>비밀번호를 입력해주세요</ErrorMessage>}
+          </>
+        )}
+        {isError && error instanceof Error && <ErrorMessage>일치하지 않는 정보가 있습니다.</ErrorMessage>}
+      </div>
 
       <Button height={48} type='submit' className='w-full mt-10'>
         로그인
