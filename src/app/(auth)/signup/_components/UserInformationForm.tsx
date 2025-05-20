@@ -8,6 +8,9 @@ import ErrorMessage from 'src/components/ErrorMessage/ErrorMessage';
 import { FieldErrors, UseFormRegister, UseFormWatch } from 'react-hook-form';
 import { SignupSchema } from '../_schemas/signup.schema';
 import { useAccountIdValidation } from '../_hooks/useAccountIdValidation';
+import { useSendOtp } from '../_hooks/react-query/useSendOtp';
+import { useVerifyOtp } from '../_hooks/react-query/useVerifyOtp';
+import { useAlertModal } from 'src/hooks/useModal';
 
 interface UserInformationFormProps {
   register: UseFormRegister<SignupSchema>;
@@ -20,58 +23,29 @@ export default function UserInformationForm({ register, errors, watch }: UserInf
   const [isEmailVerified, setIsEmailVerified] = useState(false); // 이메일 인증 여부
   const [otp, setOtp] = useState(''); // 이메일 인증번호
   const { onCheckAccountId, isUserIdAvailable, validationError } = useAccountIdValidation();
+  const { openAlertModal } = useAlertModal();
+  const { mutateAsync: sendOtp } = useSendOtp();
+  const { mutateAsync: verifyOtp } = useVerifyOtp();
 
   const id = watch('id');
   const email = watch('email');
 
-  // 이메일 인증 코드 전송
   const onSendOtp = async () => {
-    if (!email) return alert('이메일을 입력해주세요.');
-
-    try {
-      const response = await fetch('/api/auth/signup/send-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+    if (!email)
+      return openAlertModal({
+        content: '이메일을 입력해주세요',
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        alert('이메일로 인증번호가 전송되었습니다.');
-        setIsEmailSent(true);
-      } else {
-        alert(`이메일 전송 실패: ${data.error}`);
-      }
-    } catch (error) {
-      console.error('OTP 전송 오류:', error);
-      alert('이메일 인증 요청 중 오류가 발생했습니다.');
-    }
+    sendOtp(email, { onSuccess: () => setIsEmailSent(true) });
   };
 
-  // 이메일 인증 코드 확인
   const onVerifyOtp = async () => {
-    if (!otp) return alert('인증번호를 입력해주세요.');
-
-    try {
-      const response = await fetch('/api/auth/signup/verify-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, otp }),
+    if (!otp)
+      return openAlertModal({
+        content: '인증번호를 입력해주세요.',
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        alert('이메일 인증이 완료되었습니다!');
-        setIsEmailVerified(true);
-      } else {
-        alert(`인증 실패: ${data.error}`);
-      }
-    } catch (error) {
-      console.error('OTP 인증 오류:', error);
-      alert('이메일 인증 확인 중 오류가 발생했습니다.');
-    }
+    verifyOtp({ email, otp }, { onSuccess: () => setIsEmailVerified(true) });
   };
 
   return (
