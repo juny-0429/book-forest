@@ -1,13 +1,11 @@
 'use client';
 
-import React from 'react';
 import Link from 'next/link';
 import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import Button from 'src/components/Button/Button';
 import CheckBox from 'src/components/CheckBox/CheckBox';
 import { appRoutes } from 'src/routes/appRoutes';
 import { SignupSchema } from '../../_schemas/signup.schema';
-import SnsLoginButtons from '../SnsLoginButtons';
 import AgreementCheckBox from './AgreementCheckBox';
 
 interface TermsAgreementProps {
@@ -18,17 +16,18 @@ interface TermsAgreementProps {
   errors: FieldErrors<SignupSchema>;
 }
 
-export default function TermsAgreement({ setStep, register, watch, setValue, errors }: TermsAgreementProps) {
-  const agreeAgeChecked = watch('agreeAge') ?? false;
-  const agreeTermsChecked = watch('agreeTerms') ?? false;
-  const agreePrivacyChecked = watch('agreePrivacy') ?? false;
-  const agreeMarketingChecked = watch('agreeMarketing') ?? false;
-  const agreeEventChecked = watch('agreeEvent') ?? false;
+export default function TermsAgreement({ setStep, register, watch, setValue }: TermsAgreementProps) {
+  const agreeAgeChecked = watch('agreeAge') ?? false; // 만 14세 이상입니다
+  const agreeTermsChecked = watch('agreeTerms') ?? false; // 이용약관
+  const agreePrivacyChecked = watch('agreePrivacy') ?? false; // 개인정보수집 및 이용동의
+  const agreeMarketingChecked = watch('agreeMarketing') ?? false; // 개인정보 마케팅 활용 동의
+  const agreeEventChecked = watch('agreeEvent') ?? false; // 이벤트 및 특가 알림 수신 동의
 
-  const allRequiredChecked = agreeAgeChecked && agreeTermsChecked && agreePrivacyChecked;
+  const allChecked = agreeAgeChecked && agreeTermsChecked && agreePrivacyChecked && agreeMarketingChecked && agreeEventChecked; // 전체 항목 체크 여부
+  const allRequiredChecked = agreeAgeChecked && agreeTermsChecked && agreePrivacyChecked; // 필수 항목만 체크 여부
 
   const onCheckAll = () => {
-    const newState = !allRequiredChecked;
+    const newState = !allChecked;
     setValue('agreeAge', newState);
     setValue('agreeTerms', newState);
     setValue('agreePrivacy', newState);
@@ -38,17 +37,13 @@ export default function TermsAgreement({ setStep, register, watch, setValue, err
 
   return (
     <section className='flex flex-col items-center gap-[46px]'>
-      <h1 className='text-title-24b text-ui-text-title'>회원가입</h1>
-      <SnsLoginButtons />
-
       <div>
         <h2 className='text-title-16b text-ui-text-title'>약관 동의</h2>
 
         <div className='flex flex-col gap-[46px] mt-5'>
           <div className='flex flex-col items-center gap-4 p-[25px] w-[400px] border border-solid border-gray-300 rounded-[5px]'>
-            {/* 전체동의 체크박스 */}
             <div className='flex flex-col items-start gap-1 w-full'>
-              <CheckBox checked={allRequiredChecked} onChange={onCheckAll}>
+              <CheckBox checked={allChecked} onChange={onCheckAll}>
                 전체동의
               </CheckBox>
               <p className='text-caption-12r text-ui-text-description'>아래 모든 약관 및 마케팅 안내 수신 내용을 확인 및 동의합니다.</p>

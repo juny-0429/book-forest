@@ -7,6 +7,10 @@ import Button from 'src/components/Button/Button';
 import ErrorMessage from 'src/components/ErrorMessage/ErrorMessage';
 import { FieldErrors, UseFormRegister, UseFormWatch } from 'react-hook-form';
 import { SignupSchema } from '../_schemas/signup.schema';
+import { useAccountIdValidation } from '../_hooks/useAccountIdValidation';
+import { useSendOtp } from '../_hooks/react-query/useSendOtp';
+import { useVerifyOtp } from '../_hooks/react-query/useVerifyOtp';
+import { useAlertModal } from 'src/hooks/useModal';
 
 interface UserInformationFormProps {
   register: UseFormRegister<SignupSchema>;
@@ -15,106 +19,55 @@ interface UserInformationFormProps {
 }
 
 export default function UserInformationForm({ register, errors, watch }: UserInformationFormProps) {
-  const [isUserIdChecked, setIsUserIdChecked] = useState(false); // 아이디 중복 여부
-  const [isUserIdAvailable, setIsUserIdAvailable] = useState<boolean | null>(null); // 아이디 사용 가능 여부
   const [isEmailSent, setIsEmailSent] = useState(false); // 이메일 인증번호 전송 여부
   const [isEmailVerified, setIsEmailVerified] = useState(false); // 이메일 인증 여부
   const [otp, setOtp] = useState(''); // 이메일 인증번호
+  const { onCheckAccountId, isUserIdAvailable, validationError } = useAccountIdValidation();
+  const { openAlertModal } = useAlertModal();
+  const { mutateAsync: sendOtp } = useSendOtp();
+  const { mutateAsync: verifyOtp } = useVerifyOtp();
 
   const id = watch('id');
   const email = watch('email');
 
-  // 아이디 중복 체크
-  const onCheckUserId = async () => {
-    if (!id) return alert('아이디를 입력해주세요.');
-
-    try {
-      const response = await fetch(`/api/auth/signup/check-userid?id=${id}`);
-      const data = await response.json();
-
-      if (response.ok) {
-        setIsUserIdChecked(true);
-        setIsUserIdAvailable(data.available);
-      } else {
-        alert(`오류 발생: ${data.error}`);
-      }
-    } catch (error) {
-      console.error('아이디 중복 확인 오류:', error);
-      alert('아이디 중복 확인 중 오류가 발생했습니다.');
-    }
-  };
-
-  // 이메일 인증 코드 전송
   const onSendOtp = async () => {
-    if (!email) return alert('이메일을 입력해주세요.');
-
-    try {
-      const response = await fetch('/api/auth/signup/send-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+    if (!email)
+      return openAlertModal({
+        content: '이메일을 입력해주세요',
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        alert('이메일로 인증번호가 전송되었습니다.');
-        setIsEmailSent(true);
-      } else {
-        alert(`이메일 전송 실패: ${data.error}`);
-      }
-    } catch (error) {
-      console.error('OTP 전송 오류:', error);
-      alert('이메일 인증 요청 중 오류가 발생했습니다.');
-    }
+    sendOtp(email, { onSuccess: () => setIsEmailSent(true) });
   };
 
-  // 이메일 인증 코드 확인
   const onVerifyOtp = async () => {
-    if (!otp) return alert('인증번호를 입력해주세요.');
-
-    try {
-      const response = await fetch('/api/auth/signup/verify-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, otp }),
+    if (!otp)
+      return openAlertModal({
+        content: '인증번호를 입력해주세요.',
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        alert('이메일 인증이 완료되었습니다!');
-        setIsEmailVerified(true);
-      } else {
-        alert(`인증 실패: ${data.error}`);
-      }
-    } catch (error) {
-      console.error('OTP 인증 오류:', error);
-      alert('이메일 인증 확인 중 오류가 발생했습니다.');
-    }
+    verifyOtp({ email, otp }, { onSuccess: () => setIsEmailVerified(true) });
   };
 
   return (
     <section>
-      <div className='flex flex-col gap-[40px]'>
+      <div className='flex flex-col gap-8'>
         {/* 아이디 */}
         <label className='flex flex-col gap-2 w-full'>
           <span className='text-body-18b text-ui-text-title'>아이디</span>
           <p className='text-body-12m text-ui-text-description'>4자~12자리의 영문자, 숫자 / @,#$ 등 특수문자는 제외</p>
 
-          <div>
-            <div className='flex items-center gap-1 w-full'>
-              <TextInput {...register('id')} autoComplete='username' placeholder='아이디' />
-              <Button type='button' height={48} onClick={onCheckUserId} className='w-fit'>
-                중복확인
-              </Button>
-            </div>
-            {errors.id && <ErrorMessage>{errors.id.message}</ErrorMessage>}
+          <div className='flex items-center gap-1 w-full'>
+            <TextInput {...register('id')} autoComplete='username' placeholder='아이디' />
+            <Button type='button' height={48} className='w-fit' onClick={() => onCheckAccountId(id)}>
+              중복확인
+            </Button>
           </div>
 
-          {isUserIdChecked && (
-            <p className={`text-body-12m ${isUserIdAvailable ? 'text-state-success' : 'text-state-error'}`}>{isUserIdAvailable ? '사용 가능한 아이디입니다.' : '이미 사용 중인 아이디입니다.'}</p>
-          )}
+          <div className='relative w-full'>
+            {validationError && <ErrorMessage>{validationError}</ErrorMessage>}
+            {isUserIdAvailable === true && <p className="text-body-12m before:content-['•'] before:mr-1 before:inline-block text-green-500">사용 가능한 아이디입니다.</p>}
+            {isUserIdAvailable === false && <p className="text-body-12m before:content-['•'] before:mr-1 before:inline-block text-red-500">이미 사용 중인 아이디입니다.</p>}
+          </div>
         </label>
 
         {/* 비밀번호 */}
