@@ -1,8 +1,6 @@
-import Autoplay from 'embla-carousel-autoplay';
 import React, { useEffect, useState } from 'react';
-import { Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from 'src/components/Carousel/Carousel';
+import { Carousel, CarouselApi, CarouselContent, CarouselItem } from 'src/components/Carousel/Carousel';
 import Image from 'next/image';
-import { cn } from 'src/lib/utils';
 import LucideIcons from 'src/theme/lucideIcon';
 
 interface BookMainImageSwiperProps {
