@@ -1,0 +1,50 @@
+import { NextResponse } from 'next/server';
+import { SignupSchema } from 'src/app/(auth)/signup/_schemas/signup.schema';
+import { createSupabaseServer } from 'src/lib/supabaseServer'; // supabaseServer 사용
+import { Database } from 'src/types/database.types';
+
+export async function POST(request: Request) {
+  try {
+    const { id, password, user_name, email, user_phone, agreeAge, agreeTerms, agreePrivacy, agreeMarketing, agreeEvent }: SignupSchema = await request.json();
+
+    if (!agreeAge || !agreeTerms || !agreePrivacy) return NextResponse.json({ error: '필수 항목에 동의해야 합니다.' }, { status: 400 });
+
+    const supabase = await createSupabaseServer();
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    const user = data?.user;
+
+    if (error) return NextResponse.json({ error: error.message }, { status: 400 });
+
+    if (!user?.id) {
+      return NextResponse.json({ error: '사용자 ID가 생성되지 않았습니다.' }, { status: 400 });
+    }
+
+    await supabase.from('user').insert({
+      user_id: user.id,
+      account_id: id,
+      user_name,
+      user_phone,
+      user_email: email,
+      agree_marketing: agreeMarketing ?? false,
+      agree_event_notification: agreeEvent ?? false,
+    });
+
+    const { error: authorityError } = await supabase.from('authority_log').insert([
+      {
+        auth_id: 1, // 일반 사용자
+        user_id: user!.id,
+      },
+    ]);
+
+    if (authorityError) return NextResponse.json({ error: authorityError.message }, { status: 400 });
+
+    return NextResponse.json({ message: '회원가입 완료!', user });
+  } catch (error) {
+    return NextResponse.json({ error: '서버 오류 발생' }, { status: 500 });
+  }
+}
