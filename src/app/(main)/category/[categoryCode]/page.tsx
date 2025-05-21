@@ -2,11 +2,7 @@ import { Metadata } from 'next';
 import { createSupabaseServer } from 'src/lib/supabaseServer';
 import CategoryPage from './CategoryPage';
 
-type Props = {
-  params: { categoryCode: string };
-};
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { categoryCode: string } }): Promise<Metadata> {
   const { categoryCode } = params;
 
   const supabase = await createSupabaseServer();
