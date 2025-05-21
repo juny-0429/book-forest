@@ -17,7 +17,7 @@ export async function POST(req: Request) {
     if (!data) return NextResponse.json({ error: '일치하는 회원 정보가 없습니다.' }, { status: 404 });
 
     return NextResponse.json({ accountId: data.account_id, createdAt: data.created_at });
-  } catch (err) {
+  } catch (_error) {
     return NextResponse.json({ error: '서버 오류 발생' }, { status: 500 });
   }
 }

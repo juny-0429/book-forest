@@ -10,7 +10,6 @@ const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'
 export const useBannerUpload = () => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [filePath, setFilePath] = useState<string | null>(null); // 업로드된 파일 경로 저장
-  const [isSubmitted, setIsSubmitted] = useState(false); // 배너 등록 여부 상태 추가
 
   const onImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -35,16 +34,12 @@ export const useBannerUpload = () => {
     setFilePath(filePath);
   };
 
-  const markAsSubmitted = () => {
-    setIsSubmitted(true);
-  };
-
   const deleteImage = async () => {
     if (!filePath) return console.warn('삭제할 파일 경로가 없습니다.');
 
     const cleanedFilePath = filePath.replace(/^\/+/, '');
 
-    const { data, error } = await supabase.storage.from(BUCKET_NAME).remove([cleanedFilePath]);
+    const { error } = await supabase.storage.from(BUCKET_NAME).remove([cleanedFilePath]);
 
     if (error) return console.error('파일 삭제 실패:', error);
 
@@ -56,7 +51,7 @@ export const useBannerUpload = () => {
     return () => {
       deleteImage();
     };
-  }, []);
+  }, [deleteImage]);
 
-  return { onImageUpload, deleteImage, markAsSubmitted, imageUrl };
+  return { onImageUpload, deleteImage, imageUrl };
 };

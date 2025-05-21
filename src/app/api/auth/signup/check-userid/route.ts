@@ -17,7 +17,7 @@ export async function GET(request: Request) {
     }
 
     return NextResponse.json({ available: data === null }, { status: 200 });
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json({ error: '서버 오류 발생' }, { status: 500 });
   }
 }

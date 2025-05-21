@@ -29,7 +29,7 @@ const options: SelectOption[] = [
 export default function AddBannerModalContent() {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-  const { onImageUpload, deleteImage, markAsSubmitted, imageUrl } = useBannerUpload();
+  const { onImageUpload, deleteImage, imageUrl } = useBannerUpload();
   const { mutateAsync } = useCreateBanner();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -69,8 +69,6 @@ export default function AddBannerModalContent() {
       banner_start_date: startDate,
       banner_end_date: endDate,
     });
-
-    markAsSubmitted();
   };
 
   useEffect(() => {
