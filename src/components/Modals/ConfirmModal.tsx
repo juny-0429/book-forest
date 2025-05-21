@@ -12,7 +12,7 @@ export interface ConfirmModalProps extends BaseModalProps {
   onCancel: () => void;
 }
 
-export default function ConfirmModal({ title, content, confirmButtonText = '확인', cancelButtonText = '최소', onClose, onConfirm, onCancel }: ConfirmModalProps) {
+export default function ConfirmModal({ title, content, confirmButtonText = '확인', cancelButtonText = '최소', onClose, onConfirm }: ConfirmModalProps) {
   const confirm = () => {
     if (onConfirm) return onConfirm();
     onClose();
