@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useGetBannerList } from 'src/app/(main)/_hooks/react-query/useGetBannerList';
 
 export default function DualBanner() {
-  const { data: dualBannerList, isLoading } = useGetBannerList('dual');
+  const { data: dualBannerList } = useGetBannerList('dual');
 
   return (
     <section className='flex justify-center items-center gap-[50px]'>
