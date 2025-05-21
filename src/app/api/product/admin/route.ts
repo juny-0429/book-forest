@@ -74,7 +74,9 @@ export async function GET(request: Request) {
     const totalPages = count ? Math.ceil(count / limit) : 0;
 
     return NextResponse.json({ productList: flattenedData, total: count, totalPages });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message || '상품 조회 중 오류가 발생했습니다.' }, { status: 500 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message || '상품 조회 중 오류가 발생했습니다.' }, { status: 500 });
+    }
   }
 }
