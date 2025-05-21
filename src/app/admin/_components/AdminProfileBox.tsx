@@ -3,8 +3,6 @@ import Image from 'next/image';
 import SampleUserImg from '@/assets/images/author/이슬아.png';
 import LucideIcons from 'src/theme/lucideIcon';
 import IconButton from 'src/components/Button/IconButton';
-import Link from 'next/link';
-import { appRoutes } from 'src/routes/appRoutes';
 
 export default function AdminProfileBox() {
   return (

@@ -33,13 +33,7 @@ export default function AddBannerModalContent() {
   const { mutateAsync } = useCreateBanner();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors, isValid },
-  } = useForm<CreateBannerSchema>({
+  const { register, handleSubmit, watch, setValue } = useForm<CreateBannerSchema>({
     resolver: zodResolver(createBannerSchema),
     defaultValues: {
       banner_link: 'https://',

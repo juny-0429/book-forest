@@ -106,7 +106,7 @@ export const userManagementColumns: ColumnDef<UserManagementTableColumn>[] = [
     accessorKey: 'actions',
     header: '회원 탈퇴',
     size: 150,
-    cell: ({ row }) => (
+    cell: () => (
       <LineButton height={32} className='w-fit'>
         탈퇴
       </LineButton>
