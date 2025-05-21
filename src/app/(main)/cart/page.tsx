@@ -23,7 +23,12 @@ export default function CartPage() {
   const { mutate: createWishlist } = useCreateWishlist(user?.id ?? '');
   const { openAlertModal } = useAlertModal();
 
-  const { data } = user ? useGetCartListByUserId(user.id) : useGetCartList(cart.map((item) => ({ productId: item.productId, stock: item.stock })));
+  const isLoggedIn = !!user;
+
+  const { data: serverCartData } = useGetCartListByUserId(user?.id ?? '');
+  const { data: guestCartData } = useGetCartList(cart.map((item) => ({ productId: item.productId, stock: item.stock })));
+
+  const data = isLoggedIn ? serverCartData : guestCartData;
 
   const toggleProductSelection = (productId: number) => {
     setSelectedProductIds((prev) => (prev.includes(productId) ? prev.filter((id) => id !== productId) : [...prev, productId]));
