@@ -17,7 +17,7 @@ export async function POST(request: Request) {
     const startDate = new Date(banner_start_date);
     const endDate = new Date(banner_end_date);
 
-    const { data: existingBanners, error: countError } = await supabase.from('banner').select('banner_id', { count: 'exact' }).eq('banner_position', banner_position);
+    const { data: existingBanners } = await supabase.from('banner').select('banner_id', { count: 'exact' }).eq('banner_position', banner_position);
 
     const maxBanners: Record<string, number> = {
       main: 20,
@@ -53,7 +53,7 @@ export async function POST(request: Request) {
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
     return NextResponse.json({ message: '배너 등록 성공', data }, { status: 201 });
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json({ error: '서버 내부 오류' }, { status: 500 });
   }
 }
@@ -101,7 +101,7 @@ export async function PUT(request: Request) {
     if (error) return NextResponse.json({ message: `에러 발생: ${error.message}` }, { status: 500 });
 
     return NextResponse.json({ message: '배너 활성화 상태 변경 성공' }, { status: 200 });
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json({ message: '서버 에러 발생' }, { status: 500 });
   }
 }
