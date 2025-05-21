@@ -11,7 +11,7 @@ import { toastMessage } from 'src/hooks/useToast';
 import WishlistToolbar from './_components/WishlistToolbar';
 import { useCart } from '../../cart/_hooks/useCart';
 
-export default function wishlist() {
+export default function WishlistPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const view = searchParams.get('view') === 'list' ? 'list' : 'grid';
