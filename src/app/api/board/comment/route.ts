@@ -58,8 +58,11 @@ export async function GET(request: Request) {
     });
 
     return NextResponse.json({ commentList });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message || '댓글 조회 중 오류 발생' }, { status: 500 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: '댓글 조회 중 오류 발생' }, { status: 500 });
   }
 }
 
@@ -108,8 +111,11 @@ export async function POST(request: Request) {
     };
 
     return NextResponse.json(newComment);
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message || '댓글 등록 중 오류 발생' }, { status: 500 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: '댓글 등록 중 오류 발생' }, { status: 500 });
   }
 }
 
@@ -138,7 +144,10 @@ export async function DELETE(request: Request) {
     if (error) throw error;
 
     return NextResponse.json({ message: '댓글이 삭제되었습니다.' });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message || '댓글 삭제 중 오류 발생' }, { status: 500 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: '댓글 삭제 중 오류 발생' }, { status: 500 });
   }
 }

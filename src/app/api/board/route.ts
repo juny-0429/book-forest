@@ -12,7 +12,7 @@ export async function GET(request: Request) {
   if (!boardCode) return NextResponse.json({ error: '게시판 코드가 필요합니다.' }, { status: 400 });
 
   try {
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from('board')
       .select(
         `
@@ -41,7 +41,9 @@ export async function GET(request: Request) {
       .sort((a, b) => b.createAt.getTime() - a.createAt.getTime());
 
     return NextResponse.json(flattenedData);
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message || '게시글 조회 중 오류가 발생했습니다.' }, { status: 500 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message || '게시글 조회 중 오류가 발생했습니다.' }, { status: 500 });
+    }
   }
 }
