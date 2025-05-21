@@ -82,7 +82,7 @@ export default function UserInformationForm({ register, errors, watch }: UserInf
         {/* 전화번호 */}
         <label className='flex flex-col gap-2 w-full'>
           <span className='text-body-18b text-ui-text-title'>전화번호</span>
-          <p className='text-body-12m text-ui-text-description'>'-'를 포함한 전화번호 입력</p>
+          <p className='text-body-12m text-ui-text-description'>&apos;-&apos;를 포함한 전화번호 입력</p>
           <TextInput type='tel' {...register('user_phone')} placeholder='전화번호' maxLength={13} />
         </label>
 

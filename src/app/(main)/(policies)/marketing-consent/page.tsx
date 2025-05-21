@@ -67,7 +67,7 @@ export default function MarketingConsentPage() {
         <ul className='list-disc pl-5 text-gray-700 space-y-2'>
           <li>홈페이지 내 개인정보 설정에서 철회</li>
           <li>고객센터를 통한 철회 요청</li>
-          <li>수신된 이메일 또는 SMS 내 "수신거부" 클릭</li>
+          <li>수신된 이메일 또는 SMS 내 &apos;수신거부&apos; 클릭</li>
         </ul>
       </section>
 

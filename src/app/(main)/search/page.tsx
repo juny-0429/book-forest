@@ -39,7 +39,7 @@ export default function SearchPage() {
   return (
     <div>
       <h2 className='text-title-32b text-ui-text-title'>
-        '{keyword}' 에 대한 검색결과 : {totalCount}개
+        &apos;{keyword}&apos; 에 대한 검색결과 : {totalCount}개
       </h2>
 
       <ul className='flex flex-col'>

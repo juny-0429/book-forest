@@ -13,7 +13,7 @@ export default function PrivacyPage() {
 
       <section>
         <h2 className='text-xl font-semibold'>1. 수집하는 개인정보 항목</h2>
-        <p className='text-gray-700'>책숲(이하 "회사")은 다음과 같은 개인정보를 수집할 수 있습니다.</p>
+        <p className='text-gray-700'>책숲(이하 &apos;회사&apos;)은 다음과 같은 개인정보를 수집할 수 있습니다.</p>
         <ul className='list-disc pl-5 text-gray-700 space-y-2'>
           <li>필수 항목: 이름, 이메일, 비밀번호, 전화번호</li>
           <li>선택 항목: 주소, 프로필 사진</li>
