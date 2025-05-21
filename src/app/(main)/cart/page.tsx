@@ -87,7 +87,7 @@ export default function CartPage() {
     } else {
       setCart(getCart());
     }
-  }, [user]);
+  }, [user, getCart, addToCart, clearCart]);
 
   useEffect(() => {
     if (data) setCartList(data);
