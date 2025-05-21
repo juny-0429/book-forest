@@ -63,21 +63,19 @@ export default function AddBannerModalContent() {
     if (!startDate) return alert('배너 시작일을 선택해야 합니다.');
     if (!endDate) return alert('배너 종료일을 선택해야 합니다.');
 
-    try {
-      await mutateAsync({
-        ...data,
-        banner_image_url: imageUrl,
-        banner_start_date: startDate,
-        banner_end_date: endDate,
-      });
+    await mutateAsync({
+      ...data,
+      banner_image_url: imageUrl,
+      banner_start_date: startDate,
+      banner_end_date: endDate,
+    });
 
-      markAsSubmitted();
-    } catch (error) {}
+    markAsSubmitted();
   };
 
   useEffect(() => {
     if (imageUrl) setValue('banner_image_url', imageUrl);
-  }, [imageUrl]);
+  }, [imageUrl, setValue]);
 
   return (
     <div className='flex flex-col gap-5'>
