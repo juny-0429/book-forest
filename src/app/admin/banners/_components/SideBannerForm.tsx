@@ -9,8 +9,8 @@ import { useUpdateBannerStatus } from '../_hooks/react-query/useUpdateBannerStat
 import { useDeleteBanner } from '../_hooks/react-query/useDeleteBanner';
 
 export default function SideBannerForm() {
-  const { data: sideBannerList, isLoading } = useGetAdminBannerList('side');
-  const { mutate: updateBannerStatus, isPending } = useUpdateBannerStatus('side');
+  const { data: sideBannerList } = useGetAdminBannerList('side');
+  const { mutate: updateBannerStatus } = useUpdateBannerStatus('side');
   const { mutate: deleteBanner, isPending: isDeleting } = useDeleteBanner('dual');
 
   const sideBanner = sideBannerList?.[0];

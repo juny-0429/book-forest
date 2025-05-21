@@ -9,8 +9,8 @@ import { useUpdateBannerStatus } from '../_hooks/react-query/useUpdateBannerStat
 import { useDeleteBanner } from '../_hooks/react-query/useDeleteBanner';
 
 export default function TripleBannerForm() {
-  const { data: sideBannerList, isLoading } = useGetAdminBannerList('triple');
-  const { mutate: updateBannerStatus, isPending } = useUpdateBannerStatus('triple');
+  const { data: sideBannerList } = useGetAdminBannerList('triple');
+  const { mutate: updateBannerStatus } = useUpdateBannerStatus('triple');
   const { mutate: deleteBanner, isPending: isDeleting } = useDeleteBanner('triple');
 
   const onToggleBannerStatus = (banner_id: number, is_active: boolean) => {

@@ -9,8 +9,8 @@ import { useUpdateBannerStatus } from '../_hooks/react-query/useUpdateBannerStat
 import { useDeleteBanner } from '../_hooks/react-query/useDeleteBanner';
 
 export default function DualBannerForm() {
-  const { data: sideBannerList, isLoading } = useGetAdminBannerList('dual');
-  const { mutate: updateBannerStatus, isPending } = useUpdateBannerStatus('dual');
+  const { data: sideBannerList } = useGetAdminBannerList('dual');
+  const { mutate: updateBannerStatus } = useUpdateBannerStatus('dual');
   const { mutate: deleteBanner, isPending: isDeleting } = useDeleteBanner('dual');
 
   const onToggleBannerStatus = (banner_id: number, is_active: boolean) => {
@@ -29,7 +29,7 @@ export default function DualBannerForm() {
 
       <div className='flex items-center gap-5'>
         {sideBannerList &&
-          sideBannerList.map((banner, index) => (
+          sideBannerList.map((banner) => (
             <div key={banner.banner_id} className='flex flex-col gap-2 w-[300px]'>
               <Image src={banner.banner_image_url} alt='배너 미리보기' width={300} height={150} priority={true} />
 
