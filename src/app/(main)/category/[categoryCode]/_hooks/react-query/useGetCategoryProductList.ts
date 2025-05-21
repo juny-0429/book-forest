@@ -13,7 +13,7 @@ const CATEGORY_PRODUCT_LIST = 'CATEGORY_PRODUCT_LIST';
 
 export const useGetCategoryProductList = (categoryCode: string, page = 1, limit = 10) => {
   return useInfiniteQuery({
-    queryKey: [CATEGORY_PRODUCT_LIST, categoryCode],
+    queryKey: [CATEGORY_PRODUCT_LIST, categoryCode, limit],
     queryFn: ({ pageParam = 1 }) => getCategoryCodeProductListApi(categoryCode, pageParam, limit),
     initialPageParam: page,
     getNextPageParam: (lastPage) => lastPage.paginationMeta.nextPage ?? undefined,
