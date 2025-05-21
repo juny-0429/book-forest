@@ -1,5 +1,5 @@
-import { useMutation } from "@tanstack/react-query";
-import { ForgotPasswordVerifySchema } from "../../_schemas/forgotPasswordVerify.schema";
+import { useMutation } from '@tanstack/react-query';
+import { ForgotPasswordVerifySchema } from '../../_schemas/forgotPasswordVerify.schema';
 
 const postVerifyResetPasswordUser = async (payload: ForgotPasswordVerifySchema): Promise<boolean> => {
   const res = await fetch('/api/auth/reset-password/verify', {

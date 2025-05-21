@@ -3,7 +3,6 @@ import { getCartListByUserIdQueryOptions } from './useGetCartListByUserId';
 import { CartListItemDto } from '../../_dtos/getCartList.dto';
 import { DeleteCartItemDto } from '../../_dtos/deleteCartItem.dto';
 
-
 const deleteCartListByUserId = async ({ userId, productIds }: DeleteCartItemDto) => {
   const response = await fetch(`/api/cart/${userId}`, {
     method: 'DELETE',

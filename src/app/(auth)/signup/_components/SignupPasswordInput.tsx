@@ -20,11 +20,7 @@ interface SignupPasswordInputProps<T extends FieldValues = PasswordFormFields> {
   watchPassword?: string;
 }
 
-export default function SignupPasswordInput<T extends FieldValues = PasswordFormFields>({
-  register,
-  errors,
-  watchPassword = '',
-}: SignupPasswordInputProps<T>) {
+export default function SignupPasswordInput<T extends FieldValues = PasswordFormFields>({ register, errors, watchPassword = '' }: SignupPasswordInputProps<T>) {
   const [isVisible, setIsVisible] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState('');

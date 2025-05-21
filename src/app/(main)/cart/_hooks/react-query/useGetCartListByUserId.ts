@@ -18,7 +18,7 @@ export const getCartListByUserIdQueryOptions = (userId: string) => ({
   queryKey: [CART_LIST_BY_USER_ID, userId],
   queryFn: () => getCartListByUserIdApi(userId),
   enabled: !!userId,
-})
+});
 
 export const useGetCartListByUserId = (userId: string) => {
   return useQuery(getCartListByUserIdQueryOptions(userId));
