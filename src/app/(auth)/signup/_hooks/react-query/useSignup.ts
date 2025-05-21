@@ -24,7 +24,7 @@ export const useSignup = () => {
 
   return useMutation({
     mutationFn: signUpApi,
-    onSuccess: (data) => {
+    onSuccess: () => {
       openAlertModal({
         title: '회원가입 완료',
         content: '책숲의 회원이 되신 것을 환영합니다. 다양한 책들을 만나보세요!',

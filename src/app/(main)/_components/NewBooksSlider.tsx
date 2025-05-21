@@ -13,7 +13,6 @@ import { appRoutes } from 'src/routes/appRoutes';
 export default function NewBookSlider() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(2);
-  const [count, setCount] = useState(0);
   const [selectedBook, setSelectedBook] = useState<TaggedProductItemDto | null>(null);
 
   const { data: taggedProductList } = useGetTagProductList('NEW');
@@ -27,7 +26,6 @@ export default function NewBookSlider() {
   useEffect(() => {
     if (!api) return;
 
-    setCount(api.scrollSnapList().length);
     setCurrent(api.selectedScrollSnap() + 1);
 
     api.on('select', () => {

@@ -1,7 +1,6 @@
 import React from 'react';
 import Button from 'src/components/Button/Button';
 import { useCartSummary } from '../_hooks/useCartSummary';
-import { CartItemType } from '../_hooks/useCart';
 import { CartListItemDto } from '../_dtos/getCartList.dto';
 
 interface PaymentBoxProps {

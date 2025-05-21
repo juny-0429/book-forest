@@ -63,7 +63,7 @@ export default function AddressesPage() {
         <section className='w-full'>
           <ul>
             {mockAddressList &&
-              mockAddressList.map((address, index) => (
+              mockAddressList.map((address) => (
                 <li key={address.id} className='flex items-center gap-5 w-full p-[30px] border-b border-solid border-gray-300'>
                   <Radio />
 
