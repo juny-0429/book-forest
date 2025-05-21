@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { MeetAuthorDto } from 'src/app/(main)/_dtos/getMeetAuthor.dto';
 import { createSupabaseServer } from 'src/lib/supabaseServer';
 
 export async function GET(request: Request) {
