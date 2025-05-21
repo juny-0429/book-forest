@@ -7,7 +7,7 @@ import Image from 'next/image';
 
 import SuccessIcon from '@/assets/icons/Success.png';
 import InformativeIcon from '@/assets/icons/Informative.png';
-import errorIcon from '@/assets/icons/error.png';
+import errorIcon from '@/assets/icons/Error.png';
 import WarningIcon from '@/assets/icons/Warning.png';
 
 const toastIcons = {
