@@ -50,8 +50,10 @@ export async function POST(request: Request, { params }: { params: { userId: str
     if (error) return NextResponse.json({ error: `찜 추가 중 오류가 발생했습니다: ${error.message}` }, { status: 500 });
 
     return NextResponse.json(true);
-  } catch (error) {
-    return NextResponse.json({ error: '알 수 없는 오류가 발생했습니다.' }, { status: 500 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: '알 수 없는 오류가 발생했습니다.' }, { status: 500 });
+    }
   }
 }
 
@@ -71,7 +73,9 @@ export async function DELETE(request: Request, { params }: { params: { userId: s
     if (error) return NextResponse.json({ error: `찜 삭제 중 오류가 발생했습니다: ${error.message}` }, { status: 500 });
 
     return NextResponse.json(true);
-  } catch (error) {
-    return NextResponse.json({ error: '알 수 없는 오류가 발생했습니다.' }, { status: 500 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: '알 수 없는 오류가 발생했습니다.' }, { status: 500 });
+    }
   }
 }

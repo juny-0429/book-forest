@@ -15,7 +15,9 @@ export async function PUT(request: Request) {
     if (error) return NextResponse.json({ message: `에러 발생: ${error.message}` }, { status: 500 });
 
     return NextResponse.json({ message: '상품 활성화 상태 변경 성공' }, { status: 200 });
-  } catch (error) {
-    return NextResponse.json({ message: '서버 에러 발생' }, { status: 500 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ message: '서버 에러 발생' }, { status: 500 });
+    }
   }
 }
