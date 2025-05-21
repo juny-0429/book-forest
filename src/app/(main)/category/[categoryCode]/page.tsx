@@ -7,7 +7,7 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { categoryCode } = await params;
+  const { categoryCode } = params;
 
   const supabase = await createSupabaseServer();
   const { data, error } = await supabase.from('category').select('category_name').eq('category_code', categoryCode).single();
