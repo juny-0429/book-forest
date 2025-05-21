@@ -27,7 +27,6 @@ export default function DetailPage() {
     authorAwards,
     authorDescription,
     badgeNames,
-    categoryName,
     publisher,
     price,
     discount,
