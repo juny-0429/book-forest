@@ -30,7 +30,7 @@ export default function ResetPasswordPage() {
 
   const password = watch('password');
 
-  const onSubmit = ({ password, confirmPassword }: ResetPasswordSchema) => {
+  const onSubmit = ({ password }: ResetPasswordSchema) => {
     resetPassword(password, {
       onSuccess: () => {
         alert('비밀번호가 성공적으로 변경되었습니다.');
