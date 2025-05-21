@@ -20,8 +20,7 @@ export const useUpdateProductStatus = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ updateProductId, isActive, page, searchType, keyword }: { updateProductId: number; isActive: boolean; page: number; searchType: string; keyword: string }) =>
-      updateProductStatusApi(updateProductId, isActive),
+    mutationFn: ({ updateProductId, isActive }: { updateProductId: number; isActive: boolean; page: number; searchType: string; keyword: string }) => updateProductStatusApi(updateProductId, isActive),
 
     onSuccess: (_data, variables) => {
       const { updateProductId, isActive, page, searchType, keyword } = variables;
