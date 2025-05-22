@@ -3,11 +3,11 @@ import DetailPage from './DetailPage';
 import { createSupabaseServer } from 'src/lib/supabaseServer';
 
 type Props = {
-  params: { productId: string };
+  params: Promise<{ productId: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { productId } = params;
+  const { productId } = await params;
 
   const supabase = await createSupabaseServer();
   const { data, error } = await supabase.from('product').select('product_name').eq('product_id', Number(productId)).single();
