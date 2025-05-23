@@ -1,5 +1,8 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
+import { Suspense } from 'react';
 import { useProductColumns } from './_data/productColumns.data';
 import { useGetProductList } from './_hooks/react-query/useGetProductList';
 import { useSearchParams } from 'next/navigation';
@@ -10,7 +13,7 @@ import ProductTable from './_components/ProductTable';
 import ProductPagination from './_components/ProdictPagination';
 import { useRouter } from 'next/navigation';
 
-export default function ProductManagementPage() {
+function ProductManagementPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const page = Number(searchParams.get('page') ?? '1');
@@ -67,5 +70,13 @@ export default function ProductManagementPage() {
         <ProductPagination currentPage={page} totalItems={data?.total ?? 0} />
       </div>
     </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>로딩 중...</div>}>
+      <ProductManagementPageContent />
+    </Suspense>
   );
 }

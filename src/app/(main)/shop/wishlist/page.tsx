@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+import { Suspense } from 'react';
 import WishlistGridList from './_components/WishlistGridList';
 import WishlistRowList from './_components/WishlistRowList';
 import { useAuth } from 'src/provider/authProvider';
@@ -11,7 +13,7 @@ import { toastMessage } from 'src/hooks/useToast';
 import WishlistToolbar from './_components/WishlistToolbar';
 import { useCart } from '../../cart/_hooks/useCart';
 
-export default function WishlistPage() {
+function WishlistPageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const view = searchParams.get('view') === 'list' ? 'list' : 'grid';
@@ -89,5 +91,13 @@ export default function WishlistPage() {
         {view === 'list' && wishlist && <WishlistRowList wishlist={wishlist} selectedProductIds={selectedProductIds} deleteWishlist={deleteWishlist} onToggleSelect={onToggleSelect} />}
       </div>
     </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>로딩 중...</div>}>
+      <WishlistPageContent />
+    </Suspense>
   );
 }
