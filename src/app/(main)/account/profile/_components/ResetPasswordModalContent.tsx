@@ -1,5 +1,4 @@
 import React from 'react';
-import SignupPasswordInput from 'src/app/(auth)/signup/_components/SignupPasswordInput';
 import Button from 'src/components/Button/Button';
 import LineButton from 'src/components/Button/LineButton';
 import TextInput from 'src/components/TextInput/TextInput';

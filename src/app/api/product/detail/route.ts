@@ -32,7 +32,7 @@ export async function GET(request: Request) {
     categoryName: item.category_name,
     publisher: item.publisher,
     price: item.price,
-    discount: item.discount,
+    discount: item.discount ?? 0,
     deliveryPrice: item.delivery_price,
     publishedDate: new Date(item.published_date),
     mainImages: item.main_images || [],
