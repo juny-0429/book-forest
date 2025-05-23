@@ -10,7 +10,7 @@ export default function ResetPasswordModalContent() {
       <h2 className='text-title-24b text-ui-text-title'>비밀번호 변경하기</h2>
 
       <form className='space-y-5'>
-        <SignupPasswordInput />
+        {/* <SignupPasswordInput /> */}
         <TextInput type='password' placeholder='비밀번호를 다시 입력해주세요.' />
       </form>
 
