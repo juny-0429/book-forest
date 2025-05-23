@@ -2,8 +2,8 @@ import { create } from 'zustand';
 
 interface BaseModalProps {
   onClose: () => void;
-  onCancel?: (e: React.BaseSyntheticEvent) => void;
-  onConfirm?: (e: React.BaseSyntheticEvent) => void;
+  onCancel?: () => void;
+  onConfirm?: () => void;
 }
 
 interface ModalState<TProps extends BaseModalProps> {
