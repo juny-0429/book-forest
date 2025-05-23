@@ -4,7 +4,7 @@ import { getCartListByUserIdQueryOptions } from './useGetCartListByUserId';
 import { CartListItemDto } from '../../_dtos/getCartList.dto';
 
 const updateCartItemStock = async ({ userId, productId, stock }: UpdateCartItemDto) => {
-  const response = await fetch(`/api/cart/${userId}`, {
+  const response = await fetch(`/api/cart/user?userId=${userId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

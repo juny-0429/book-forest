@@ -9,8 +9,8 @@ import { useUpdateBannerStatus } from '../_hooks/react-query/useUpdateBannerStat
 import { useDeleteBanner } from '../_hooks/react-query/useDeleteBanner';
 
 export default function MainBannerForm() {
-  const { data: sideBannerList, isLoading } = useGetAdminBannerList('main');
-  const { mutate: updateBannerStatus, isPending } = useUpdateBannerStatus('main');
+  const { data: sideBannerList } = useGetAdminBannerList('main');
+  const { mutate: updateBannerStatus } = useUpdateBannerStatus('main');
   const { mutate: deleteBanner, isPending: isDeleting } = useDeleteBanner('main');
 
   const onToggleBannerStatus = (banner_id: number, is_active: boolean) => {

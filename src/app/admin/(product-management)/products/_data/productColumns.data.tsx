@@ -5,7 +5,6 @@ import dayjs from 'dayjs';
 import { Switch } from 'src/components/Switch/Switch';
 import { useUpdateProductStatus } from '../_hooks/react-query/useUpdateProductStatus';
 import CheckBox from 'src/components/CheckBox/CheckBox';
-import { useProductSelection } from '../_hooks/useProductSelection';
 
 interface UseProductColumnsProps {
   page: number;

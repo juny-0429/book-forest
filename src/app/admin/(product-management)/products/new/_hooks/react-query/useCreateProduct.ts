@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { CreateProductDto } from '../../_dtos/createProduct.dto';
 
 const createProductApi = async (productData: CreateProductDto) => {
@@ -11,13 +11,10 @@ const createProductApi = async (productData: CreateProductDto) => {
   });
 
   if (!response.ok) throw new Error('상품 등록 요청이 실패했습니다.');
-
   return response.json();
 };
 
 export const useCreateProduct = () => {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: createProductApi,
   });

@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { UserProfileDto } from 'src/app/(main)/shop/_dtos/getUserProfile.dto';
 import { createSupabaseServer } from 'src/lib/supabaseServer';
 
-export async function GET(request: Request) {
+export async function GET() {
   const supabase = await createSupabaseServer();
   const {
     data: { user },
@@ -21,8 +21,10 @@ export async function GET(request: Request) {
     };
 
     return NextResponse.json({ userProfile });
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message || '서버 오류 발생' }, { status: 500 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ message: error.message || '서버 오류 발생' }, { status: 500 });
+    }
   }
 }
 
@@ -56,7 +58,9 @@ export async function PUT(request: Request) {
     }
 
     return NextResponse.json({ message: '성공' }, { status: 200 });
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message || '서버 오류 발생' }, { status: 500 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ message: error.message || '서버 오류 발생' }, { status: 500 });
+    }
   }
 }

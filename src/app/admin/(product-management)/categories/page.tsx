@@ -38,7 +38,7 @@ export default function CategoriesPage() {
     getSortedRowModel: getSortedRowModel(),
   });
 
-  const onEditClick = (rowId: string, rowValues: any) => {
+  const onEditClick = (rowId: string, rowValues: UpdateCategoryDto) => {
     setEditingRowId(rowId);
     setEditedValues({
       categoryId: rowValues.categoryId,

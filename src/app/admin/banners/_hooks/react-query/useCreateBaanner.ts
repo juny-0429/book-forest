@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { CreateBannerSchema } from '../../_schemas/createBanner.schema';
-import { getAdminBannerListQueryOptions } from './useGetAdminBannerList';
 
 const createBannerApi = async (data: CreateBannerSchema) => {
   const response = await fetch('/api/banner/admin', {
@@ -29,7 +28,7 @@ export const useCreateBanner = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [ADMIN_BANNER_LIST] });
     },
-    onError: (error) => {
+    onError: () => {
       alert('배너 등록 중 오류가 발생했습니다.');
     },
   });

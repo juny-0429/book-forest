@@ -1,8 +1,5 @@
 'use client';
 
-import React from 'react';
-import Button from 'src/components/Button/Button';
-import TextInput from 'src/components/TextInput/TextInput';
 import { useGetCommentList } from '../../_hooks/react-qeury/useGetCommentList';
 import { useParams } from 'next/navigation';
 import dayjs from 'dayjs';

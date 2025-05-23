@@ -93,7 +93,8 @@ export default function UserProfileCropContent() {
         },
       });
     }
-  }, [profileUrl, updateUserProfile]);
+  }, [profileUrl, updateUserProfile, closeCustomModal]);
+
   return (
     <div className='flex flex-col gap-2 pt-5'>
       <input ref={inputRef} type='file' accept='image/*' className='hidden' onChange={onFileChange} />

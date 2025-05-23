@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { SignupSchema } from 'src/app/(auth)/signup/_schemas/signup.schema';
 import { createSupabaseServer } from 'src/lib/supabaseServer'; // supabaseServer 사용
-import { Database } from 'src/types/database.types';
 
 export async function POST(request: Request) {
   try {
@@ -44,7 +43,7 @@ export async function POST(request: Request) {
     if (authorityError) return NextResponse.json({ error: authorityError.message }, { status: 400 });
 
     return NextResponse.json({ message: '회원가입 완료!', user });
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json({ error: '서버 오류 발생' }, { status: 500 });
   }
 }

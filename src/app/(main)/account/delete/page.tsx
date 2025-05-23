@@ -44,7 +44,7 @@ export default function AccountDeletePage() {
 
           <ul className='flex flex-col gap-3 pl-4'>
             {accountDeleteReasons.map((reason, index) => (
-              <li>
+              <li key={index}>
                 <Radio>{reason}</Radio>
               </li>
             ))}

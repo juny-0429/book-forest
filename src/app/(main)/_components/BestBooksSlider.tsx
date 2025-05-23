@@ -12,7 +12,6 @@ import { appRoutes } from 'src/routes/appRoutes';
 export default function BestBooksSlider() {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(2);
-  const [count, setCount] = useState(0);
 
   const { data: taggedProductList } = useGetTagProductList('BEST');
 
@@ -24,7 +23,6 @@ export default function BestBooksSlider() {
   useEffect(() => {
     if (!api) return;
 
-    setCount(api.scrollSnapList().length);
     setCurrent(api.selectedScrollSnap() + 1);
 
     api.on('select', () => {

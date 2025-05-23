@@ -20,8 +20,7 @@ export const useUpdateProductBatchStatus = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ productIds, isActive, page, searchType, keyword }: { productIds: number[]; isActive: boolean; page: number; searchType: string; keyword: string }) =>
-      updateProductBatchStatusApi(productIds, isActive),
+    mutationFn: ({ productIds, isActive }: { productIds: number[]; isActive: boolean; page: number; searchType: string; keyword: string }) => updateProductBatchStatusApi(productIds, isActive),
 
     onSuccess: (_data, variables) => {
       const { productIds, isActive, page, searchType, keyword } = variables;
@@ -31,7 +30,7 @@ export const useUpdateProductBatchStatus = () => {
 
         return {
           ...oldData,
-          productList: oldData.productList.map((product: any) => (productIds.includes(product.productId) ? { ...product, isActive } : product)),
+          productList: oldData.productList.map((product) => (productIds.includes(product.productId) ? { ...product, isActive } : product)),
         };
       });
     },

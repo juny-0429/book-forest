@@ -117,11 +117,7 @@ export const useCart = () => {
       });
     } else {
       const cart = getCart();
-      const updated = cart.map((item) =>
-        item.productId === productId
-          ? { ...item, stock }
-          : item
-      );
+      const updated = cart.map((item) => (item.productId === productId ? { ...item, stock } : item));
       saveCart(updated);
     }
   };

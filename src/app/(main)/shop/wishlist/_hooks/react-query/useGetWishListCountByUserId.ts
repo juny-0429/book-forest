@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 export const getWishListCountByUserId = async (userId: string): Promise<number> => {
-  const res = await fetch(`/api/wishlist/${userId}/count`, {
+  const res = await fetch(`/api/wishlist/id/count?userId=${userId}`, {
     next: { tags: ['cart'] },
   });
 

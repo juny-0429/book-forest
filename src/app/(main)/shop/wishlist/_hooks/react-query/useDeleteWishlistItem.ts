@@ -3,7 +3,7 @@ import { getWishlistByUserIdQueryOptions } from './useGetWhishlistByUserId';
 import { wishlistCountByUserIdQueryOptions } from './useGetWishListCountByUserId';
 
 export const deleteWishlistApi = async (userId: string, productIds: number[]): Promise<boolean> => {
-  const response = await fetch(`/api/wishlist/${userId}`, {
+  const response = await fetch(`/api/wishlist/id?userId=${userId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

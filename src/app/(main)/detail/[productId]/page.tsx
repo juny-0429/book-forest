@@ -3,7 +3,7 @@ import DetailPage from './DetailPage';
 import { createSupabaseServer } from 'src/lib/supabaseServer';
 
 type Props = {
-  params: { productId: string };
+  params: Promise<{ productId: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

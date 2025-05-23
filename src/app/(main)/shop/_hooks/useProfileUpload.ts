@@ -21,7 +21,7 @@ export const useProfileUpload = () => {
     const fileExt = file.name.split('.').pop();
     const fileName = `${uuidv4()}.${fileExt}`;
 
-    const { data, error } = await supabase.storage.from(BUCKET_NAME).upload(fileName, file);
+    const { error } = await supabase.storage.from(BUCKET_NAME).upload(fileName, file);
 
     if (error) return alert('파일 업로드에 실패했습니다.');
 

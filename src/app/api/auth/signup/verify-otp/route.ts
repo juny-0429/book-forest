@@ -8,7 +8,7 @@ export async function POST(request: Request) {
 
     const supabase = await createSupabaseServer();
 
-    const { data, error } = await supabase.from('otp_verification').select('otp_code, expires_at').eq('email', email).single();
+    const { data } = await supabase.from('otp_verification').select('otp_code, expires_at').eq('email', email).single();
 
     if (!data) {
       return NextResponse.json({ error: '인증번호가 만료되었거나 요청되지 않았습니다.' }, { status: 400 });
@@ -32,7 +32,7 @@ export async function POST(request: Request) {
     // await supabase.from('user').update({ verified: true }).eq('email', email);
 
     return NextResponse.json({ verified: true });
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json({ error: '서버 오류 발생' }, { status: 500 });
   }
 }

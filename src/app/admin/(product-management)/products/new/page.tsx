@@ -28,11 +28,11 @@ export default function ProductNewPage() {
 
   const onSubmit = (formData: CreateProductSchema) => {
     createProduct(formData, {
-      onSuccess: (res) => {
+      onSuccess: () => {
         alert('상품이 등록되었습니다!');
         router.push('/admin/products');
       },
-      onError: (err) => {
+      onError: (_error) => {
         alert('상품 등록에 실패했습니다.');
       },
     });

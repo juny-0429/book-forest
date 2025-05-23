@@ -31,7 +31,9 @@ export async function GET(request: Request) {
     }));
 
     return NextResponse.json({ categoryList });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message || '중분류 조회 중 오류가 발생했습니다.' }, { status: 500 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message || '중분류 조회 중 오류가 발생했습니다.' }, { status: 500 });
+    }
   }
 }

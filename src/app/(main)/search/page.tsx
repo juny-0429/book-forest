@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useRef } from 'react';
 import { useGetSearchProductList } from './_hooks/react-query/useGetSearchProductList';
@@ -13,7 +15,7 @@ import dayjs from 'dayjs';
 import Image from 'next/image';
 import { appRoutes } from 'src/routes/appRoutes';
 
-export default function SearchPage() {
+function SearchPageContent() {
   const searchParams = useSearchParams();
   const keyword = searchParams.get('keyword') ?? '';
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetSearchProductList(keyword);
@@ -39,7 +41,7 @@ export default function SearchPage() {
   return (
     <div>
       <h2 className='text-title-32b text-ui-text-title'>
-        '{keyword}' 에 대한 검색결과 : {totalCount}개
+        &apos;{keyword}&apos; 에 대한 검색결과 : {totalCount}개
       </h2>
 
       <ul className='flex flex-col'>
@@ -104,5 +106,13 @@ export default function SearchPage() {
       {hasNextPage && <div ref={observerRef} className='h-10' />}
       {isFetchingNextPage && <p className='text-center py-4'>불러오는 중...</p>}
     </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<div>로딩 중...</div>}>
+      <SearchPageContent />
+    </Suspense>
   );
 }

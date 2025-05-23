@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 const getCartListByUserIdApi = async (userId: string) => {
-  const response = await fetch(`/api/cart/${userId}`, {
+  const response = await fetch(`/api/cart/user?userId=${userId}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -18,7 +18,7 @@ export const getCartListByUserIdQueryOptions = (userId: string) => ({
   queryKey: [CART_LIST_BY_USER_ID, userId],
   queryFn: () => getCartListByUserIdApi(userId),
   enabled: !!userId,
-})
+});
 
 export const useGetCartListByUserId = (userId: string) => {
   return useQuery(getCartListByUserIdQueryOptions(userId));

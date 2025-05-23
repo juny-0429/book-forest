@@ -52,7 +52,7 @@ export async function POST(request: Request) {
         image_type: 'main',
         is_main: index === 0,
       })),
-      ...(detailImageUrls ?? []).map((url, index) => ({
+      ...(detailImageUrls ?? []).map((url) => ({
         product_id: productId,
         image_url: url,
         image_type: 'detail',

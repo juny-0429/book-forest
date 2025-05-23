@@ -23,7 +23,7 @@ export default function BookHeader({ productId, productName, authorName, publish
     try {
       await navigator.clipboard.writeText(fullUrl);
       alert('주소가 복사되었습니다!');
-    } catch (err) {
+    } catch (_error) {
       alert('주소 복사에 실패했어요.');
     }
   };

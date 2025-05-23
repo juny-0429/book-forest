@@ -14,7 +14,7 @@ const SEARCH_PRODUCT_LIST = 'SEARCH_PRODUCT_LIST';
 
 export const useGetSearchProductList = (keyword: string, page = 1, limit = 3) => {
   return useInfiniteQuery({
-    queryKey: [SEARCH_PRODUCT_LIST, keyword],
+    queryKey: [SEARCH_PRODUCT_LIST, keyword, limit],
     queryFn: ({ pageParam = 1 }) => getSearchProductListApi(keyword, pageParam, limit),
     initialPageParam: page,
     getNextPageParam: (lastPage, allPages) => {

@@ -1,6 +1,5 @@
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { cn } from 'src/lib/utils';
 
 export default function DatePickerWithTime({ value, onChange }: { value: Date | null; onChange: (date: Date | null) => void }) {
   return (

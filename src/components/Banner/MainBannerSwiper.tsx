@@ -11,7 +11,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { useGetBannerList } from 'src/app/(main)/_hooks/react-query/useGetBannerList';
 
-export default function mainBannerListSwiper() {
+export default function MainBannerListSwiper() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(1);

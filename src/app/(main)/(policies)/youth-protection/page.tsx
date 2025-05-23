@@ -13,8 +13,8 @@ export default function YouthProtectionPage() {
         <section className='space-y-4'>
           <h2 className='text-xl font-semibold'>1. 청소년 보호 정책 개요</h2>
           <p className='text-gray-700'>
-            책숲(이하 "회사")은 청소년이 각종 유해 정보로부터 보호받을 수 있도록 하기 위해 <strong>‘청소년보호법’</strong>, <strong>‘정보통신망 이용촉진 및 정보보호 등에 관한 법률’</strong> 등 관련
-            법령을 준수하며, 청소년 보호 정책을 시행하고 있습니다.
+            책숲(이하 &quot;회사&quot;)은 청소년이 각종 유해 정보로부터 보호받을 수 있도록 하기 위해 <strong>&apos; 청소년보호법&apos;</strong>,
+            <strong>&apos; 정보통신망 이용촉진 및 정보보호 등에 관한 법률&apos;</strong>등 관련 법령을 준수하며, 청소년 보호 정책을 시행하고 있습니다.
           </p>
           <p className='text-gray-700'>회사는 청소년의 건전한 성장을 저해하는 유해 정보 및 비윤리적, 반사회적 행위를 엄격하게 제재하고 있습니다.</p>
         </section>

@@ -3,7 +3,7 @@ import ModalLayout from './ModalLayout/ModalLayout';
 import LucideIcons from 'src/theme/lucideIcon';
 
 export interface CustomModalProps extends BaseModalProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export default function CustomModal({ children, onClose }: CustomModalProps) {

@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
 const createCartListByUserId = async (userId: string, cart: { productId: number; stock: number }[]) => {
-  const response = await fetch(`/api/cart/${userId}`, {
+  const response = await fetch(`/api/cart/user?userId=${userId}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
