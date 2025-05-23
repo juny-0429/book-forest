@@ -2,6 +2,17 @@
 
 import { useModalStore } from 'src/store/useModalStore';
 
+interface BaseModalProps {
+  onClose: () => void;
+  onCancel?: (e: React.BaseSyntheticEvent) => void;
+  onConfirm?: (e: React.BaseSyntheticEvent) => void;
+}
+
+interface ModalState<TProps extends BaseModalProps> {
+  Component: React.ComponentType<TProps>;
+  props?: Omit<TProps, 'onClose'>;
+}
+
 const Modals = () => {
   const { modals, closeModal } = useModalStore();
 
