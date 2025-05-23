@@ -4,7 +4,7 @@ import { CartListItemDto } from '../../_dtos/getCartList.dto';
 import { DeleteCartItemDto } from '../../_dtos/deleteCartItem.dto';
 
 const deleteCartListByUserId = async ({ userId, productIds }: DeleteCartItemDto) => {
-  const response = await fetch(`/api/cart/${userId}`, {
+  const response = await fetch(`/api/cart/user?userId=${userId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

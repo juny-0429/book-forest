@@ -1,12 +1,13 @@
 import { NextResponse } from 'next/server';
 import { createSupabaseServer } from 'src/lib/supabaseServer';
 
-export async function GET(request: Request, { params }: { params: { userId: string } }) {
+export async function GET(request: Request) {
   const supabase = await createSupabaseServer();
-  const userId = (await params).userId;
+  const { searchParams } = new URL(request.url);
+  const userId = searchParams.get('userId');
 
   const { data, error } = await supabase.rpc('get_cart_products_by_user_id', {
-    _user_id: userId,
+    _user_id: userId as string,
   });
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
@@ -56,9 +57,10 @@ export async function POST(request: Request) {
   return NextResponse.json({ success: true });
 }
 
-export async function PUT(request: Request, { params }: { params: { userId: string } }) {
+export async function PUT(request: Request) {
   const supabase = await createSupabaseServer();
-  const userId = (await params).userId;
+  const { searchParams } = new URL(request.url);
+  const userId = searchParams.get('userId');
   const { productId, stock }: { productId: number; stock: number } = await request.json();
 
   if (!userId || !productId || typeof stock !== 'number') {
@@ -74,9 +76,10 @@ export async function PUT(request: Request, { params }: { params: { userId: stri
   return NextResponse.json({ success: true });
 }
 
-export async function DELETE(request: Request, { params }: { params: { userId: string } }) {
+export async function DELETE(request: Request) {
   const supabase = await createSupabaseServer();
-  const userId = (await params).userId;
+  const { searchParams } = new URL(request.url);
+  const userId = searchParams.get('userId');
   const { productIds }: { productIds: number[] } = await request.json();
 
   if (!userId || !Array.isArray(productIds) || productIds.length === 0) {

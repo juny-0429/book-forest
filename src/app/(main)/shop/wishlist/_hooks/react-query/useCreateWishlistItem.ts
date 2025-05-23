@@ -4,7 +4,7 @@ import { wishlistCountByUserIdQueryOptions } from './useGetWishListCountByUserId
 import { wishlistItemCheckQueryOptions } from './useGetwishlistItemCheck';
 
 export const createWishlistApi = async (userId: string, productIds: number[]): Promise<boolean> => {
-  const response = await fetch(`/api/wishlist/${userId}`, {
+  const response = await fetch(`/api/wishlist/id?userId=${userId}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

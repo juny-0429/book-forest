@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 export const getWishlistItemCheck = async (userId: string, productId: number): Promise<boolean> => {
-  const res = await fetch(`/api/wishlist/${userId}/check?productId=${productId}`);
+  const res = await fetch(`/api/wishlist/id/check?userId=${userId}&productId=${productId}`);
   if (!res.ok) {
     throw new Error('찜 여부 확인에 실패했습니다.');
   }

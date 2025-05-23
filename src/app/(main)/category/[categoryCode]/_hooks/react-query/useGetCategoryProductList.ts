@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 export const getCategoryCodeProductListApi = async (categoryCode: string, pageParam = 1, limit: number) => {
-  const response = await fetch(`/api/category/${categoryCode}?page=${pageParam}&limit=${limit}`);
+  const response = await fetch(`/api/category/code?categoryCode=${categoryCode}&page=${pageParam}&limit=${limit}`);
 
   if (!response.ok) throw new Error('카테고리별 상품을 불러오는 데 실패했습니다.');
 

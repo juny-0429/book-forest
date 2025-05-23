@@ -2,20 +2,19 @@ import { NextResponse } from 'next/server';
 import { CategoryProductListItem } from 'src/app/(main)/category/[categoryCode]/_dtos/getCategoryProductList.dto';
 import { createSupabaseServer } from 'src/lib/supabaseServer';
 
-export async function GET(request: Request, { params }: { params: { categoryCode: string } }) {
+export async function GET(request: Request) {
   const supabase = await createSupabaseServer();
 
   const { searchParams } = new URL(request.url);
   const page = parseInt(searchParams.get('page') || '1');
   const limit = parseInt(searchParams.get('limit') || '10');
-
-  const categoryCode = (await params).categoryCode;
+  const categoryCode = searchParams.get('categoryCode');
 
   const { data, error } =
     categoryCode === '00'
       ? await supabase.rpc('get_all_products', { _page: page, _limit: limit })
       : await supabase.rpc('get_products_by_category_code', {
-          _category_code: categoryCode,
+          _category_code: categoryCode as string,
           _page: page,
           _limit: limit,
         });

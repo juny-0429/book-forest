@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 const getCartListByUserIdApi = async (userId: string) => {
-  const response = await fetch(`/api/cart/${userId}`, {
+  const response = await fetch(`/api/cart/user?userId=${userId}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

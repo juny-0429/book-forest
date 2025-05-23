@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { WishlistItemDto } from '../../_dtos/GetWhislistItem.dto';
 
 export const getWishlistByUserId = async (userId: string): Promise<WishlistItemDto[]> => {
-  const response = await fetch(`/api/wishlist/${userId}`, {
+  const response = await fetch(`/api/wishlist/id?userId=${userId}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
