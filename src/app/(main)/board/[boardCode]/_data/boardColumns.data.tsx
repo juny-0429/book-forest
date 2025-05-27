@@ -1,9 +1,9 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown } from 'lucide-react';
-import { PostListDto } from '../_dtos/getPostList.dto';
+import { GetPostItemDto } from '../_dtos/getPostList.dto';
 import dayjs from 'dayjs';
 
-export const boardColumns: ColumnDef<PostListDto>[] = [
+export const boardColumns: ColumnDef<GetPostItemDto>[] = [
   { accessorKey: 'postId', header: 'ID', size: 70 },
   {
     accessorKey: 'postTitle',

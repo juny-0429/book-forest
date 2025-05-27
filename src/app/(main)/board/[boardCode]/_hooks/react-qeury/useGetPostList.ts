@@ -1,8 +1,8 @@
 import { BoardCategoryType } from 'src/types/boardCategory.types';
-import { PostListDto } from '../../_dtos/getPostList.dto';
+import { GetPostItemDto } from '../../_dtos/getPostList.dto';
 import { useQuery } from '@tanstack/react-query';
 
-const getPostListApi = async (boardCode: BoardCategoryType): Promise<PostListDto[]> => {
+const getPostListApi = async (boardCode: BoardCategoryType): Promise<GetPostItemDto[]> => {
   const response = await fetch(`/api/board?boardCode=${boardCode}`, {
     method: 'GET',
     headers: {
