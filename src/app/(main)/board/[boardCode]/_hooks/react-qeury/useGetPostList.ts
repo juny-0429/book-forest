@@ -16,10 +16,12 @@ const getPostListApi = async (boardCode: BoardCategoryType, keyword?: string): P
 
 const POST_LIST = 'POST_LIST';
 
+export const getPostListQueryOptions = (boardCode: BoardCategoryType, keyword?: string) => ({
+  queryKey: [POST_LIST, boardCode, keyword],
+  queryFn: () => getPostListApi(boardCode, keyword),
+  enabled: !!boardCode && (!keyword || keyword.trim().length === 0 || keyword.trim().length >= 2),
+});
+
 export const useGetPostList = (boardCode: BoardCategoryType, keyword?: string) => {
-  return useQuery({
-    queryKey: [POST_LIST, boardCode, keyword],
-    queryFn: () => getPostListApi(boardCode, keyword),
-    enabled: !!boardCode && (!keyword || keyword.trim().length === 0 || keyword.trim().length >= 2),
-  });
+  return useQuery(getPostListQueryOptions(boardCode, keyword));
 };
