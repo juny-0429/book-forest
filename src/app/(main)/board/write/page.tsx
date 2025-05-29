@@ -15,11 +15,12 @@ import { useRouter } from 'next/navigation';
 import { useAlertModal } from 'src/hooks/useModal';
 import { CreatePostDto } from './_dtos/createPostDto';
 import { useAuth } from 'src/provider/authProvider';
+import { BoardCategoryType } from 'src/types/boardCategory.types';
 
 export default function BoardWritePage() {
   const router = useRouter();
   const { data: categories = [] } = useGetBoardCategory();
-  const { mutate: createPost } = useCreatePost();
+
   const { uploadImage, imageUrls, removeImage } = usePostImageUpload();
   const { openAlertModal } = useAlertModal();
   const { user } = useAuth();
@@ -34,13 +35,15 @@ export default function BoardWritePage() {
     handleSubmit,
     control,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<BoardWriteFormSchema>({
     resolver: zodResolver(boardWriteFormSchema),
     mode: 'onChange',
   });
 
-  console.log('errors =', errors);
+  const selectedBoardCode = watch('boardCategory') as BoardCategoryType;
+  const { mutate: createPost } = useCreatePost(selectedBoardCode);
 
   const onImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -53,6 +56,12 @@ export default function BoardWritePage() {
   };
 
   const onSubmit = async (data: BoardWriteFormSchema) => {
+    if (!data.boardCategory) {
+      return openAlertModal({
+        content: '카테고리를 선택해주세요.',
+      });
+    }
+
     const payload: CreatePostDto = {
       boardCode: data.boardCategory,
       userId: user?.id ?? '',
