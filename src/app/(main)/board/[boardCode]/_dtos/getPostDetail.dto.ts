@@ -4,4 +4,5 @@ export interface PostDetailDto {
   postContent: string;
   createAt: Date;
   accountId: string;
+  postImageUrl: string | null;
 }

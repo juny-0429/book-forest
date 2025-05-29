@@ -19,6 +19,7 @@ export async function GET(request: Request) {
         post_title,
         post_content,
         create_at,
+        post_image_url,
         user:user_id (account_id)
       `
       )
@@ -33,6 +34,7 @@ export async function GET(request: Request) {
       postContent: data.post_content,
       createAt: new Date(data.create_at!),
       accountId: data.user!.account_id,
+      postImageUrl: data.post_image_url ?? null,
     };
 
     return NextResponse.json(formattedData);
