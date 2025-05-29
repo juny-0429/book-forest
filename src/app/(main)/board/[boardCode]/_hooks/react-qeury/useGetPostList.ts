@@ -1,9 +1,9 @@
 import { BoardCategoryType } from 'src/types/boardCategory.types';
-import { PostListDto } from '../../_dtos/getPostList.dto';
+import { GetPostItemDto } from '../../_dtos/getPostList.dto';
 import { useQuery } from '@tanstack/react-query';
 
-const getPostListApi = async (boardCode: BoardCategoryType): Promise<PostListDto[]> => {
-  const response = await fetch(`/api/board?boardCode=${boardCode}`, {
+const getPostListApi = async (boardCode: BoardCategoryType, keyword?: string): Promise<GetPostItemDto[]> => {
+  const response = await fetch(`/api/board?boardCode=${boardCode}&keyword=${keyword}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -16,10 +16,12 @@ const getPostListApi = async (boardCode: BoardCategoryType): Promise<PostListDto
 
 const POST_LIST = 'POST_LIST';
 
-export const useGetPostList = (boardCode: BoardCategoryType) => {
-  return useQuery({
-    queryKey: [POST_LIST, boardCode],
-    queryFn: () => getPostListApi(boardCode),
-    enabled: !!boardCode,
-  });
+export const getPostListQueryOptions = (boardCode: BoardCategoryType, keyword?: string) => ({
+  queryKey: [POST_LIST, boardCode, keyword],
+  queryFn: () => getPostListApi(boardCode, keyword),
+  enabled: !!boardCode && (!keyword || keyword.trim().length === 0 || keyword.trim().length >= 2),
+});
+
+export const useGetPostList = (boardCode: BoardCategoryType, keyword?: string) => {
+  return useQuery(getPostListQueryOptions(boardCode, keyword));
 };

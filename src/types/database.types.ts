@@ -530,34 +530,37 @@ export type Database = {
       };
       post: {
         Row: {
-          board_id: number;
+          board_code: string;
           create_at: string | null;
           is_delete: boolean;
           is_notice: boolean;
           post_content: string;
           post_id: number;
           post_title: string;
-          user_id: string | null;
+          user_id: string;
+          post_image_url: string | null;
         };
         Insert: {
-          board_id: number;
+          board_code: string;
           create_at?: string | null;
           is_delete?: boolean;
           is_notice?: boolean;
           post_content: string;
           post_id?: number;
           post_title: string;
-          user_id?: string | null;
+          user_id?: string;
+          post_image_url?: string | null;
         };
         Update: {
-          board_id?: number;
+          board_code?: string;
           create_at?: string | null;
           is_delete?: boolean;
           is_notice?: boolean;
           post_content?: string;
           post_id?: number;
           post_title?: string;
-          user_id?: string | null;
+          user_id?: string;
+          post_image_url?: string | null;
         };
         Relationships: [
           {

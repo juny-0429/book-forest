@@ -17,7 +17,7 @@ export default function BoardDetailPage() {
   return (
     <div className='flex flex-col gap-5'>
       <PostTitle postData={postData} />
-      <PostContent postContent={postData.postContent} />
+      <PostContent postContent={postData.postContent} postImageUrl={postData.postImageUrl} />
 
       <div className='flex flex-col gap-4'>
         <CommentForm />

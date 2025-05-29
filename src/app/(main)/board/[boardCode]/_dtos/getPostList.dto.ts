@@ -1,4 +1,4 @@
-export interface PostListDto {
+export interface GetPostItemDto {
   postId: number;
   postTitle: string;
   createAt: Date;
