@@ -14,7 +14,7 @@ export async function GET(request: Request) {
   try {
     const keyword = searchParams.get('keyword');
 
-    let query = supabase.from('post').select('post_id, post_title, create_at, user:user_id(account_id)').eq('board_code', boardCode);
+    let query = supabase.from('post').select('post_id, post_title, create_at, user:user_id(account_id)').eq('board_code', boardCode).eq('is_delete', false);
 
     if (keyword) query = query.ilike('post_title', `%${keyword}%`);
 
