@@ -31,7 +31,7 @@ export default function ShowHideBanner() {
               <Link href={showHideBannerList[0].banner_link}>
                 <Image src={showHideBannerList[0].banner_image_url} width={400} height={250} alt='show & hide banner image' priority />
               </Link>
-              <button type='button' onClick={hideForOneDay} className='flex justify-end items-center gap-2 w-full px-2 py-1 text-body-12r text-ui-text-body hover:text-ui-cta'>
+              <button type='button' onClick={hideForOneDay} className='flex items-center gap-2 w-fit px-2 py-1 ml-auto text-body-12r text-ui-text-body hover:text-ui-cta cursor-pointer'>
                 <span>오늘 하루 보지 않기</span>
                 <LucideIcons.X size={16} />
               </button>

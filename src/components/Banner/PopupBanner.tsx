@@ -16,8 +16,8 @@ export default function PopupBanner() {
     isVisible && (
       <div className='fixed bottom-4 right-10 z-50 w-fit h-fit overflow-hidden'>
         <div className='flex justify-end items-center gap-1 px-1 py-[2px]'>
-          <span>오늘 하루 보지 않기</span>
-          <button onClick={hideForOneDay} className=''>
+          <button onClick={hideForOneDay} className='flex items-center gap-1'>
+            <span className='text-ui-text-title text-body-14r'>오늘 하루 보지 않기</span>
             <LucideIcons.X size={24} />
           </button>
         </div>
