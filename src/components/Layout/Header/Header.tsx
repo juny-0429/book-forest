@@ -34,12 +34,14 @@ export default function Header() {
             </li>
           )}
           {user && !loading && <hr className='w-[2px] h-[10px] bg-gray-600' />}
-          <li>
-            <Link href={appRoutes.signup} className='text-body-16m'>
-              회원가입
-            </Link>
-          </li>
-          <hr className='w-[2px] h-[10px] bg-gray-600' />
+          {!user && !loading && (
+            <li>
+              <Link href={appRoutes.signup} className='text-body-16m'>
+                회원가입
+              </Link>
+            </li>
+          )}
+          {!user && !loading && <hr className='w-[2px] h-[10px] bg-gray-600' />}
           <li>
             <Link href={appRoutes.shop.main} className='text-body-16m'>
               마이페이지
