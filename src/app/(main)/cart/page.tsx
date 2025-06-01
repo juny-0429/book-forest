@@ -77,17 +77,19 @@ export default function CartPage() {
   };
 
   useEffect(() => {
+    const guestCart = getCart();
+
     if (user) {
-      const guestCart = getCart();
       if (guestCart.length > 0) {
         addToCart(guestCart);
         clearCart();
         setCart([]);
       }
     } else {
-      setCart(getCart());
+      setCart(guestCart);
     }
-  }, [user, getCart, addToCart, clearCart]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   useEffect(() => {
     if (data) setCartList(data);
