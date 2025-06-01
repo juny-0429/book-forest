@@ -5,7 +5,7 @@ import TextInput from 'src/components/TextInput/TextInput';
 import SignupPasswordInput from './SignupPasswordInput';
 import Button from 'src/components/Button/Button';
 import ErrorMessage from 'src/components/ErrorMessage/ErrorMessage';
-import { FieldErrors, UseFormRegister, UseFormWatch } from 'react-hook-form';
+import { FieldErrors, UseFormRegister, UseFormReturn, UseFormWatch } from 'react-hook-form';
 import { SignupSchema } from '../_schemas/signup.schema';
 import { useAccountIdValidation } from '../_hooks/useAccountIdValidation';
 import { useSendOtp } from '../_hooks/react-query/useSendOtp';
@@ -16,9 +16,10 @@ interface UserInformationFormProps {
   register: UseFormRegister<SignupSchema>;
   errors: FieldErrors<SignupSchema>;
   watch: UseFormWatch<SignupSchema>;
+  trigger: UseFormReturn<SignupSchema>['trigger'];
 }
 
-export default function UserInformationForm({ register, errors, watch }: UserInformationFormProps) {
+export default function UserInformationForm({ register, errors, watch, trigger }: UserInformationFormProps) {
   const [isEmailSent, setIsEmailSent] = useState(false); // 이메일 인증번호 전송 여부
   const [isEmailVerified, setIsEmailVerified] = useState(false); // 이메일 인증 여부
   const [otp, setOtp] = useState(''); // 이메일 인증번호
@@ -63,15 +64,15 @@ export default function UserInformationForm({ register, errors, watch }: UserInf
             </Button>
           </div>
 
-          <div className='relative w-full'>
+          <div className='relative w-full h-2'>
             {validationError && <ErrorMessage>{validationError}</ErrorMessage>}
-            {isUserIdAvailable === true && <p className="text-body-12m before:content-['•'] before:mr-1 before:inline-block text-green-500">사용 가능한 아이디입니다.</p>}
-            {isUserIdAvailable === false && <p className="text-body-12m before:content-['•'] before:mr-1 before:inline-block text-red-500">이미 사용 중인 아이디입니다.</p>}
+            {!validationError && isUserIdAvailable === true && <p className="mt-2 text-caption-12r before:content-['•'] before:mr-1 before:inline-block text-green-500">사용 가능한 아이디입니다.</p>}
+            {!validationError && isUserIdAvailable === false && <ErrorMessage>이미 사용 중인 아이디입니다.</ErrorMessage>}
           </div>
         </label>
 
         {/* 비밀번호 */}
-        <SignupPasswordInput register={register} errors={errors} />
+        <SignupPasswordInput register={register} errors={errors} watchPassword={watch('password')} trigger={trigger} />
 
         {/* 이름 */}
         <label className='flex flex-col gap-2 w-full'>

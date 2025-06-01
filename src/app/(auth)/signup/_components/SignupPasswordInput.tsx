@@ -6,7 +6,9 @@ import LucideIcons from 'src/theme/lucideIcon';
 import { Progress } from 'src/components/Progress/Progress';
 import { cn } from 'src/lib/utils';
 import { usePasswordStrength } from '../_hooks/usePasswordStrength';
-import { FieldErrors, UseFormRegister, UseFormRegisterReturn, FieldValues, Path } from 'react-hook-form';
+import { FieldErrors, UseFormRegister, UseFormRegisterReturn, FieldValues, Path, useFormContext, UseFormReturn } from 'react-hook-form';
+import ErrorMessage from 'src/components/ErrorMessage/ErrorMessage';
+import { SignupSchema } from '../_schemas/signup.schema';
 
 interface PasswordFormFields {
   password: string;
@@ -18,27 +20,16 @@ interface SignupPasswordInputProps<T extends FieldValues = PasswordFormFields> {
   confirmRegister?: UseFormRegisterReturn;
   errors?: FieldErrors<T>;
   watchPassword?: string;
+  trigger: UseFormReturn<T>['trigger'];
 }
 
-export default function SignupPasswordInput<T extends FieldValues = PasswordFormFields>({ register, watchPassword = '' }: SignupPasswordInputProps<T>) {
+export default function SignupPasswordInput<T extends FieldValues = PasswordFormFields>({ register, watchPassword = '', errors, trigger }: SignupPasswordInputProps<T>) {
   const [isVisible, setIsVisible] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [confirmError, setConfirmError] = useState<string | null>(null);
-
   const { rules, progressValue, strength } = usePasswordStrength(watchPassword);
 
-  const onConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setConfirmPassword(e.target.value);
-    if (e.target.value !== watchPassword) {
-      setConfirmError('비밀번호가 일치하지 않습니다.');
-    } else {
-      setConfirmError(null);
-    }
-  };
-
   return (
-    <fieldset className='flex flex-col gap-2'>
+    <fieldset className='flex flex-col gap-4'>
       <legend className='text-body-18b text-ui-text-title'>비밀번호</legend>
       <p className='text-body-12m text-ui-text-description'>8자~20자 이내의 영문자, 숫자, 특수문자 조합</p>
 
@@ -72,22 +63,27 @@ export default function SignupPasswordInput<T extends FieldValues = PasswordForm
         </div>
       </div>
 
-      <TextInput
-        type={isConfirmVisible ? 'text' : 'password'}
-        value={confirmPassword}
-        {...register('confirmPassword' as Path<T>)}
-        autoComplete='new-password'
-        name='confirmPassword'
-        onChange={onConfirmPasswordChange}
-        rightIcon={
-          <button type='button' onClick={() => setIsConfirmVisible((prev) => !prev)}>
-            {isConfirmVisible ? <LucideIcons.Eye /> : <LucideIcons.EyeOff />}
-          </button>
-        }
-        placeholder='비밀번호 확인'
-      />
-
-      {confirmError && <p className='text-red-500 text-sm'>{confirmError}</p>}
+      <div className='relative w-full'>
+        <TextInput
+          type={isConfirmVisible ? 'text' : 'password'}
+          {...register('confirmPassword' as Path<T>, {
+            validate: (value) => value === watchPassword || '비밀번호가 일치하지 않습니다.',
+          })}
+          autoComplete='new-password'
+          name='confirmPassword'
+          onBlur={() => trigger('confirmPassword' as Path<T>)}
+          rightIcon={
+            <button type='button' onClick={() => setIsConfirmVisible((prev) => !prev)}>
+              {isConfirmVisible ? <LucideIcons.Eye /> : <LucideIcons.EyeOff />}
+            </button>
+          }
+          placeholder='비밀번호 확인'
+        />
+        <div className='absolute w-full h-2'>
+          {!watchPassword && <></>}
+          {watchPassword && (errors?.confirmPassword ? <ErrorMessage>비밀번호가 일치하지 않습니다.</ErrorMessage> : <p className='mt-2 text-caption-12r text-green-500'>일치하는 비밀번호입니다.</p>)}
+        </div>
+      </div>
     </fieldset>
   );
 }

@@ -17,6 +17,7 @@ export default function SignUpPage() {
     handleSubmit,
     watch,
     setValue,
+    trigger,
     formState: { errors },
   } = useForm<SignupSchema>({
     resolver: zodResolver(signupSchema),
@@ -34,7 +35,7 @@ export default function SignUpPage() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <SignupHero />
         {step === 1 && <TermsAgreement setStep={setStep} register={register} watch={watch} setValue={setValue} errors={errors} />}
-        {step === 2 && <UserInformationForm register={register} errors={errors} watch={watch} />}
+        {step === 2 && <UserInformationForm register={register} errors={errors} watch={watch} trigger={trigger} />}
       </form>
     </div>
   );
