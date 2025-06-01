@@ -63,10 +63,10 @@ export default function UserInformationForm({ register, errors, watch }: UserInf
             </Button>
           </div>
 
-          <div className='relative w-full'>
+          <div className='relative w-full h-2'>
             {validationError && <ErrorMessage>{validationError}</ErrorMessage>}
-            {isUserIdAvailable === true && <p className="text-body-12m before:content-['•'] before:mr-1 before:inline-block text-green-500">사용 가능한 아이디입니다.</p>}
-            {isUserIdAvailable === false && <p className="text-body-12m before:content-['•'] before:mr-1 before:inline-block text-red-500">이미 사용 중인 아이디입니다.</p>}
+            {!validationError && isUserIdAvailable === true && <p className="mt-2 text-caption-12r before:content-['•'] before:mr-1 before:inline-block text-green-500">사용 가능한 아이디입니다.</p>}
+            {!validationError && isUserIdAvailable === false && <ErrorMessage>이미 사용 중인 아이디입니다.</ErrorMessage>}
           </div>
         </label>
 
