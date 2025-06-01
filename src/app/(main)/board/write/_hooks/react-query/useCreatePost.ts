@@ -4,7 +4,7 @@ import { getPostListQueryOptions } from '../../../[boardCode]/_hooks/react-qeury
 import { GetPostItemDto } from '../../../[boardCode]/_dtos/getPostList.dto';
 import { BoardCategoryType } from 'src/types/boardCategory.types';
 
-export const createPostApi = async (postData: CreatePostDto) => {
+export const createPostApi = async (postData: CreatePostDto): Promise<GetPostItemDto> => {
   const response = await fetch('/api/board/create', {
     method: 'POST',
     headers: {
@@ -15,7 +15,7 @@ export const createPostApi = async (postData: CreatePostDto) => {
 
   if (!response.ok) throw new Error('게시글 작성에 실패했습니다.');
 
-  return response.json();
+  return await response.json();
 };
 
 export const useCreatePost = (boardCode: BoardCategoryType) => {
@@ -29,7 +29,7 @@ export const useCreatePost = (boardCode: BoardCategoryType) => {
       queryClient.setQueryData<GetPostItemDto[]>(options.queryKey, (oldData) => {
         if (!oldData) return [newPost];
 
-        return [...oldData, ...newPost];
+        return [newPost, ...oldData];
       });
     },
   });
