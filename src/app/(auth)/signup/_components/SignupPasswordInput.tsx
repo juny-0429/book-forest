@@ -6,9 +6,8 @@ import LucideIcons from 'src/theme/lucideIcon';
 import { Progress } from 'src/components/Progress/Progress';
 import { cn } from 'src/lib/utils';
 import { usePasswordStrength } from '../_hooks/usePasswordStrength';
-import { FieldErrors, UseFormRegister, UseFormRegisterReturn, FieldValues, Path, useFormContext, UseFormReturn } from 'react-hook-form';
+import { FieldErrors, UseFormRegister, UseFormRegisterReturn, FieldValues, Path, UseFormReturn } from 'react-hook-form';
 import ErrorMessage from 'src/components/ErrorMessage/ErrorMessage';
-import { SignupSchema } from '../_schemas/signup.schema';
 
 interface PasswordFormFields {
   password: string;
@@ -26,6 +25,7 @@ interface SignupPasswordInputProps<T extends FieldValues = PasswordFormFields> {
 export default function SignupPasswordInput<T extends FieldValues = PasswordFormFields>({ register, watchPassword = '', errors, trigger }: SignupPasswordInputProps<T>) {
   const [isVisible, setIsVisible] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
+  const [isConfirmTouched, setIsConfirmTouched] = useState(false);
   const { rules, progressValue, strength } = usePasswordStrength(watchPassword);
 
   return (
@@ -71,7 +71,10 @@ export default function SignupPasswordInput<T extends FieldValues = PasswordForm
           })}
           autoComplete='new-password'
           name='confirmPassword'
-          onBlur={() => trigger('confirmPassword' as Path<T>)}
+          onBlur={() => {
+            setIsConfirmTouched(true);
+            trigger('confirmPassword' as Path<T>);
+          }}
           rightIcon={
             <button type='button' onClick={() => setIsConfirmVisible((prev) => !prev)}>
               {isConfirmVisible ? <LucideIcons.Eye /> : <LucideIcons.EyeOff />}
@@ -80,8 +83,8 @@ export default function SignupPasswordInput<T extends FieldValues = PasswordForm
           placeholder='비밀번호 확인'
         />
         <div className='absolute w-full h-2'>
-          {!watchPassword && <></>}
-          {watchPassword && (errors?.confirmPassword ? <ErrorMessage>비밀번호가 일치하지 않습니다.</ErrorMessage> : <p className='mt-2 text-caption-12r text-green-500'>일치하는 비밀번호입니다.</p>)}
+          {isConfirmTouched &&
+            (errors?.confirmPassword ? <ErrorMessage>비밀번호가 일치하지 않습니다.</ErrorMessage> : <p className='mt-2 text-caption-12r text-green-500'>일치하는 비밀번호입니다.</p>)}
         </div>
       </div>
     </fieldset>
