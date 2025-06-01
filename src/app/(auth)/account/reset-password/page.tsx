@@ -22,6 +22,7 @@ export default function ResetPasswordPage() {
     register,
     handleSubmit,
     watch,
+    trigger,
     formState: { errors },
   } = useForm<ResetPasswordSchema>({
     resolver: zodResolver(resetPasswordSchema),
@@ -55,7 +56,7 @@ export default function ResetPasswordPage() {
           <LucideIcons.User size={100} strokeWidth={1} className='p-4 text-white bg-ui-main rounded-full shadow-blur-6-50' />
 
           <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-10'>
-            <SignupPasswordInput register={register} errors={errors} watchPassword={password} />
+            <SignupPasswordInput register={register} errors={errors} watchPassword={password} trigger={trigger} />
 
             <Button type='submit' height={48} className='mt-10'>
               비밀번호 변경
