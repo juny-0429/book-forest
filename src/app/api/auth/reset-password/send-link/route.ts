@@ -1,4 +1,3 @@
-// /api/auth/reset-password/send-link.ts
 import { NextResponse } from 'next/server';
 import { createSupabaseServer } from 'src/lib/supabaseServer';
 
@@ -8,11 +7,11 @@ export async function POST(req: Request) {
 
   const supabase = await createSupabaseServer();
 
-  const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `http://localhost:3000/account/reset-password`,
-  });
+  const redirectTo = process.env.NODE_ENV === 'development' ? 'http://localhost:3000/account/reset-password' : 'https://book-forest.vercel.app/account/reset-password';
 
-  console.log('error = ', error);
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: redirectTo,
+  });
 
   if (error) return NextResponse.json({ error: '메일 전송 중 오류가 발생했습니다.' }, { status: 500 });
 
