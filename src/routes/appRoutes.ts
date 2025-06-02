@@ -5,10 +5,10 @@ export const appRoutes = {
   login: '/login',
 
   account: {
-    /* 아이디 찾기 */
-    forgotId: '/account/forgot-id',
+    /* 이메일 찾기 */
+    forgotEmail: '/account/forgot-email',
     /* 아이디 찾기 결과 */
-    forgotIdResult: '/account/forgot-id/result',
+    forgotEmailResult: '/account/forgot-email/result',
     /* 비밀번호 재설정 */
     resetPassword: '/account/reset-password',
     /* 비밀번호 찾기(회원 검증) */

@@ -818,6 +818,7 @@ export type Database = {
           user_id: string;
           user_name: string;
           user_phone: string;
+          user_email: string;
           user_profile_image_url: string | null;
         };
         Insert: {
@@ -833,6 +834,7 @@ export type Database = {
           user_id: string;
           user_name: string;
           user_phone: string;
+          user_email?: string;
           user_profile_image_url?: string | null;
         };
         Update: {
@@ -848,6 +850,7 @@ export type Database = {
           user_id?: string;
           user_name?: string;
           user_phone?: string;
+          user_email?: string;
           user_profile_image_url?: string | null;
         };
         Relationships: [];
