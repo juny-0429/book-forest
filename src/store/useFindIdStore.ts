@@ -1,15 +1,13 @@
 import { create } from 'zustand';
 
-interface FindIdState {
-  foundUserName: string;
+interface FindEmailState {
   foundUserEmail: string;
-  setUserInfo: (info: { userName: string; userEmail: string }) => void;
-  clearUserInfo: () => void;
+  setUserEmail: (email: string) => void;
+  clearUserEmail: () => void;
 }
 
-export const useFindIdStore = create<FindIdState>((set) => ({
-  foundUserName: '',
+export const useFindIdStore = create<FindEmailState>((set) => ({
   foundUserEmail: '',
-  setUserInfo: ({ userName, userEmail }) => set({ foundUserName: userName, foundUserEmail: userEmail }),
-  clearUserInfo: () => set({ foundUserName: '', foundUserEmail: '' }),
+  setUserEmail: (email) => set({ foundUserEmail: email }),
+  clearUserEmail: () => set({ foundUserEmail: '' }),
 }));

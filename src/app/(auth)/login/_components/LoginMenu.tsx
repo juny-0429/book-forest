@@ -7,7 +7,7 @@ export default function LoginMenu() {
     <nav>
       <ul className='flex justify-center items-center gap-4'>
         <li className='text-body-14m text-ui-text-title hover:underline'>
-          <Link href={appRoutes.account.forgotId}>아이디 찾기</Link>
+          <Link href={appRoutes.account.forgotEmail}>이메일 찾기</Link>
         </li>
 
         <hr className='w-[1px] h-[10px] bg-gray-600' />
