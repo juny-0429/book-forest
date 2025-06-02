@@ -13,6 +13,9 @@ export const middleware = async (request: NextRequest) => {
   });
 
   const path = request.nextUrl.pathname;
+
+  if (path.startsWith('/account/reset-password')) return NextResponse.next();
+
   const isAdminRoute = path.startsWith('/admin');
 
   const {

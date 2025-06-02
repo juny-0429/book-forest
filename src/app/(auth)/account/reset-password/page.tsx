@@ -36,13 +36,14 @@ export default function ResetPasswordPage() {
 
   const onSubmit = ({ password }: ResetPasswordSchema) => {
     resetPassword(password, {
-      onSuccess: async () => {
-        await supabaseBrowser.auth.signOut();
-
+      onSuccess: () => {
         openAlertModal({
           title: '비밀번호 변경 완료',
           content: '비밀번호가 성공적으로 변경되었습니다. 다시 로그인해주세요.',
-          onConfirm: () => router.push(appRoutes.login),
+          onConfirm: async () => {
+            await supabaseBrowser.auth.signOut();
+            router.push(appRoutes.login);
+          },
         });
       },
       onError: (error) => {
