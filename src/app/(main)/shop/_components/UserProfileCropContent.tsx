@@ -19,7 +19,6 @@ export default function UserProfileCropContent() {
   const [crop, setCrop] = useState({ x: 0, y: 0 }); // 크롭 위치
   const [zoom, setZoom] = useState(1); // 확대/축소 비율
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null); // 크롭 영역(px)
-  const [profileUrl, setProfileUrl] = useState<string | null>(null); // 최종 이미지 URL
 
   const { closeCustomModal } = useCustomModal();
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -80,20 +79,10 @@ export default function UserProfileCropContent() {
 
         if (!uploadedImageUrl) return alert('URL 가져오기에 실패했습니다.');
 
-        setProfileUrl(uploadedImageUrl);
+        updateUserProfile(uploadedImageUrl, { onSuccess: () => closeCustomModal() });
       }, 'image/jpeg');
     };
   };
-
-  useEffect(() => {
-    if (profileUrl) {
-      updateUserProfile(profileUrl, {
-        onSuccess: () => {
-          closeCustomModal();
-        },
-      });
-    }
-  }, [profileUrl, updateUserProfile, closeCustomModal]);
 
   return (
     <div className='flex flex-col gap-2 pt-5'>
