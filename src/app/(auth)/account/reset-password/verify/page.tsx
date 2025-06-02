@@ -31,7 +31,7 @@ export default function ForgotPasswordPage() {
   });
 
   const userName = useWatch({ control, name: 'userName' });
-  const accountId = useWatch({ control, name: 'accountId' });
+  const userPhone = useWatch({ control, name: 'userPhone' });
   const userEmail = useWatch({ control, name: 'userEmail' });
 
   const { mutate: verifyUser } = useVerifyResetPasswordUser();
@@ -41,7 +41,7 @@ export default function ForgotPasswordPage() {
 
   const onRequestVerification = () => {
     verifyUser(
-      { userName, accountId, userEmail },
+      { userName, userPhone, userEmail },
       {
         onSuccess: (match) => {
           if (!match) {
@@ -112,10 +112,10 @@ export default function ForgotPasswordPage() {
           </label>
 
           <label>
-            <span className='text-body-18b text-ui-text-title'>아이디</span>
+            <span className='text-body-18b text-ui-text-title'>전화번호</span>
 
             <div className='relative'>
-              <TextInput type='text' {...register('accountId')} placeholder='아이디' className='mt-2' />
+              <TextInput type='text' {...register('userPhone')} placeholder='전화번호' className='mt-2' />
               {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
             </div>
           </label>
