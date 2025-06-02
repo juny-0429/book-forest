@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 import { resetPasswordSchema, ResetPasswordSchema } from './_schemas/resetPassword.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAlertModal } from 'src/hooks/useModal';
+import { supabaseBrowser } from 'src/lib/supabaseBrowser';
 
 export default function ResetPasswordPage() {
   const router = useRouter();
@@ -35,7 +36,9 @@ export default function ResetPasswordPage() {
 
   const onSubmit = ({ password }: ResetPasswordSchema) => {
     resetPassword(password, {
-      onSuccess: () => {
+      onSuccess: async () => {
+        await supabaseBrowser.auth.signOut();
+
         openAlertModal({
           title: '비밀번호 변경 완료',
           content: '비밀번호가 성공적으로 변경되었습니다. 다시 로그인해주세요.',
