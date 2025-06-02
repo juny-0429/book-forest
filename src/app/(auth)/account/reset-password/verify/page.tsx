@@ -12,11 +12,11 @@ import { useForm, useWatch } from 'react-hook-form';
 import { forgotPasswordVerifySchema, ForgotPasswordVerifySchema } from './_schemas/forgotPasswordVerify.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useVerifyResetPasswordUser } from './_hooks/react-query/useVerifyResetPasswordUser';
-import { useSendOtpForFindId } from '../../forgot-email/_hooks/react-query/SendOtpForFindIdArgs';
-import { useVerifyOtpForFindId } from '../../forgot-email/_hooks/react-query/VerifyOtpForFindIdArgs';
 import { useAlertModal } from 'src/hooks/useModal';
 import { useSendResetPasswordLink } from './_hooks/react-query/useSendResetPasswordLink';
 import { useRouter } from 'next/navigation';
+import { useSendOtpForFindId } from '../../forgot-email/_hooks/react-query/SendOtpForFindIdArgs';
+import { useVerifyOtpForFindId } from '../../forgot-email/_hooks/react-query/VerifyOtpForFindIdArgs';
 
 export default function ForgotPasswordPage() {
   const [errorMessage, setErrorMessage] = useState('');
