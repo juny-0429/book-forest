@@ -13,10 +13,12 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { resetPasswordSchema, ResetPasswordSchema } from './_schemas/resetPassword.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useAlertModal } from 'src/hooks/useModal';
 
 export default function ResetPasswordPage() {
   const router = useRouter();
   const { mutate: resetPassword } = useResetPassword();
+  const { openAlertModal } = useAlertModal();
 
   const {
     register,
@@ -34,8 +36,11 @@ export default function ResetPasswordPage() {
   const onSubmit = ({ password }: ResetPasswordSchema) => {
     resetPassword(password, {
       onSuccess: () => {
-        alert('비밀번호가 성공적으로 변경되었습니다.');
-        router.push(appRoutes.login);
+        openAlertModal({
+          title: '비밀번호 변경 완료',
+          content: '비밀번호가 성공적으로 변경되었습니다. 다시 로그인해주세요.',
+          onConfirm: () => router.push(appRoutes.login),
+        });
       },
       onError: (error) => {
         alert((error as Error).message);

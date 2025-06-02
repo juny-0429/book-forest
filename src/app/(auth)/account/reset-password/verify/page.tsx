@@ -48,6 +48,7 @@ export default function ForgotPasswordPage() {
             setErrorMessage('입력하신 정보와 일치하는 회원을 찾을 수 없습니다.');
             return;
           }
+          setErrorMessage('');
           sendOtpForFindId(
             { email: userEmail },
             {
@@ -112,7 +113,11 @@ export default function ForgotPasswordPage() {
 
           <label>
             <span className='text-body-18b text-ui-text-title'>아이디</span>
-            <TextInput type='text' {...register('accountId')} placeholder='아이디' className='mt-2' />
+
+            <div className='relative'>
+              <TextInput type='text' {...register('accountId')} placeholder='아이디' className='mt-2' />
+              {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+            </div>
           </label>
 
           <fieldset className='flex flex-col gap-2'>
@@ -132,8 +137,6 @@ export default function ForgotPasswordPage() {
                 </Button>
               </div>
             )}
-
-            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
           </fieldset>
         </form>
 
