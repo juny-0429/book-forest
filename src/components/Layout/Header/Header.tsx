@@ -11,48 +11,72 @@ import { useSignOut } from 'src/hooks/userLogout';
 import HeaderSearchBar from './HeaderSearchBar';
 
 export default function Header() {
-  const { user, loading } = useAuth();
+  const { user, authority, isAdmin, loading } = useAuth();
   const { signOut } = useSignOut();
+
+  const isLoggedIn = !!user;
 
   return (
     <header className='sticky top-0 z-50 w-full bg-ui-background border-b border-solid border-gray-300'>
       <nav className='bg-gray-200'>
-        <ul className='flex justify-end items-center w-full max-w-[1400px] mx-auto gap-5 px-[50px] py-[10px] text-ui-text-title '>
-          {!user && !loading && (
-            <li>
-              <Link href={appRoutes.login} className='text-body-16m'>
-                로그인
-              </Link>
-            </li>
+        <ul className='flex justify-end items-center w-full max-w-[1400px] mx-auto gap-5 px-[50px] py-[10px] text-ui-text-title'>
+          {/* 비로그인 상태 */}
+          {!loading && !isLoggedIn && (
+            <>
+              <li>
+                <Link href={appRoutes.login} className='text-body-16m'>
+                  로그인
+                </Link>
+              </li>
+              <hr className='w-[2px] h-[10px] bg-gray-600' />
+              <li>
+                <Link href={appRoutes.signup} className='text-body-16m'>
+                  회원가입
+                </Link>
+              </li>
+              <hr className='w-[2px] h-[10px] bg-gray-600' />
+              <li>
+                <Link href={appRoutes.cart} className='text-body-16m'>
+                  장바구니
+                </Link>
+              </li>
+            </>
           )}
-          {!user && !loading && <hr className='w-[2px] h-[10px] bg-gray-600' />}
-          {user && !loading && (
-            <li>
-              <button onClick={signOut} className='text-body-16m'>
-                로그아웃
-              </button>
-            </li>
+
+          {/* 로그인 상태 (공통) */}
+          {!loading && isLoggedIn && (
+            <>
+              <li>
+                <button onClick={signOut} className='text-body-16m'>
+                  로그아웃
+                </button>
+              </li>
+              <hr className='w-[2px] h-[10px] bg-gray-600' />
+              <li>
+                <Link href={appRoutes.shop.main} className='text-body-16m'>
+                  마이페이지
+                </Link>
+              </li>
+              <hr className='w-[2px] h-[10px] bg-gray-600' />
+              <li>
+                <Link href={appRoutes.cart} className='text-body-16m'>
+                  장바구니
+                </Link>
+              </li>
+            </>
           )}
-          {user && !loading && <hr className='w-[2px] h-[10px] bg-gray-600' />}
-          {!user && !loading && (
-            <li>
-              <Link href={appRoutes.signup} className='text-body-16m'>
-                회원가입
-              </Link>
-            </li>
+
+          {/* 관리자 전용 메뉴 */}
+          {!loading && isLoggedIn && isAdmin && (
+            <>
+              <hr className='w-[2px] h-[10px] bg-gray-600' />
+              <li>
+                <Link href={appRoutes.admin.main} className='text-body-16m'>
+                  관리자 페이지
+                </Link>
+              </li>
+            </>
           )}
-          {!user && !loading && <hr className='w-[2px] h-[10px] bg-gray-600' />}
-          <li>
-            <Link href={appRoutes.shop.main} className='text-body-16m'>
-              마이페이지
-            </Link>
-          </li>
-          <hr className='w-[2px] h-[10px] bg-gray-600' />
-          <li>
-            <Link href={appRoutes.cart} className='text-body-16m'>
-              장바구니
-            </Link>
-          </li>
         </ul>
       </nav>
 

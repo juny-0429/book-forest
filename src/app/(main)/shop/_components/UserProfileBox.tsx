@@ -30,7 +30,7 @@ export default function UserProfileBox() {
     <section className='flex flex-col items-center gap-4 px-5 py-4 border border-solid border-gray-300 rounded-[6px]'>
       <figure className='relative'>
         <div className='relative w-[100px] h-[100px] rounded-full overflow-hidden'>
-          {profileImageSrc && <Image src={userInfo?.userProfileImageUrl || DefaultProfileImg} alt='user profile' fill sizes='100px' className='object-cover' />}
+          {profileImageSrc && <Image src={profileImageSrc} alt='user profile' fill sizes='100px' className='object-cover' />}
         </div>
 
         <button onClick={openProfileCropModal} className='absolute bottom-0 right-0 flex justify-center items-center w-7 h-7 bg-gray-600 rounded-full'>
