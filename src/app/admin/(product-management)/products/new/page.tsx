@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import ProductImageSection from './_components/ProductImageSection';
 import ProductPricingSection from './_components/ProductPricingSection';
 import ProductBasicInfoSection from './_components/ProductBasicInfoSection';
@@ -10,10 +9,12 @@ import { createProductSchema, CreateProductSchema } from './_schema/createProduc
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCreateProduct } from './_hooks/react-query/useCreateProduct';
 import { useRouter } from 'next/navigation';
+import { useAlertModal } from 'src/hooks/useModal';
 
 export default function ProductNewPage() {
   const router = useRouter();
   const { mutate: createProduct } = useCreateProduct();
+  const { openAlertModal } = useAlertModal();
 
   const methods = useForm<CreateProductSchema>({
     resolver: zodResolver(createProductSchema),
@@ -29,11 +30,17 @@ export default function ProductNewPage() {
   const onSubmit = (formData: CreateProductSchema) => {
     createProduct(formData, {
       onSuccess: () => {
-        alert('상품이 등록되었습니다!');
+        openAlertModal({
+          title: '상품 등록 완료',
+          content: '상품이 성공적으로 등록되었습니다.',
+        });
         router.push('/admin/products');
       },
       onError: (_error) => {
-        alert('상품 등록에 실패했습니다.');
+        openAlertModal({
+          title: '상품 등록 실패',
+          content: '상품 등록 중 문제가 발생했습니다.',
+        });
       },
     });
   };

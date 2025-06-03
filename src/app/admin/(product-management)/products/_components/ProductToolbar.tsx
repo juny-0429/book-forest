@@ -26,7 +26,12 @@ export default function ProductToolbar({ selectedCount, onClickActivate, onClick
   return (
     <div className='flex justify-between items-center mb-2'>
       <div className='flex items-center gap-1'>
-        <Select options={options} placeholder='검색어 선택' value={options.find((opt) => opt.value === searchType)} onChange={(option) => setSearchType(option?.value ?? 'product_id')} />
+        <Select
+          options={options}
+          placeholder='검색어 선택'
+          value={options.find((opt) => opt.value === searchType)}
+          onChange={(option) => setSearchType(String(option?.value ?? 'product_id'))}
+        />
         <SearchBar
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}

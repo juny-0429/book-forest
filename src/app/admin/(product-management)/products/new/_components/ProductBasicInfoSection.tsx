@@ -16,6 +16,7 @@ export default function ProductBasicInfoSection() {
   const [publishedDate, setPublishedDate] = useState<Date | null>(null);
   const [selectedAuthorName, setSelectedAuthorName] = useState('');
   const [selectedTopName, setSelectedTopName] = useState('');
+  const [selectedSubLabel, setSelectedSubLabel] = useState('');
 
   const { register, setValue } = useFormContext();
   const { openCustomModal } = useCustomModal();
@@ -24,12 +25,12 @@ export default function ProductBasicInfoSection() {
   const { data: subCategories = [] } = useGetSubCategoryList(selectedTopName);
 
   const topOptions: SelectOption[] = topCategories.map((cat) => ({
-    value: cat.categoryName,
+    value: cat.categoryId,
     label: cat.categoryName,
   }));
 
   const subOptions: SelectOption[] = subCategories.map((cat) => ({
-    value: cat.categoryName,
+    value: cat.categoryId,
     label: cat.categoryName,
   }));
 
@@ -70,19 +71,26 @@ export default function ProductBasicInfoSection() {
           options={topOptions}
           placeholder='대분류 선택'
           onChange={(option) => {
-            setSelectedTopName(option?.value ?? '');
-            setValue('categoryId', ''); // 중분류 초기화
+            setSelectedTopName(String(option?.label ?? ''));
+            setSelectedSubLabel('');
+            setValue('categoryId', Number(option?.value ?? 0));
           }}
           className='w-1/2'
         />
 
         <Select
-          options={subOptions}
+          options={subOptions.length > 0 ? subOptions : [{ value: '', label: '선택할 수 있는 중분류가 없습니다.' }]}
           placeholder='중분류 선택'
           onChange={(option) => {
-            const category = subCategories.find((c) => c.categoryCode === option?.value);
-            setValue('categoryId', category?.categoryId ?? '');
+            if (option?.value) {
+              setSelectedSubLabel(String(option.label));
+              setValue('categoryId', Number(option.value));
+            } else {
+              setSelectedSubLabel('');
+              setValue('categoryId', 0);
+            }
           }}
+          value={subOptions.find((opt) => opt.label === selectedSubLabel) ?? null}
           isDisabled={!selectedTopName}
           className='w-1/2'
         />
