@@ -20,12 +20,23 @@ export default function HeaderSearchBar() {
   const onSearch = () => {
     if (!keyword.trim()) return;
     setIsResultOpen(false);
+    setKeyword('');
+    setCurrentPage(1);
     router.push(`/search?keyword=${encodeURIComponent(keyword)}`);
   };
 
   useEffect(() => {
-    if (keyword) setIsResultOpen(true);
+    if (keyword) {
+      setCurrentPage(1);
+      setIsResultOpen(true);
+    }
   }, [keyword]);
+
+  useEffect(() => {
+    if (!isResultOpen) {
+      setCurrentPage(1);
+    }
+  }, [isResultOpen]);
 
   const limit = 4;
   const { data } = useGetSearchBarProductList(keyword, currentPage, limit);
@@ -47,13 +58,13 @@ export default function HeaderSearchBar() {
             {productList.map((book: SearchProductListItemDto) => (
               <div key={book.productId} className='flex items-center gap-2'>
                 {book.mainImageUrl && (
-                  <Link href={`${appRoutes.productDetail}/${book.productId}`}>
+                  <Link href={`${appRoutes.productDetail}/${book.productId}`} onClick={() => setTimeout(() => setIsResultOpen(false), 0)}>
                     <Image src={book.mainImageUrl} width={70} height={70} alt='product image' className='book-item' />
                   </Link>
                 )}
 
                 <div className='flex flex-col gap-1'>
-                  <Link href={`${appRoutes.productDetail}/${book.productId}`}>
+                  <Link href={`${appRoutes.productDetail}/${book.productId}`} onClick={() => setTimeout(() => setIsResultOpen(false), 0)}>
                     <p className='text-body-16b text-ui-text-title hover:underline'>{book.productName}</p>
                   </Link>
                   <p className='text-body-16r text-ui-text-description'>{`${book.authorName}(${book.publisher})`}</p>
